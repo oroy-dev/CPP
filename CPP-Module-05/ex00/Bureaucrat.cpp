@@ -6,7 +6,7 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 13:36:27 by oroy              #+#    #+#             */
-/*   Updated: 2024/05/10 16:41:37 by oroy             ###   ########.fr       */
+/*   Updated: 2024/05/13 20:06:04 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,67 +14,118 @@
 
 /*	Canonical Form Requirements --------------------------------------------- */
 
-Bureaucrat::Bureaucrat(void)
+Bureaucrat::Bureaucrat(void) : _name("Default"), _grade(150)
 {
-	std::cout << "Default constructor called" << std::endl;
-	_name = "Fonctionnaire" + _getBureaucratIncrement();
+	_testGrade();
 	return ;
 }
 
-Bureaucrat::Bureaucrat(Bureaucrat const &src)
+Bureaucrat::Bureaucrat(Bureaucrat const &src) : _name(src._name + "_copy"), _grade(src._grade)
 {
-	std::cout << "Constructor by copy called" << std::endl;
-	*this = src;
-	return ; 
+	_testGrade();
+	return ;
 }
 
 Bureaucrat	&Bureaucrat::operator=(Bureaucrat const &rhs)
 {
-	std::cout << "Assignment to instance called" << std::endl;
 	this->_grade = rhs._grade;
-	this->_name = rhs._name;
+	std::cout << "[" << _name << "] Copied grade from " << rhs._name << std::endl;
+	_testGrade(); // Not sure this line is necessary
 	return (*this);
 }
 
 Bureaucrat::~Bureaucrat(void)
 {
-	std::cout << "Destructor called" << std::endl;
-	return ; 
+	std::cout << "[" << _name << "] Bureaucrat destroyed" << std::endl;
+	return ;
 }
 
-/*	Add-ons ----------------------------------------------------------------- */
+/*	Additional Constructors ------------------------------------------------- */
 
-void	Bureaucrat::getGrade(void) const
+Bureaucrat::Bureaucrat(std::string const name) : _name(name), _grade(150)
 {
-	std::cout << _grade << std::endl;
+	_testGrade();
+	return ;
 }
 
-void	Bureaucrat::getName(void) const
+Bureaucrat::Bureaucrat(int grade) : _name("Unnamed"), _grade(grade)
 {
-	std::cout << _name << std::endl;
+	_testGrade();
+	return ;
 }
+
+Bureaucrat::Bureaucrat(std::string const name, int grade) : _name(name), _grade(grade)
+{
+	_testGrade();
+	return ;
+}
+
+/*	Getters ----------------------------------------------------------------- */
+
+int	Bureaucrat::getGrade(void) const
+{
+	return (_grade);
+}
+
+std::string const	Bureaucrat::getName(void) const
+{
+	return (_name);
+}
+
+/*	Grade Functions --------------------------------------------------------- */
 
 void	Bureaucrat::decrementGrade(void)
 {
-	_grade++;
+	++_grade;
+	std::cout << "[" << _name << "] " << "Grade Decremented" << std::endl;
+	_testGrade();
 }
 
 void	Bureaucrat::incrementGrade(void)
 {
-	_grade--;
+	--_grade;
+	std::cout << "[" << _name << "] " << "Grade Incremented" << std::endl;
+	_testGrade();
 }
 
-void	Bureaucrat::operator<<(void) const
+void	Bureaucrat::_testGrade(void)
 {
-	std::cout << _name << "bureaucrat grade" << _grade << std::endl;
+	try
+	{
+		if (_grade < 1)
+		{
+			throw	GradeTooHighException();
+		}
+		else if (_grade > 150)
+		{
+			throw	GradeTooLowException();
+		}
+	}
+	catch(const GradeTooHighException& e)
+	{
+		std::cerr << RED << "[" << _name << "] " << e.what() << RESET << std::endl;
+		std::cout << "└─> Trying for grade ──> " << _grade << std::endl;
+		_grade = 1;
+		std::cout << "└─> Going back to grade ──> " << _grade << std::endl;
+	}
+	catch(const GradeTooLowException& e)
+	{
+		std::cerr << RED << "[" << _name << "] " << e.what() << RESET << std::endl;
+		std::cout << "└─> Trying for grade ──> " << _grade << std::endl;
+		_grade = 150;
+		std::cout << "└─> Going back to grade ──> " << _grade << std::endl;
+	}
 }
 
-int	Bureaucrat::_getBureaucratIncrement(void)
+/*	Printing ---------------------------------------------------------------- */
+
+void	Bureaucrat::printStatus(void) const
 {
-	_inc = ++inc % 151;
-	if (_inc == 0)
-		++_inc;
-	return (_inc);
+	std::cout << GREEN << *this << RESET << std::endl;
 }
 
-int	Bureaucrat::_inc = 0;
+std::ostream	&operator<<(std::ostream &o, Bureaucrat const &rhs)
+{
+	o << "[" << rhs.getName() << "] bureaucrat grade " << rhs.getGrade();
+	return (o);
+}

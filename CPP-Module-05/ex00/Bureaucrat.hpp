@@ -6,7 +6,7 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 13:32:05 by oroy              #+#    #+#             */
-/*   Updated: 2024/05/10 16:41:27 by oroy             ###   ########.fr       */
+/*   Updated: 2024/05/13 19:03:02 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,41 @@
 # define BUREAUCRAT_H
 
 # include <iostream>
+# include <stdexcept>
 # include <string>
+
+# define RESET	"\033[0m"
+# define RED	"\033[31m"
+# define GREEN	"\033[32m"
+# define YELLOW	"\033[33m"
+# define BLUE	"\033[34m"
 
 class Bureaucrat
 {
 private:
 	
-	std::string _name;
-	int			_grade;
+	std::string const	_name;
+	int					_grade;
 
-	static int	_inc;
-	int			_getBureaucratIncrement(void);
+	void				_testGrade(void);
+
+	class GradeTooHighException : public std::exception
+	{
+		public:
+			virtual const char* what() const throw()
+			{
+				return ("Grade is too high");
+			}
+	};
+
+	class GradeTooLowException : public std::exception
+	{
+		public:
+			virtual const char* what() const throw()
+			{
+				return ("Grade is too low");
+			}
+	};
 
 public:
 
@@ -32,15 +56,21 @@ public:
 	Bureaucrat(Bureaucrat const &src);
 	Bureaucrat &operator=(Bureaucrat const &rhs);
 	~Bureaucrat(void);
+
+	Bureaucrat(int grade);
+	Bureaucrat(std::string const name);
+	Bureaucrat(std::string const name, int grade);
 	
-	void	getGrade(void) const;
-	void	getName(void) const;
+	std::string const	getName(void) const;
+	int					getGrade(void) const;
 
-	void	decrementGrade(void);
-	void	incrementGrade(void);
+	void				decrementGrade(void);
+	void				incrementGrade(void);
 
-	void	operator<<(void) const;
+	void				printStatus(void) const;
 
 };
+
+std::ostream	&operator<<(std::ostream &o, Bureaucrat const &rhs);
 
 #endif
