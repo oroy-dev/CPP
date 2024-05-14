@@ -6,7 +6,7 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 13:36:27 by oroy              #+#    #+#             */
-/*   Updated: 2024/05/13 20:06:04 by oroy             ###   ########.fr       */
+/*   Updated: 2024/05/14 17:41:29 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ Bureaucrat::Bureaucrat(void) : _name("Default"), _grade(150)
 
 Bureaucrat::Bureaucrat(Bureaucrat const &src) : _name(src._name + "_copy"), _grade(src._grade)
 {
-	_testGrade();
 	return ;
 }
 
@@ -30,7 +29,6 @@ Bureaucrat	&Bureaucrat::operator=(Bureaucrat const &rhs)
 {
 	this->_grade = rhs._grade;
 	std::cout << "[" << _name << "] Copied grade from " << rhs._name << std::endl;
-	_testGrade(); // Not sure this line is necessary
 	return (*this);
 }
 
