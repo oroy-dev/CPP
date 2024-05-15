@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Form.hpp                                           :+:      :+:    :+:   */
+/*   AForm.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:42:47 by oroy              #+#    #+#             */
-/*   Updated: 2024/05/15 11:55:18 by oroy             ###   ########.fr       */
+/*   Updated: 2024/05/15 14:00:23 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FORM_H
-# define FORM_H
+#ifndef AForm_H
+# define AForm_H
 
 # include <iostream>
 # include <string>
@@ -20,9 +20,9 @@
 
 class Bureaucrat;
 
-class Form
+class AForm
 {
-private:
+protected:
 	
 	std::string const	_name;
 	bool				_signed;
@@ -51,12 +51,12 @@ private:
 
 public:
 	
-	Form(void);
-	Form(Form const &src);
-	Form &operator=(Form const &rhs);
-	~Form(void);
+	AForm(void);
+	AForm(AForm const &src);
+	AForm &operator=(AForm const &rhs);
+	virtual ~AForm(void);
 
-	Form(std::string name, int gradeSign, int gradeExec);
+	AForm(std::string name, int gradeSign, int gradeExec);
 	
 	std::string const	getName(void) const;
 	bool				getSigned(void) const;
@@ -69,6 +69,6 @@ public:
 
 };
 
-std::ostream	&operator<<(std::ostream &o, Form const &rhs);
+std::ostream	&operator<<(std::ostream &o, AForm const &rhs);
 
 #endif

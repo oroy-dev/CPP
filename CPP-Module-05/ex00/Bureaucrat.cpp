@@ -6,7 +6,7 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 13:36:27 by oroy              #+#    #+#             */
-/*   Updated: 2024/05/14 17:41:29 by oroy             ###   ########.fr       */
+/*   Updated: 2024/05/15 15:13:44 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@
 
 Bureaucrat::Bureaucrat(void) : _name("Default"), _grade(150)
 {
-	_testGrade();
 	return ;
 }
 
-Bureaucrat::Bureaucrat(Bureaucrat const &src) : _name(src._name + "_copy"), _grade(src._grade)
+Bureaucrat::Bureaucrat(Bureaucrat const &src) : _name(src._name + "_copy")
 {
+	*this = src;
 	return ;
 }
 
@@ -42,7 +42,6 @@ Bureaucrat::~Bureaucrat(void)
 
 Bureaucrat::Bureaucrat(std::string const name) : _name(name), _grade(150)
 {
-	_testGrade();
 	return ;
 }
 

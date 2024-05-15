@@ -6,7 +6,7 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 13:36:27 by oroy              #+#    #+#             */
-/*   Updated: 2024/05/15 15:13:27 by oroy             ###   ########.fr       */
+/*   Updated: 2024/05/15 15:12:43 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ std::ostream	&operator<<(std::ostream &o, Bureaucrat const &rhs)
 
 /*	Form -------------------------------------------------------------------- */
 
-void	Bureaucrat::signForm(Form &form) const
+void	Bureaucrat::signForm(AForm &form) const
 {
 	const char	*error;
 	
