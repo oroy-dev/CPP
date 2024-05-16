@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PresidentialPardonForm.hpp                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:42:47 by oroy              #+#    #+#             */
-/*   Updated: 2024/05/15 15:19:27 by oroy             ###   ########.fr       */
+/*   Updated: 2024/05/15 23:21:49 by olivierroy       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,10 @@
 
 class PresidentialPardonForm : public AForm
 {
+private:
+
+	void	_pardon(std::string target) const;
+
 public:
 	
 	PresidentialPardonForm(void);
