@@ -6,7 +6,7 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 13:36:27 by oroy              #+#    #+#             */
-/*   Updated: 2024/05/15 15:12:43 by oroy             ###   ########.fr       */
+/*   Updated: 2024/05/16 17:00:10 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,19 @@ void	Bureaucrat::signForm(AForm &form) const
 		std::cout << GREEN << _name << " signed " << form.getName() << RESET << std::endl;
 	else
 		std::cout << RED << _name << " couldn't sign " << form.getName() << " because " << error << RESET << std::endl;
+	std::cout << "└─> Bureaucrat Grade ──> " << _grade << std::endl;
+	form.printStatus();
+}
+
+void	Bureaucrat::executeForm(AForm const &form) const
+{
+	const char	*error;
+	
+	error = form.execute(*this);
+	if (!error)
+		std::cout << GREEN << _name << " executed " << form.getName() << RESET << std::endl;
+	else
+		std::cout << RED << _name << " couldn't execute " << form.getName() << " because " << error << RESET << std::endl;
 	std::cout << "└─> Bureaucrat Grade ──> " << _grade << std::endl;
 	form.printStatus();
 }

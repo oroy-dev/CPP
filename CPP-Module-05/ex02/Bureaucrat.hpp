@@ -6,7 +6,7 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 13:32:05 by oroy              #+#    #+#             */
-/*   Updated: 2024/05/15 13:47:42 by oroy             ###   ########.fr       */
+/*   Updated: 2024/05/16 16:46:48 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ public:
 	void				printStatus(void) const;
 
 	void				signForm(AForm &form) const;
+	void				executeForm(AForm const &form) const;
 
 };
 

@@ -6,7 +6,7 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:07:07 by oroy              #+#    #+#             */
-/*   Updated: 2024/05/15 15:13:51 by oroy             ###   ########.fr       */
+/*   Updated: 2024/05/16 16:59:12 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /*	Canonical Form Requirements --------------------------------------------- */
 
-AForm::AForm(void) : _name("DefaultAForm"), _signed(false), _gradeSign(150), _gradeExec(150)
+AForm::AForm(void) : _name("DefaultForm"), _signed(false), _gradeSign(150), _gradeExec(150)
 {
 	return ;
 }
@@ -132,6 +132,21 @@ const char	*AForm::beSigned(Bureaucrat const &brat)
 			_signed = false;	
 			throw	GradeTooLowException();
 		}
+	}
+	catch (const GradeTooLowException& e)
+	{
+		return (e.what());
+	}
+}
+
+const char	*AForm::execute(Bureaucrat const &executor) const
+{
+	try
+	{
+		if (executor.getGrade() <= _gradeExec)
+			return (NULL);
+		else
+			throw	GradeTooLowException();
 	}
 	catch (const GradeTooLowException& e)
 	{

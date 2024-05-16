@@ -6,7 +6,7 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:42:47 by oroy              #+#    #+#             */
-/*   Updated: 2024/05/15 14:00:23 by oroy             ###   ########.fr       */
+/*   Updated: 2024/05/16 16:56:06 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ public:
 	void				printStatus(void) const;
 
 	const char			*beSigned(Bureaucrat const &brat);
+	const char			*execute(Bureaucrat const &executor) const;
 
 };
 

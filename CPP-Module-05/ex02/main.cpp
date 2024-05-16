@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+        */
+/*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:09:26 by oroy              #+#    #+#             */
-/*   Updated: 2024/05/15 23:26:02 by olivierroy       ###   ########.fr       */
+/*   Updated: 2024/05/16 17:02:27 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,12 @@ int	main(void)
 {
 	ShrubberyCreationForm	form;
 	RobotomyRequestForm		form2("Dude");
+	RobotomyRequestForm		form3;
+
+	Bureaucrat				brat("Oli", 100);
 
 	form.printStatus();
+
+	brat.executeForm(form3);
 	return (0);
 }

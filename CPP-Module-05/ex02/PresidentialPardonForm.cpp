@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PresidentialPardonForm.cpp                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+        */
+/*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:07:07 by oroy              #+#    #+#             */
-/*   Updated: 2024/05/15 23:24:11 by olivierroy       ###   ########.fr       */
+/*   Updated: 2024/05/16 16:37:02 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@
 
 PresidentialPardonForm::PresidentialPardonForm(void) : AForm("PresidentialPardonForm", 25, 5)
 {
-	_pardon("Default");
+	_pardon("default");
 	return ;
 }
 
 PresidentialPardonForm::PresidentialPardonForm(PresidentialPardonForm const &src) : AForm(src._name + "_copy", 25, 5)
 {
 	*this = src;
-	_pardon("Default");
+	_pardon("default");
 	return ;
 }
 
@@ -49,5 +49,5 @@ PresidentialPardonForm::PresidentialPardonForm(std::string target) : AForm("Pres
 
 void	PresidentialPardonForm::_pardon(std::string target) const
 {
-	std::cout << target << " was pardonned by  Zaphod Beeblebrox" << std::endl;
+	std::cout << target << " was pardonned by Zaphod Beeblebrox" << std::endl;
 }

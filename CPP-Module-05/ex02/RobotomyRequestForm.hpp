@@ -6,7 +6,7 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:42:47 by oroy              #+#    #+#             */
-/*   Updated: 2024/05/15 15:55:06 by oroy             ###   ########.fr       */
+/*   Updated: 2024/05/16 16:11:38 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ class RobotomyRequestForm : public AForm
 {
 private:
 
-	void	_doOperation(std::string target) const;
+	void	_robotize(std::string target) const;
 	
 public:
 	

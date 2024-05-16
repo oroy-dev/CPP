@@ -6,7 +6,7 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 15:16:42 by oroy              #+#    #+#             */
-/*   Updated: 2024/05/15 16:02:00 by oroy             ###   ########.fr       */
+/*   Updated: 2024/05/16 16:36:15 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,14 @@
 
 RobotomyRequestForm::RobotomyRequestForm(void) : AForm("RobotomyRequestForm", 72, 45)
 {
+	_robotize("default");
 	return ;
 }
 
 RobotomyRequestForm::RobotomyRequestForm(RobotomyRequestForm const &src) : AForm(src._name + "_copy", 72, 45)
 {
 	*this = src;
+	_robotize("default");
 	return ;
 }
 
@@ -41,20 +43,22 @@ RobotomyRequestForm::~RobotomyRequestForm(void)
 
 RobotomyRequestForm::RobotomyRequestForm(std::string target) : AForm("RobotomyRequestForm", 72, 45)
 {
-	_doOperation(target);
+	_robotize(target);
 	return ;
 }
 
-void	RobotomyRequestForm::_doOperation(std::string target) const
+void	RobotomyRequestForm::_robotize(std::string target) const
 {
-	int	random;
+	static unsigned int	old_time;
+	unsigned int		new_time;
 
-	srand(time(0));
-	random = rand();
-	std::cout << random << std::endl;
+	new_time = time(NULL);
+	if (new_time != old_time)
+		srand(new_time);
+	old_time = new_time;
 	std::cout << "Drrrrrrrr Drrrrrrrr" << std::endl;
-	if (random % 2 == 0)
-		std::cout << GREEN << target << " was robotomized" << RESET << std::endl;
+	if (rand() % 2 == 0)
+		std::cout << GREEN << target << " was robotized" << RESET << std::endl;
 	else
-		std::cout << RED << target << " was not robotomized" << RESET << std::endl;
+		std::cout << RED << target << " was not robotized" << RESET << std::endl;
 }
