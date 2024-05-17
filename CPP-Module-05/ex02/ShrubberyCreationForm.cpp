@@ -6,7 +6,7 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:07:07 by oroy              #+#    #+#             */
-/*   Updated: 2024/05/16 16:08:37 by oroy             ###   ########.fr       */
+/*   Updated: 2024/05/17 19:14:56 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,14 @@
 
 /*	Canonical Form Requirements --------------------------------------------- */
 
-ShrubberyCreationForm::ShrubberyCreationForm(void) : AForm("ShrubberyCreationForm", 145, 137)
+ShrubberyCreationForm::ShrubberyCreationForm(std::string target) : AForm("ShrubberyCreationForm", target, 145, 137)
 {
-	_writeShrubbery("default");
 	return ;
 }
 
-ShrubberyCreationForm::ShrubberyCreationForm(ShrubberyCreationForm const &src) : AForm(src._name + "_copy", 145, 137)
+ShrubberyCreationForm::ShrubberyCreationForm(ShrubberyCreationForm const &src) : AForm(src.getName() + "_copy", src.getTarget(), 145, 137)
 {
 	*this = src;
-	_writeShrubbery("default");
 	return ;
 }
 
@@ -35,24 +33,18 @@ ShrubberyCreationForm	&ShrubberyCreationForm::operator=(ShrubberyCreationForm co
 
 ShrubberyCreationForm::~ShrubberyCreationForm(void)
 {
-	std::cout << "[" << _name << "] burned" << std::endl;
+	std::cout << "[" << getName() << "] burned" << std::endl;
 	return ;
 }
 
 /*	Additional Constructors ------------------------------------------------- */
 
-ShrubberyCreationForm::ShrubberyCreationForm(std::string target) : AForm("ShrubberyCreationForm", 145, 137)
-{
-	_writeShrubbery(target);
-	return ;
-}
-
-void	ShrubberyCreationForm::_writeShrubbery(std::string target) const
+void	ShrubberyCreationForm::_doFormAction(void) const
 {
 	std::string		filename;
 	std::ofstream	file;
 
-	filename = target + "_shrubbery";
+	filename = getTarget() + "_shrubbery";
 	file.open (filename, std::ofstream::app);
 	if (file.is_open())
 	{

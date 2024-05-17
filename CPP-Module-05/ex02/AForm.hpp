@@ -6,7 +6,7 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:42:47 by oroy              #+#    #+#             */
-/*   Updated: 2024/05/16 16:56:06 by oroy             ###   ########.fr       */
+/*   Updated: 2024/05/17 19:19:03 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,10 @@ class Bureaucrat;
 
 class AForm
 {
-protected:
+private:
 	
 	std::string const	_name;
+	std::string const	_target;
 	bool				_signed;
 	int const			_gradeSign;
 	int const			_gradeExec;
@@ -49,6 +50,17 @@ protected:
 			}
 	};
 
+	class FormNotSigned : public std::exception
+	{
+		public:
+			virtual const char* what() const throw()
+			{
+				return ("Form not signed");
+			}
+	};
+
+	virtual void	_doFormAction(void) const = 0;
+
 public:
 	
 	AForm(void);
@@ -56,9 +68,10 @@ public:
 	AForm &operator=(AForm const &rhs);
 	virtual ~AForm(void);
 
-	AForm(std::string name, int gradeSign, int gradeExec);
+	AForm(std::string name, std::string target, int gradeSign, int gradeExec);
 	
 	std::string const	getName(void) const;
+	std::string const	getTarget(void) const;
 	bool				getSigned(void) const;
 	int					getGradeSign(void) const;
 	int					getGradeExec(void) const;

@@ -6,7 +6,7 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 15:16:42 by oroy              #+#    #+#             */
-/*   Updated: 2024/05/16 16:36:15 by oroy             ###   ########.fr       */
+/*   Updated: 2024/05/17 19:13:31 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,14 @@
 
 /*	Canonical Form Requirements --------------------------------------------- */
 
-RobotomyRequestForm::RobotomyRequestForm(void) : AForm("RobotomyRequestForm", 72, 45)
+RobotomyRequestForm::RobotomyRequestForm(std::string target) : AForm("RobotomyRequestForm", target, 72, 45)
 {
-	_robotize("default");
 	return ;
 }
 
-RobotomyRequestForm::RobotomyRequestForm(RobotomyRequestForm const &src) : AForm(src._name + "_copy", 72, 45)
+RobotomyRequestForm::RobotomyRequestForm(RobotomyRequestForm const &src) : AForm(src.getName() + "_copy", src.getTarget(), 72, 45)
 {
 	*this = src;
-	_robotize("default");
 	return ;
 }
 
@@ -35,19 +33,13 @@ RobotomyRequestForm	&RobotomyRequestForm::operator=(RobotomyRequestForm const &r
 
 RobotomyRequestForm::~RobotomyRequestForm(void)
 {
-	std::cout << "[" << _name << "] burned" << std::endl;
+	std::cout << "[" << getName() << "] burned" << std::endl;
 	return ;
 }
 
 /*	Additional Constructors ------------------------------------------------- */
 
-RobotomyRequestForm::RobotomyRequestForm(std::string target) : AForm("RobotomyRequestForm", 72, 45)
-{
-	_robotize(target);
-	return ;
-}
-
-void	RobotomyRequestForm::_robotize(std::string target) const
+void	RobotomyRequestForm::_doFormAction(void) const
 {
 	static unsigned int	old_time;
 	unsigned int		new_time;
@@ -58,7 +50,7 @@ void	RobotomyRequestForm::_robotize(std::string target) const
 	old_time = new_time;
 	std::cout << "Drrrrrrrr Drrrrrrrr" << std::endl;
 	if (rand() % 2 == 0)
-		std::cout << GREEN << target << " was robotized" << RESET << std::endl;
+		std::cout << GREEN << getTarget() << " was robotized" << RESET << std::endl;
 	else
-		std::cout << RED << target << " was not robotized" << RESET << std::endl;
+		std::cout << RED << getTarget() << " was not robotized" << RESET << std::endl;
 }

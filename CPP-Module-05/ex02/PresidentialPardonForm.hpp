@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   PresidentialPardonForm.hpp                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+        */
+/*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:42:47 by oroy              #+#    #+#             */
-/*   Updated: 2024/05/15 23:21:49 by olivierroy       ###   ########.fr       */
+/*   Updated: 2024/05/17 19:11:04 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PresidentialPardonForm_H
-# define PresidentialPardonForm_H
+#ifndef PRESIDENTIALPARDONFORM_H
+# define PRESIDENTIALPARDONFORM_H
 
 # include <iostream>
 # include <string>
@@ -22,17 +22,14 @@ class PresidentialPardonForm : public AForm
 {
 private:
 
-	void	_pardon(std::string target) const;
+	void	_doFormAction(void) const;
 
 public:
 	
-	PresidentialPardonForm(void);
+	PresidentialPardonForm(std::string target);
 	PresidentialPardonForm(PresidentialPardonForm const &src);
 	PresidentialPardonForm &operator=(PresidentialPardonForm const &rhs);
 	~PresidentialPardonForm(void);
-
-	PresidentialPardonForm(std::string target);
-
 };
 
 #endif

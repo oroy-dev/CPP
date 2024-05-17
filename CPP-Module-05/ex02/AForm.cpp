@@ -6,7 +6,7 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:07:07 by oroy              #+#    #+#             */
-/*   Updated: 2024/05/16 16:59:12 by oroy             ###   ########.fr       */
+/*   Updated: 2024/05/17 19:08:48 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,13 @@
 
 /*	Canonical Form Requirements --------------------------------------------- */
 
-AForm::AForm(void) : _name("DefaultForm"), _signed(false), _gradeSign(150), _gradeExec(150)
+AForm::AForm(void) : _name("DefaultForm"), _target("Default"), _gradeSign(150), _gradeExec(150)
 {
+	_signed = false;
 	return ;
 }
 
-AForm::AForm(AForm const &src) : _name(src._name + "_copy"), _gradeSign(src._gradeSign), _gradeExec(src._gradeExec)
+AForm::AForm(AForm const &src) : _name(src._name + "_copy"), _target(src._target), _gradeSign(src._gradeSign), _gradeExec(src._gradeExec)
 {
 	*this = src;
 	return ;
@@ -39,7 +40,7 @@ AForm::~AForm(void)
 
 /*	Additional Constructors ------------------------------------------------- */
 
-AForm::AForm(std::string name, int gradeSign, int gradeExec) : _name(name), _gradeSign(_testGrade(gradeSign)), _gradeExec(_testGrade(gradeExec))
+AForm::AForm(std::string name, std::string target, int gradeSign, int gradeExec) : _name(name), _target(target), _gradeSign(_testGrade(gradeSign)), _gradeExec(_testGrade(gradeExec))
 {
 	_signed = false;
 	return ;
@@ -50,6 +51,11 @@ AForm::AForm(std::string name, int gradeSign, int gradeExec) : _name(name), _gra
 std::string const	AForm::getName(void) const
 {
 	return (_name);
+}
+
+std::string const	AForm::getTarget(void) const
+{
+	return (_target);
 }
 
 bool	AForm::getSigned(void) const
@@ -143,13 +149,24 @@ const char	*AForm::execute(Bureaucrat const &executor) const
 {
 	try
 	{
-		if (executor.getGrade() <= _gradeExec)
-			return (NULL);
-		else
+		if (!getSigned())
+		{
+			throw	FormNotSigned();
+		}
+		else if (executor.getGrade() > _gradeExec)
+		{	
 			throw	GradeTooLowException();
+		}
+		else
+			_doFormAction();
+	}
+	catch (const FormNotSigned& e)
+	{
+		return (e.what());
 	}
 	catch (const GradeTooLowException& e)
 	{
 		return (e.what());
 	}
+	return (NULL);
 }
