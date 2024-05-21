@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   AForm.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:07:07 by oroy              #+#    #+#             */
-/*   Updated: 2024/05/17 19:08:48 by oroy             ###   ########.fr       */
+/*   Updated: 2024/05/21 15:49:10 by olivierroy       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,13 @@ int	AForm::getGradeSign(void) const
 int	AForm::getGradeExec(void) const
 {
 	return (_gradeExec);
+}
+
+/*	Setters ----------------------------------------------------------------- */
+
+void	AForm::setSigned(bool isSigned)
+{
+	_signed = isSigned;
 }
 
 /*	Grade Functions --------------------------------------------------------- */
@@ -158,7 +165,11 @@ const char	*AForm::execute(Bureaucrat const &executor) const
 			throw	GradeTooLowException();
 		}
 		else
+		{
+			std::cout << BLUE << "Form Action" << RESET << std::endl;
 			_doFormAction();
+			std::cout << std::endl;
+		}
 	}
 	catch (const FormNotSigned& e)
 	{

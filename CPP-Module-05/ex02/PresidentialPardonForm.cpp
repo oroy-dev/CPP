@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PresidentialPardonForm.cpp                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:07:07 by oroy              #+#    #+#             */
-/*   Updated: 2024/05/16 16:37:02 by oroy             ###   ########.fr       */
+/*   Updated: 2024/05/21 14:38:33 by olivierroy       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,40 +14,32 @@
 
 /*	Canonical Form Requirements --------------------------------------------- */
 
-PresidentialPardonForm::PresidentialPardonForm(void) : AForm("PresidentialPardonForm", 25, 5)
+PresidentialPardonForm::PresidentialPardonForm(std::string target) : AForm("PresidentialPardonForm", target, 25, 5)
 {
-	_pardon("default");
 	return ;
 }
 
-PresidentialPardonForm::PresidentialPardonForm(PresidentialPardonForm const &src) : AForm(src._name + "_copy", 25, 5)
+PresidentialPardonForm::PresidentialPardonForm(PresidentialPardonForm const &src) : AForm(src.getName() + "_copy", src.getTarget(), 25, 5)
 {
 	*this = src;
-	_pardon("default");
 	return ;
 }
 
 PresidentialPardonForm	&PresidentialPardonForm::operator=(PresidentialPardonForm const &rhs)
 {
-	_signed = rhs._signed;
+	setSigned(rhs.getSigned());
 	return (*this);
 }
 
 PresidentialPardonForm::~PresidentialPardonForm(void)
 {
-	std::cout << "[" << _name << "] burned" << std::endl;
+	std::cout << "[" << getName() << "] burned" << std::endl;
 	return ;
 }
 
-/*	Additional Constructors ------------------------------------------------- */
+/*	Form Action ------------------------------------------------------------- */
 
-PresidentialPardonForm::PresidentialPardonForm(std::string target) : AForm("PresidentialPardonForm", 25, 5)
+void	PresidentialPardonForm::_doFormAction(void) const
 {
-	_pardon(target);
-	return ;
-}
-
-void	PresidentialPardonForm::_pardon(std::string target) const
-{
-	std::cout << target << " was pardonned by Zaphod Beeblebrox" << std::endl;
+	std::cout << getTarget() << " was pardonned by Zaphod Beeblebrox" << std::endl;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ShrubberyCreationForm.cpp                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:07:07 by oroy              #+#    #+#             */
-/*   Updated: 2024/05/17 19:14:56 by oroy             ###   ########.fr       */
+/*   Updated: 2024/05/21 15:52:05 by olivierroy       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ ShrubberyCreationForm::ShrubberyCreationForm(ShrubberyCreationForm const &src) :
 
 ShrubberyCreationForm	&ShrubberyCreationForm::operator=(ShrubberyCreationForm const &rhs)
 {
-	_signed = rhs._signed;
+	setSigned(rhs.getSigned());
 	return (*this);
 }
 
@@ -37,7 +37,7 @@ ShrubberyCreationForm::~ShrubberyCreationForm(void)
 	return ;
 }
 
-/*	Additional Constructors ------------------------------------------------- */
+/*	Form Action ------------------------------------------------------------- */
 
 void	ShrubberyCreationForm::_doFormAction(void) const
 {
@@ -50,6 +50,7 @@ void	ShrubberyCreationForm::_doFormAction(void) const
 	{
 		file << _getAscii();
 		file.close();
+		std::cout << "Wrote shrubbery in " << filename << std::endl;
 	}
 	else
 		std::cerr << RED << "Failed to open file: " << filename << RESET << std::endl;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   AForm.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:42:47 by oroy              #+#    #+#             */
-/*   Updated: 2024/05/17 19:19:03 by oroy             ###   ########.fr       */
+/*   Updated: 2024/05/21 14:55:01 by olivierroy       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ public:
 	bool				getSigned(void) const;
 	int					getGradeSign(void) const;
 	int					getGradeExec(void) const;
+
+	void				setSigned(bool isSigned);
 
 	void				printStatus(void) const;
 

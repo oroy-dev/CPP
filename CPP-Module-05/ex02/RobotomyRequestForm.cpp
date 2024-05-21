@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   RobotomyRequestForm.cpp                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 15:16:42 by oroy              #+#    #+#             */
-/*   Updated: 2024/05/17 19:13:31 by oroy             ###   ########.fr       */
+/*   Updated: 2024/05/21 14:37:25 by olivierroy       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ RobotomyRequestForm::RobotomyRequestForm(RobotomyRequestForm const &src) : AForm
 
 RobotomyRequestForm	&RobotomyRequestForm::operator=(RobotomyRequestForm const &rhs)
 {
-	_signed = rhs._signed;
+	setSigned(rhs.getSigned());
 	return (*this);
 }
 
@@ -37,7 +37,7 @@ RobotomyRequestForm::~RobotomyRequestForm(void)
 	return ;
 }
 
-/*	Additional Constructors ------------------------------------------------- */
+/*	Form Action ------------------------------------------------------------- */
 
 void	RobotomyRequestForm::_doFormAction(void) const
 {

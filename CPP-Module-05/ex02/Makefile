@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+         #
+#    By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/13 15:50:37 by oroy              #+#    #+#              #
-#    Updated: 2024/05/17 18:14:29 by oroy             ###   ########.fr        #
+#    Updated: 2024/05/21 15:53:35 by olivierroy       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ FLAGS	:= -Wall -Wextra -Werror -std=c++98 -g
 
 RM		:= rm -rf
 
-JUNK	:= *.dSYM
+JUNK	:= *.dSYM *_shrubbery
 
 # RULES ********************************************************************** #
 
