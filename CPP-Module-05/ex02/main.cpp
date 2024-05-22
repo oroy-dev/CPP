@@ -6,7 +6,7 @@
 /*   By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:09:26 by oroy              #+#    #+#             */
-/*   Updated: 2024/05/21 16:02:46 by olivierroy       ###   ########.fr       */
+/*   Updated: 2024/05/21 17:31:41 by olivierroy       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 int	main(void)
 {
-	ShrubberyCreationForm	form1("Jardin");
+	ShrubberyCreationForm	form1("test");
 	RobotomyRequestForm		form2("Wall-E");
 	PresidentialPardonForm	form3("Trump");
 
@@ -30,12 +30,16 @@ int	main(void)
 	form2.printStatus();
 	form3.printStatus();
 
+	// form1
 	cederic.signForm(form1);
 	cederic.executeForm(form1);
+
+	// form2
 	cederic.signForm(form2);
 	cederic.executeForm(form2);
-
 	ecole42.executeForm(form2);
+
+	// form3
 	ecole42.executeForm(form3);
 	ecole42.signForm(form3);
 	ziggy.signForm(form3);
