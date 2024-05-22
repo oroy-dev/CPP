@@ -6,18 +6,11 @@
 /*   By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 18:14:54 by olivierroy        #+#    #+#             */
-/*   Updated: 2024/05/22 00:25:44 by olivierroy       ###   ########.fr       */
+/*   Updated: 2024/05/22 13:58:30 by olivierroy       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Intern.hpp"
-
-std::string Intern::forms[NUMBER_OF_FORMS] = \
-{
-	"presidential pardon",
-	"robotomy request",
-	"shrubbery creation"
-};
 
 /*	Canonical Form Requirements --------------------------------------------- */
 
@@ -44,7 +37,7 @@ Intern::~Intern()
 	return ;
 }
 
-/*	Make Form Function ------------------------------------------------------ */
+/*	Forms ------------------------------------------------------------------- */
 
 AForm	*Intern::_getForm(unsigned int i, std::string target) const
 {
@@ -59,14 +52,27 @@ AForm	*Intern::_getForm(unsigned int i, std::string target) const
 
 AForm	*Intern::makeForm(std::string name, std::string target) const
 {
-	for (int i = 0; i < NUMBER_OF_FORMS; i++)
+	AForm	*form;
+
+	for (unsigned int i = 0; i < NUMBER_OF_FORMS; i++)
 	{
 		if (forms[i] == name)
 		{
-			std::cout << "Intern creates " << name << std::endl;
-			return (_getForm(i, target));
+			form = _getForm(i, target);
+			if (!form)
+				std::cout << "Unusual problem occurred while trying to get form" << std::endl;
+			else
+				std::cout << "Intern creates " << name << std::endl;
+			return (form);
 		}
 	}
 	std::cout << "No such form exists" << std::endl;
 	return (NULL);
 }
+
+std::string Intern::forms[NUMBER_OF_FORMS] = \
+{
+	"presidential pardon",
+	"robotomy request",
+	"shrubbery creation"
+};
