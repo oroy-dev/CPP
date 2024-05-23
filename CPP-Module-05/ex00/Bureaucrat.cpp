@@ -6,7 +6,7 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 13:36:27 by oroy              #+#    #+#             */
-/*   Updated: 2024/05/23 17:21:22 by oroy             ###   ########.fr       */
+/*   Updated: 2024/05/23 17:51:27 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,14 @@
 Bureaucrat::Bureaucrat(std::string const name, int grade) : _name(name), _grade(grade)
 {
 	_testGrade();
+	std::cout << "[" << _name << "] Bureaucrat created with grade " << _grade << std::endl;
 	return ;
 }
 
 Bureaucrat::Bureaucrat(Bureaucrat const &src) : _name(src._name + "_copy")
 {
 	*this = src;
+	std::cout << "[" << _name << "] Bureaucrat created with grade " << _grade << std::endl;
 	return ;
 }
 

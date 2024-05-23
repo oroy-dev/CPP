@@ -6,7 +6,7 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:09:26 by oroy              #+#    #+#             */
-/*   Updated: 2024/05/23 17:22:15 by oroy             ###   ########.fr       */
+/*   Updated: 2024/05/23 17:52:05 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	main(void)
 {
+	// Bureaucrat	random(NULL, '0'); Do we have to handle NULL string ? (with const_cast)
 	Bureaucrat	po("PO", 150);
 	Bureaucrat	ced("Ced", 2);
 	Bureaucrat	copycat("Copycat", 67);
