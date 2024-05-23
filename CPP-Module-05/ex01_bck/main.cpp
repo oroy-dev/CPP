@@ -6,41 +6,29 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:09:26 by oroy              #+#    #+#             */
-/*   Updated: 2024/05/23 17:07:16 by oroy             ###   ########.fr       */
+/*   Updated: 2024/05/15 13:45:46 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Intern.hpp"
 #include "Bureaucrat.hpp"
+#include "Form.hpp"
 
 int	main(void)
 {
-	Intern		someRandomIntern;
-	Bureaucrat	squareEnix("SquareEnix", 2);
+	Bureaucrat	Bob("Bob", 125);
+	Bureaucrat	Dylan("Dylan", 57);
 
-	// AForm	*none;
-	// none = someRandomIntern.makeForm("", "");
-	// squareEnix.signForm(*none);
-	// squareEnix.executeForm(*none);
+	Form		random;
+	Form		eazypeezy("eazypeezy", 124, 100);
+	Form		hellish("hellish", -2147483648, 2147483647);
 
-	AForm	*ppf;
-	ppf = someRandomIntern.makeForm("presidential pardon", "Octo");
-	squareEnix.signForm(*ppf);
-	squareEnix.executeForm(*ppf);
+	std::cout << std::endl;
 
-	AForm	*rrf;
-	rrf = someRandomIntern.makeForm("robotomy request", "Path");
-	squareEnix.signForm(*rrf);
-	squareEnix.executeForm(*rrf);
+	Bob.signForm(random);
+	Bob.signForm(eazypeezy);
 
-	AForm	*scf;
-	scf = someRandomIntern.makeForm("shrubbery creation", "Traveler");
-	squareEnix.signForm(*scf);
-	squareEnix.executeForm(*scf);
-
-	delete ppf;
-	delete rrf;
-	delete scf;
-
+	Dylan.signForm(eazypeezy);
+	Dylan.signForm(hellish);
+	
 	return (0);
 }

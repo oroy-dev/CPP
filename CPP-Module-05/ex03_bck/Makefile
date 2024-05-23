@@ -3,25 +3,33 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+         #
+#    By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/13 15:50:37 by oroy              #+#    #+#              #
-#    Updated: 2024/05/23 17:25:07 by oroy             ###   ########.fr        #
+#    Updated: 2024/05/21 18:29:48 by olivierroy       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	:= bureaucrat
+NAME	:=	intern
 
-OBJDIR	:= obj
-SRC		:= main.cpp Bureaucrat.cpp
-OBJ		:= $(patsubst %.cpp, $(OBJDIR)/%.o, $(SRC))
+OBJDIR	:=	obj
 
-CC		:= c++
-FLAGS	:= -Wall -Wextra -Werror -std=c++98 -g
+SRC		:=	main.cpp \
+			AForm.cpp \
+			Bureaucrat.cpp \
+			Intern.cpp \
+			PresidentialPardonForm.cpp \
+			RobotomyRequestForm.cpp \
+			ShrubberyCreationForm.cpp
 
-RM		:= rm -rf
+OBJ		:=	$(patsubst %.cpp, $(OBJDIR)/%.o, $(SRC))
 
-JUNK	:=	*.dSYM
+CC		:=	c++
+FLAGS	:=	-Wall -Wextra -Werror -std=c++98 -g
+
+RM		:=	rm -rf
+
+JUNK	:=	*.dSYM *_shrubbery
 
 # RULES ********************************************************************** #
 
@@ -38,15 +46,12 @@ $(OBJDIR)/%.o: %.cpp
 
 clean:
 	$(RM) $(OBJDIR)
+	$(RM) $(JUNK)
 
 fclean: clean
 	$(RM) $(NAME)
-	$(RM) $(JUNK)
 
 re: fclean all
-
-run: $(NAME)
-	./$(NAME)
 
 # VALGRIND ******************************************************************* #
 

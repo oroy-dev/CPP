@@ -6,7 +6,7 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 13:32:05 by oroy              #+#    #+#             */
-/*   Updated: 2024/05/23 17:15:17 by oroy             ###   ########.fr       */
+/*   Updated: 2024/05/14 18:18:31 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,15 @@
 # include <stdexcept>
 # include <string>
 
+# include "Form.hpp"
+
 # define RESET	"\033[0m"
 # define RED	"\033[31m"
 # define GREEN	"\033[32m"
 # define YELLOW	"\033[33m"
 # define BLUE	"\033[34m"
+
+class Form;
 
 class Bureaucrat
 {
@@ -52,10 +56,14 @@ private:
 
 public:
 
-	Bureaucrat(std::string const name, int grade);
+	Bureaucrat(void);
 	Bureaucrat(Bureaucrat const &src);
 	Bureaucrat &operator=(Bureaucrat const &rhs);
 	~Bureaucrat(void);
+
+	Bureaucrat(int grade);
+	Bureaucrat(std::string const name);
+	Bureaucrat(std::string const name, int grade);
 	
 	std::string const	getName(void) const;
 	int					getGrade(void) const;
@@ -64,6 +72,8 @@ public:
 	void				incrementGrade(void);
 
 	void				printStatus(void) const;
+
+	void				signForm(Form &form) const;
 
 };
 

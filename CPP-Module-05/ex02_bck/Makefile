@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+         #
+#    By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/13 15:50:37 by oroy              #+#    #+#              #
-#    Updated: 2024/05/23 17:25:07 by oroy             ###   ########.fr        #
+#    Updated: 2024/05/21 15:53:35 by olivierroy       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	:= bureaucrat
+NAME	:= form
 
 OBJDIR	:= obj
-SRC		:= main.cpp Bureaucrat.cpp
+SRC		:= main.cpp Bureaucrat.cpp AForm.cpp ShrubberyCreationForm.cpp RobotomyRequestForm.cpp PresidentialPardonForm.cpp
 OBJ		:= $(patsubst %.cpp, $(OBJDIR)/%.o, $(SRC))
 
 CC		:= c++
@@ -21,7 +21,7 @@ FLAGS	:= -Wall -Wextra -Werror -std=c++98 -g
 
 RM		:= rm -rf
 
-JUNK	:=	*.dSYM
+JUNK	:= *.dSYM *_shrubbery
 
 # RULES ********************************************************************** #
 
@@ -38,15 +38,12 @@ $(OBJDIR)/%.o: %.cpp
 
 clean:
 	$(RM) $(OBJDIR)
+	$(RM) $(JUNK)
 
 fclean: clean
 	$(RM) $(NAME)
-	$(RM) $(JUNK)
 
 re: fclean all
-
-run: $(NAME)
-	./$(NAME)
 
 # VALGRIND ******************************************************************* #
 

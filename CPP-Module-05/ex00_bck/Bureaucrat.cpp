@@ -6,7 +6,7 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 13:36:27 by oroy              #+#    #+#             */
-/*   Updated: 2024/05/23 17:21:22 by oroy             ###   ########.fr       */
+/*   Updated: 2024/05/23 17:13:01 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 
 /*	Canonical Form Requirements --------------------------------------------- */
 
-Bureaucrat::Bureaucrat(std::string const name, int grade) : _name(name), _grade(grade)
+Bureaucrat::Bureaucrat(void) : _name("Default"), _grade(150)
 {
-	_testGrade();
 	return ;
 }
 
@@ -36,6 +35,25 @@ Bureaucrat	&Bureaucrat::operator=(Bureaucrat const &rhs)
 Bureaucrat::~Bureaucrat(void)
 {
 	std::cout << "[" << _name << "] Bureaucrat destroyed" << std::endl;
+	return ;
+}
+
+/*	Additional Constructors ------------------------------------------------- */
+
+Bureaucrat::Bureaucrat(std::string const name) : _name(name), _grade(150)
+{
+	return ;
+}
+
+Bureaucrat::Bureaucrat(int grade) : _name("Unnamed"), _grade(grade)
+{
+	_testGrade();
+	return ;
+}
+
+Bureaucrat::Bureaucrat(std::string const name, int grade) : _name(name), _grade(grade)
+{
+	_testGrade();
 	return ;
 }
 
