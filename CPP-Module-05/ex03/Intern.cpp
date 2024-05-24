@@ -6,7 +6,7 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 18:14:54 by olivierroy        #+#    #+#             */
-/*   Updated: 2024/05/23 16:17:54 by oroy             ###   ########.fr       */
+/*   Updated: 2024/05/24 16:53:46 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,14 @@
 
 Intern::Intern(void)
 {
+	std::cout << "[Intern] hired" << std::endl;
 	return ;
 }
 
 Intern::Intern(Intern const &src)
 {
 	(void) src;
+	std::cout << "[Intern] hired" << std::endl;
 	return ;
 }
 
@@ -33,7 +35,7 @@ Intern	&Intern::operator=(Intern const &rhs)
 
 Intern::~Intern()
 {
-	std::cout << "Intern killed" << std::endl;
+	std::cout << "[Intern] fired" << std::endl;
 	return ;
 }
 
@@ -53,7 +55,7 @@ AForm	*Intern::_getForm(unsigned int i, std::string target) const
 AForm	*Intern::makeForm(std::string name, std::string target) const
 {
 	AForm	*form;
-
+	
 	for (unsigned int i = 0; i < NUMBER_OF_FORMS; i++)
 	{
 		if (forms[i] == name)

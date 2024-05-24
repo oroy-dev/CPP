@@ -6,7 +6,7 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 13:36:27 by oroy              #+#    #+#             */
-/*   Updated: 2024/05/23 17:51:27 by oroy             ###   ########.fr       */
+/*   Updated: 2024/05/24 14:21:49 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,14 @@ Bureaucrat::~Bureaucrat(void)
 
 /*	Getters ----------------------------------------------------------------- */
 
-int	Bureaucrat::getGrade(void) const
-{
-	return (_grade);
-}
-
 std::string const	Bureaucrat::getName(void) const
 {
 	return (_name);
+}
+
+int	Bureaucrat::getGrade(void) const
+{
+	return (_grade);
 }
 
 /*	Grade Functions --------------------------------------------------------- */

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Bureaucrat.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+        */
+/*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 13:32:05 by oroy              #+#    #+#             */
-/*   Updated: 2024/05/21 16:03:39 by olivierroy       ###   ########.fr       */
+/*   Updated: 2024/05/24 16:14:34 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,10 @@ private:
 
 public:
 
-	Bureaucrat(void);
+	Bureaucrat(std::string const name, int grade);
 	Bureaucrat(Bureaucrat const &src);
 	Bureaucrat &operator=(Bureaucrat const &rhs);
-	~Bureaucrat(void);
-
-	Bureaucrat(int grade);
-	Bureaucrat(std::string const name);
-	Bureaucrat(std::string const name, int grade);
+	~Bureaucrat();
 	
 	std::string const	getName(void) const;
 	int					getGrade(void) const;

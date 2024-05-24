@@ -6,7 +6,7 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:07:07 by oroy              #+#    #+#             */
-/*   Updated: 2024/05/15 15:13:11 by oroy             ###   ########.fr       */
+/*   Updated: 2024/05/24 14:57:38 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,34 +14,30 @@
 
 /*	Canonical Form Requirements --------------------------------------------- */
 
-Form::Form(void) : _name("DefaultForm"), _signed(false), _gradeSign(150), _gradeExec(150)
+Form::Form(std::string name, int gradeSign, int gradeExec) : _name(name), _gradeSign(_testGrade(gradeSign)), _gradeExec(_testGrade(gradeExec))
 {
+	_signed = false;
+	std::cout << "[" << _name << "] Form created" << std::endl;
 	return ;
 }
 
 Form::Form(Form const &src) : _name(src._name + "_copy"), _gradeSign(src._gradeSign), _gradeExec(src._gradeExec)
 {
 	*this = src;
+	std::cout << "[" << _name << "] Form created by copy" << std::endl;
 	return ;
 }
 
 Form	&Form::operator=(Form const &rhs)
 {
 	_signed = rhs._signed;
+	std::cout << "[" << _name << "] Copied 'signed' attribute from " << rhs._name << std::endl;
 	return (*this);
 }
 
 Form::~Form(void)
 {
 	std::cout << "[" << _name << "] Form burned" << std::endl;
-	return ;
-}
-
-/*	Additional Constructors ------------------------------------------------- */
-
-Form::Form(std::string name, int gradeSign, int gradeExec) : _name(name), _gradeSign(_testGrade(gradeSign)), _gradeExec(_testGrade(gradeExec))
-{
-	_signed = false;
 	return ;
 }
 
@@ -122,19 +118,24 @@ const char	*Form::beSigned(Bureaucrat const &brat)
 {
 	try
 	{
-		if (brat.getGrade() <= _gradeSign)
+		if (_signed)
 		{
-			_signed = true;
-			return (NULL);
+			throw	FormAlreadySigned();
 		}
-		else
+		else if (brat.getGrade() > _gradeSign)
 		{
-			_signed = false;	
 			throw	GradeTooLowException();
 		}
+		else
+			_signed = true;
+	}
+	catch (const FormAlreadySigned& e)
+	{
+		return (e.what());
 	}
 	catch (const GradeTooLowException& e)
 	{
 		return (e.what());
 	}
+	return (NULL);
 }

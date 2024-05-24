@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Bureaucrat.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+        */
+/*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 13:36:27 by oroy              #+#    #+#             */
-/*   Updated: 2024/05/21 17:35:00 by olivierroy       ###   ########.fr       */
+/*   Updated: 2024/05/24 16:18:37 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,17 @@
 
 /*	Canonical Form Requirements --------------------------------------------- */
 
-Bureaucrat::Bureaucrat(void) : _name("Default"), _grade(150)
+Bureaucrat::Bureaucrat(std::string const name, int grade) : _name(name), _grade(grade)
 {
+	_testGrade();
+	std::cout << "[" << _name << "] Bureaucrat created with grade " << _grade << std::endl;
 	return ;
 }
 
 Bureaucrat::Bureaucrat(Bureaucrat const &src) : _name(src._name + "_copy")
 {
 	*this = src;
+	std::cout << "[" << _name << "] Bureaucrat created with grade " << _grade << std::endl;
 	return ;
 }
 
@@ -38,35 +41,16 @@ Bureaucrat::~Bureaucrat(void)
 	return ;
 }
 
-/*	Additional Constructors ------------------------------------------------- */
-
-Bureaucrat::Bureaucrat(std::string const name) : _name(name), _grade(150)
-{
-	return ;
-}
-
-Bureaucrat::Bureaucrat(int grade) : _name("Unnamed"), _grade(grade)
-{
-	_testGrade();
-	return ;
-}
-
-Bureaucrat::Bureaucrat(std::string const name, int grade) : _name(name), _grade(grade)
-{
-	_testGrade();
-	return ;
-}
-
 /*	Getters ----------------------------------------------------------------- */
-
-int	Bureaucrat::getGrade(void) const
-{
-	return (_grade);
-}
 
 std::string const	Bureaucrat::getName(void) const
 {
 	return (_name);
+}
+
+int	Bureaucrat::getGrade(void) const
+{
+	return (_grade);
 }
 
 /*	Grade Functions --------------------------------------------------------- */
@@ -134,12 +118,10 @@ void	Bureaucrat::signForm(AForm &form) const
 	const char	*error;
 	
 	error = form.beSigned(*this);
-	if (form.getSigned())
-		std::cout << GREEN << _name << " signed " << form.getName() << RESET << std::endl;
-	else
+	if (error)
 		std::cout << RED << _name << " couldn't sign " << form.getName() << " because " << error << RESET << std::endl;
-	std::cout << "└─> Bureaucrat Grade ──> " << _grade << std::endl;
-	form.printStatus();
+	else
+		std::cout << GREEN << _name << " signed " << form.getName() << RESET << std::endl;
 }
 
 void	Bureaucrat::executeForm(AForm const &form) const
@@ -147,10 +129,8 @@ void	Bureaucrat::executeForm(AForm const &form) const
 	const char	*error;
 	
 	error = form.execute(*this);
-	if (!error)
-		std::cout << GREEN << _name << " executed " << form.getName() << RESET << std::endl;
-	else
+	if (error)
 		std::cout << RED << _name << " couldn't execute " << form.getName() << " because " << error << RESET << std::endl;
-	std::cout << "└─> Bureaucrat Grade ──> " << _grade << std::endl;
-	form.printStatus();
+	else
+		std::cout << GREEN << _name << " executed " << form.getName() << RESET << std::endl;
 }

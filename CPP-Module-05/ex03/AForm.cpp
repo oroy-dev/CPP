@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   AForm.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+        */
+/*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:07:07 by oroy              #+#    #+#             */
-/*   Updated: 2024/05/21 15:49:10 by olivierroy       ###   ########.fr       */
+/*   Updated: 2024/05/24 16:31:44 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,35 +14,30 @@
 
 /*	Canonical Form Requirements --------------------------------------------- */
 
-AForm::AForm(void) : _name("DefaultForm"), _target("Default"), _gradeSign(150), _gradeExec(150)
+AForm::AForm(std::string name, std::string target, int gradeSign, int gradeExec) : _name(name), _target(target), _gradeSign(_testGrade(gradeSign)), _gradeExec(_testGrade(gradeExec))
 {
 	_signed = false;
+	std::cout << "[" << _name << "] Form created" << std::endl;
 	return ;
 }
 
 AForm::AForm(AForm const &src) : _name(src._name + "_copy"), _target(src._target), _gradeSign(src._gradeSign), _gradeExec(src._gradeExec)
 {
 	*this = src;
+	std::cout << "[" << _name << "] Form created by copy" << std::endl;
 	return ;
 }
 
 AForm	&AForm::operator=(AForm const &rhs)
 {
 	_signed = rhs._signed;
+	std::cout << "[" << _name << "] Copied 'signed' attribute from " << rhs._name << std::endl;
 	return (*this);
 }
 
 AForm::~AForm(void)
 {
 	std::cout << "[" << _name << "] AForm burned" << std::endl;
-	return ;
-}
-
-/*	Additional Constructors ------------------------------------------------- */
-
-AForm::AForm(std::string name, std::string target, int gradeSign, int gradeExec) : _name(name), _target(target), _gradeSign(_testGrade(gradeSign)), _gradeExec(_testGrade(gradeExec))
-{
-	_signed = false;
 	return ;
 }
 
@@ -135,28 +130,33 @@ const char	*AForm::beSigned(Bureaucrat const &brat)
 {
 	try
 	{
-		if (brat.getGrade() <= _gradeSign)
+		if (_signed)
 		{
-			_signed = true;
-			return (NULL);
+			throw	FormAlreadySigned();
 		}
-		else
+		else if (brat.getGrade() > _gradeSign)
 		{
-			_signed = false;	
 			throw	GradeTooLowException();
 		}
+		else
+			_signed = true;
+	}
+	catch (const FormAlreadySigned& e)
+	{
+		return (e.what());
 	}
 	catch (const GradeTooLowException& e)
 	{
 		return (e.what());
 	}
+	return (NULL);
 }
 
 const char	*AForm::execute(Bureaucrat const &executor) const
 {
 	try
 	{
-		if (!getSigned())
+		if (!_signed)
 		{
 			throw	FormNotSigned();
 		}
@@ -168,7 +168,6 @@ const char	*AForm::execute(Bureaucrat const &executor) const
 		{
 			std::cout << BLUE << "Form Action" << RESET << std::endl;
 			_doFormAction();
-			std::cout << std::endl;
 		}
 	}
 	catch (const FormNotSigned& e)

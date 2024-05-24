@@ -6,7 +6,7 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:42:47 by oroy              #+#    #+#             */
-/*   Updated: 2024/05/15 11:55:18 by oroy             ###   ########.fr       */
+/*   Updated: 2024/05/24 15:33:09 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,15 @@ private:
 
 	int					_testGrade(int grade);
 
+	class FormAlreadySigned : public std::exception
+	{
+		public:
+			virtual const char* what() const throw()
+			{
+				return ("Form is already signed");
+			}
+	};
+
 	class GradeTooHighException : public std::exception
 	{
 		public:
@@ -51,12 +60,10 @@ private:
 
 public:
 	
-	Form(void);
+	Form(std::string name, int gradeSign, int gradeExec);
 	Form(Form const &src);
 	Form &operator=(Form const &rhs);
-	~Form(void);
-
-	Form(std::string name, int gradeSign, int gradeExec);
+	~Form();
 	
 	std::string const	getName(void) const;
 	bool				getSigned(void) const;

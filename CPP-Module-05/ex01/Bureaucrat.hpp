@@ -6,7 +6,7 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 13:32:05 by oroy              #+#    #+#             */
-/*   Updated: 2024/05/14 18:18:31 by oroy             ###   ########.fr       */
+/*   Updated: 2024/05/24 15:33:05 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,10 @@ private:
 
 public:
 
-	Bureaucrat(void);
+	Bureaucrat(std::string const name, int grade);
 	Bureaucrat(Bureaucrat const &src);
 	Bureaucrat &operator=(Bureaucrat const &rhs);
-	~Bureaucrat(void);
-
-	Bureaucrat(int grade);
-	Bureaucrat(std::string const name);
-	Bureaucrat(std::string const name, int grade);
+	~Bureaucrat();
 	
 	std::string const	getName(void) const;
 	int					getGrade(void) const;

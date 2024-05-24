@@ -3,25 +3,32 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+         #
+#    By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/13 15:50:37 by oroy              #+#    #+#              #
-#    Updated: 2024/05/21 15:53:35 by olivierroy       ###   ########.fr        #
+#    Updated: 2024/05/24 16:25:31 by oroy             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	:= form
+NAME	:=	form
 
-OBJDIR	:= obj
-SRC		:= main.cpp Bureaucrat.cpp AForm.cpp ShrubberyCreationForm.cpp RobotomyRequestForm.cpp PresidentialPardonForm.cpp
-OBJ		:= $(patsubst %.cpp, $(OBJDIR)/%.o, $(SRC))
+OBJDIR	:=	obj
 
-CC		:= c++
-FLAGS	:= -Wall -Wextra -Werror -std=c++98 -g
+SRC		:=	main.cpp \
+			AForm.cpp \
+			Bureaucrat.cpp \
+			PresidentialPardonForm.cpp \
+			RobotomyRequestForm.cpp \
+			ShrubberyCreationForm.cpp
 
-RM		:= rm -rf
+OBJ		:=	$(patsubst %.cpp, $(OBJDIR)/%.o, $(SRC))
 
-JUNK	:= *.dSYM *_shrubbery
+CC		:=	c++
+FLAGS	:=	-Wall -Wextra -Werror -std=c++98 -g
+
+RM		:=	rm -rf
+
+JUNK	:=	*.dSYM *_shrubbery
 
 # RULES ********************************************************************** #
 
@@ -44,6 +51,9 @@ fclean: clean
 	$(RM) $(NAME)
 
 re: fclean all
+
+run: $(NAME)
+	@./$(NAME)
 
 # VALGRIND ******************************************************************* #
 

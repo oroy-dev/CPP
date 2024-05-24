@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   AForm.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+        */
+/*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:42:47 by oroy              #+#    #+#             */
-/*   Updated: 2024/05/21 14:55:01 by olivierroy       ###   ########.fr       */
+/*   Updated: 2024/05/24 16:29:23 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef AForm_H
-# define AForm_H
+#ifndef AFORM_H
+# define AFORM_H
 
 # include <iostream>
 # include <string>
@@ -32,6 +32,24 @@ private:
 
 	int					_testGrade(int grade);
 
+	class FormAlreadySigned : public std::exception
+	{
+		public:
+			virtual const char* what() const throw()
+			{
+				return ("Form is already signed");
+			}
+	};
+
+	class FormNotSigned : public std::exception
+	{
+		public:
+			virtual const char* what() const throw()
+			{
+				return ("Form not signed");
+			}
+	};
+
 	class GradeTooHighException : public std::exception
 	{
 		public:
@@ -50,33 +68,24 @@ private:
 			}
 	};
 
-	class FormNotSigned : public std::exception
-	{
-		public:
-			virtual const char* what() const throw()
-			{
-				return ("Form not signed");
-			}
-	};
-
 	virtual void	_doFormAction(void) const = 0;
+
+protected:
+
+	void			setSigned(bool isSigned);
 
 public:
 	
-	AForm(void);
+	AForm(std::string name, std::string target, int gradeSign, int gradeExec);
 	AForm(AForm const &src);
 	AForm &operator=(AForm const &rhs);
-	virtual ~AForm(void);
-
-	AForm(std::string name, std::string target, int gradeSign, int gradeExec);
+	virtual ~AForm();
 	
 	std::string const	getName(void) const;
 	std::string const	getTarget(void) const;
 	bool				getSigned(void) const;
 	int					getGradeSign(void) const;
 	int					getGradeExec(void) const;
-
-	void				setSigned(bool isSigned);
 
 	void				printStatus(void) const;
 
