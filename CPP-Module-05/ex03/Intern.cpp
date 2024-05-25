@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Intern.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 18:14:54 by olivierroy        #+#    #+#             */
-/*   Updated: 2024/05/24 16:53:46 by oroy             ###   ########.fr       */
+/*   Updated: 2024/05/25 17:35:45 by olivierroy       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,33 +43,32 @@ Intern::~Intern()
 
 AForm	*Intern::_getForm(unsigned int i, std::string target) const
 {
+	AForm	*form;
+
 	switch (i)
 	{
-		case 0: return (new PresidentialPardonForm(target));
-		case 1: return (new RobotomyRequestForm(target));
-		case 2: return (new ShrubberyCreationForm(target));
+		case 0: form = new PresidentialPardonForm(target); break;
+		case 1: form = new RobotomyRequestForm(target); break;
+		case 2: form = new ShrubberyCreationForm(target); break;
 	}
-	return (NULL);
+	return (form);
 }
 
 AForm	*Intern::makeForm(std::string name, std::string target) const
 {
-	AForm	*form;
+	AForm	*form = NULL;
 	
 	for (unsigned int i = 0; i < NUMBER_OF_FORMS; i++)
 	{
 		if (forms[i] == name)
 		{
 			form = _getForm(i, target);
-			if (!form)
-				std::cout << "Unusual problem occurred while trying to get form" << std::endl;
-			else
-				std::cout << "Intern creates " << name << std::endl;
+			std::cout << "Intern creates " << name << std::endl;
 			return (form);
 		}
 	}
-	std::cout << "No such form exists" << std::endl;
-	return (NULL);
+	std::cout << RED << "No such form exists. Creating default form" << RESET << std::endl;
+	return (new DefaultForm(target));
 }
 
 std::string Intern::forms[NUMBER_OF_FORMS] = \

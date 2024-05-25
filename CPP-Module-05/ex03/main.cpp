@@ -6,7 +6,7 @@
 /*   By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:09:26 by oroy              #+#    #+#             */
-/*   Updated: 2024/05/25 16:22:25 by olivierroy       ###   ########.fr       */
+/*   Updated: 2024/05/25 17:37:06 by olivierroy       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,13 @@ int	main(void)
 {
 	Intern		someRandomIntern;
 	Bureaucrat	squareEnix("SquareEnix", 2);
+
+	std::cout << std::endl;
+
+	AForm	*none;
+	none = someRandomIntern.makeForm("", "");
+	squareEnix.signForm(*none);
+	squareEnix.executeForm(*none);
 
 	std::cout << std::endl;
 
@@ -41,6 +48,7 @@ int	main(void)
 
 	std::cout << std::endl;
 
+	delete none;
 	delete ppf;
 	delete rrf;
 	delete scf;
