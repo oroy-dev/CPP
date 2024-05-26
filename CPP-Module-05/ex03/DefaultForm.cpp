@@ -6,7 +6,7 @@
 /*   By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:07:07 by oroy              #+#    #+#             */
-/*   Updated: 2024/05/25 17:18:37 by olivierroy       ###   ########.fr       */
+/*   Updated: 2024/05/26 14:03:54 by olivierroy       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 /*	Canonical Form Requirements --------------------------------------------- */
 
-DefaultForm::DefaultForm(std::string target) : AForm("DefaultForm", target, 25, 5)
+DefaultForm::DefaultForm(std::string target) : AForm("DefaultForm", target, 150, 150)
 {
 	return ;
 }
 
-DefaultForm::DefaultForm(DefaultForm const &src) : AForm(src.getName() + "_copy", src.getTarget(), 25, 5)
+DefaultForm::DefaultForm(DefaultForm const &src) : AForm(src.getName() + "_copy", src.getTarget(), 150, 150)
 {
 	*this = src;
 	return ;
