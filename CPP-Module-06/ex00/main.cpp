@@ -6,7 +6,7 @@
 /*   By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 18:14:05 by oroy              #+#    #+#             */
-/*   Updated: 2024/05/28 23:32:20 by olivierroy       ###   ########.fr       */
+/*   Updated: 2024/05/29 23:31:38 by olivierroy       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	convert(std::string str)
 
 }
 
-static int	correctType(std::string::size_type i, bool comma, bool f, bool digit)
+static int	getType(std::string::size_type i, bool comma, bool f, bool digit)
 {
 	if (!digit && i == 0)
 		return (_CHAR);
@@ -49,10 +49,13 @@ static int	detectType(std::string str)
 {
 	std::string::size_type	i;
 	size_t					len;
-	bool					comma = false;
-	bool					digit = true;
-	bool					f = false;
+	bool					comma;
+	bool					digit;
+	bool					f;
 
+	f = false;
+	digit = true;
+	comma = false;
 	len = str.length();
 	for (i = 0; i < len; i++)
 	{
@@ -66,7 +69,7 @@ static int	detectType(std::string str)
 			break ;
 		}
 	}
-	return (correctType(i, comma, digit, f));
+	return (getType(i, comma, digit, f));
 }
 
 int	main(int argc, char **argv)
