@@ -6,11 +6,11 @@
 #    By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/13 15:50:37 by oroy              #+#    #+#              #
-#    Updated: 2024/05/27 18:13:03 by oroy             ###   ########.fr        #
+#    Updated: 2024/06/04 15:32:19 by oroy             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	:= conversion
+NAME	:= convert
 
 OBJDIR	:= obj
 SRC		:= main.cpp

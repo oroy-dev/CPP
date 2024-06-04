@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Converter.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+        */
+/*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:40:40 by oroy              #+#    #+#             */
-/*   Updated: 2024/06/04 01:11:12 by olivierroy       ###   ########.fr       */
+/*   Updated: 2024/06/04 15:51:28 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,20 @@ Converter::Converter(std::string str) : _type(_STRING)
 	return ;
 }
 
-Converter::Converter(Converter const &src)
-{
-	*this = src;
-	return ;
-}
+// Converter::Converter(Converter const &src)
+// {
+// 	*this = src;
+// 	return ;
+// }
 
-Converter	&Converter::operator=(Converter const &rhs)
-{
-	_valueC = rhs._valueC;
-	_valueI = rhs._valueI;
-	_valueF = rhs._valueF;
-	_valueD = rhs._valueD;
-	return (*this);
-}
+// Converter	&Converter::operator=(Converter const &rhs)
+// {
+// 	_valueC = rhs._valueC;
+// 	_valueI = rhs._valueI;
+// 	_valueF = rhs._valueF;
+// 	_valueD = rhs._valueD;
+// 	return (*this);
+// }
 
 Converter::~Converter()
 {
@@ -62,29 +62,29 @@ double const	Converter::getDouble(void) const
 	return (_valueD);
 }
 
-void	Converter::setChar(char const valueC)
+void	Converter::_setChar(char const valueC)
 {
 	_valueC = valueC;
 }
 
-void	Converter::setInt(int const valueI)
+void	Converter::_setInt(int const valueI)
 {
 	_valueI = valueI;
 }
 
-void	Converter::setFloat(float const valueF)
+void	Converter::_setFloat(float const valueF)
 {
 	_valueF = valueF;
 }
 
-void	Converter::setDouble(double const valueD)
+void	Converter::_setDouble(double const valueD)
 {
 	_valueD = valueD;
 }
 
 /*	Functions --------------------------------------------------------------- */
 
-int	Converter::_getType(size_t len, bool dot, bool f, bool digit) const
+int	Converter::_getType(size_t len, bool digit, bool dot, bool f) const
 {
 	if (!digit && len == 1)
 		return (_CHAR);
@@ -97,7 +97,7 @@ int	Converter::_getType(size_t len, bool dot, bool f, bool digit) const
 	return (_STRING);
 }
 
-void	Converter::_detectType(std::string str)
+void	Converter::_detectType(std::string const str)
 {
 	size_t	len;
 	bool	digit;
@@ -110,7 +110,9 @@ void	Converter::_detectType(std::string str)
 	len = str.length();
 	for (size_t i = 0; i < len; i++)
 	{
-		if (!dot && i > 0 && i != len - 1 && str[i] == '.')
+		if (i == 0 && len > 1 && (str[i] == '+' || str[i] == '-'))
+			continue ;
+		else if (!dot && i > 0 && i != len - 1 && str[i] == '.')
 			dot = true;
 		else if (i > 0 && i == len - 1 && str[i] == 'f')
 			f = true;
@@ -120,10 +122,37 @@ void	Converter::_detectType(std::string str)
 			break ;
 		}
 	}
-	_type = _getType(len, dot, digit, f);
+	_type = _getType(len, digit, dot, f);
 }
 
-void	Converter::_convertString(std::string str)
+void	Converter::_convertString(std::string const str)
 {
 	_detectType(str);
+	switch (_type)
+	{
+		case 0: _setChar(str[0]); break;
+		case 1: _setInt(_ft_stoi(str));
+		case 2: ;
+		case 3: ;
+	}
+}
+
+/*	Utils ------------------------------------------------------------------- */
+
+int	Converter::_ft_stoi(std::string const str) const
+{
+	size_t	data;
+	bool	minus;
+
+	data = 0;
+	minus = false;
+	for (size_t i = 0; i < str.length(); i++)
+	{
+		if (i == 0 && str[i] == '-')
+			minus = true;
+		else
+			data += str[i] - '0';
+	}
+	// if (minus)
+		
 }

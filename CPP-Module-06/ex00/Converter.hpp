@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Converter.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+        */
+/*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:39:52 by oroy              #+#    #+#             */
-/*   Updated: 2024/06/04 01:08:46 by olivierroy       ###   ########.fr       */
+/*   Updated: 2024/06/04 15:24:58 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # define _DOUBLE	3
 
 # include <iostream>
+# include <limits>
 # include <string>
 
 class Converter
@@ -32,15 +33,22 @@ private:
 	float	_valueF;
 	double	_valueD;
 
-	void	_convertString(std::string str);
-	void	_detectType(std::string str);
-	int		_getType(size_t len, bool dot, bool f, bool digit) const;
+	void	_convertString(std::string const str);
+	void	_detectType(std::string const str);
+	int		_getType(size_t len, bool digit, bool dot, bool f) const;
+
+	int		_ft_stoi(std::string const str) const;
+
+	void	_setChar(char const valueC);
+	void	_setInt(int const valueI);
+	void	_setFloat(float const valueF);
+	void	_setDouble(double const valueD);
 
 public:
 
 	Converter(std::string str);
-	Converter(Converter const &src);
-	Converter &operator=(Converter const &rhs);
+	// Converter(Converter const &src);
+	// Converter &operator=(Converter const &rhs);
 	~Converter();
 
 	char const		getChar(void) const;
@@ -48,10 +56,6 @@ public:
 	float const		getFloat(void) const;
 	double const	getDouble(void) const;
 
-	void			setChar(char const valueC);
-	void			setInt(int const valueI);
-	void			setFloat(float const valueF);
-	void			setDouble(double const valueD);
 
 };
 
