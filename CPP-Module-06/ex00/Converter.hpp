@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   Converter.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+        */
+/*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:39:52 by oroy              #+#    #+#             */
-/*   Updated: 2024/06/04 21:35:50 by olivierroy       ###   ########.fr       */
+/*   Updated: 2024/06/05 19:20:15 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+// https://stackoverflow.com/questions/4392665/converting-string-to-float-without-atof-in-c
 
 #ifndef CONVERTER_H
 # define CONVERTER_H
@@ -41,14 +43,14 @@ private:
 	void		_detectType(void);
 	int			_getType(size_t len, bool digit, bool dot, bool f) const;
 
-	// int			_ft_stoi(std::string const str) const;
-
-	// void		_setChar(char const valueC);
+	void		_setChar(void);
 	void		_setInt(void);
 	void		_setFloat(void);
-	// void		_setDouble(double const valueD);
+	void		_setDouble(void);
 
 	void		_setOtherTypes(void);
+
+	bool		_checkIntOverflow(int minus, int data, int c) const;
 
 public:
 
@@ -57,12 +59,7 @@ public:
 	// Converter &operator=(Converter const &rhs);
 	~Converter();
 
-	// char const		getChar(void) const;
-	// int const		getInt(void) const;
-	// float const		getFloat(void) const;
-	// double const	getDouble(void) const;
-
-	void			printResult(void) const;
+	void		printResult(void) const;
 
 };
 

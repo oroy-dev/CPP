@@ -6,14 +6,14 @@
 #    By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/13 15:50:37 by oroy              #+#    #+#              #
-#    Updated: 2024/06/05 19:21:09 by oroy             ###   ########.fr        #
+#    Updated: 2024/06/05 14:49:38 by oroy             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	:= convert
+NAME	:= base
 
 OBJDIR	:= obj
-SRC		:= main.cpp Converter.cpp
+SRC		:= main.cpp
 OBJ		:= $(patsubst %.cpp, $(OBJDIR)/%.o, $(SRC))
 
 CC		:= c++

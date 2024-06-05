@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   Data.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/27 18:14:05 by oroy              #+#    #+#             */
-/*   Updated: 2024/06/05 19:19:24 by oroy             ###   ########.fr       */
+/*   Created: 2024/06/03 15:39:52 by oroy              #+#    #+#             */
+/*   Updated: 2024/06/05 13:14:57 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Converter.hpp"
+#ifndef DATA_H
+# define DATA_H
 
-int	main(int argc, char **argv)
+# include <iostream>
+# include <string>
+
+struct Data
 {
-	Converter	*convert = NULL;
+	std::string	name;
+	int			age;
+};
 
-	if (argc != 2)
-	{
-		std::cerr << "Please enter only one parameter" << std::endl;
-		std::cerr << "└─> ./program_name \"parameter\"" << std::endl;
-		return (1);
-	}
-	convert = new Converter(argv[1]);
-	delete	convert;
-	return (0);
-}
+#endif

@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   Base.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/27 18:14:05 by oroy              #+#    #+#             */
-/*   Updated: 2024/06/05 19:19:24 by oroy             ###   ########.fr       */
+/*   Created: 2024/06/05 13:56:16 by oroy              #+#    #+#             */
+/*   Updated: 2024/06/05 15:16:43 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Converter.hpp"
+#ifndef BASE_H
+# define BASE_H
 
-int	main(int argc, char **argv)
+# include <cstdlib>
+# include <ctime>
+# include <iostream>
+# include <exception>
+
+class Base
 {
-	Converter	*convert = NULL;
+public:
+	virtual ~Base() {};
+};
 
-	if (argc != 2)
-	{
-		std::cerr << "Please enter only one parameter" << std::endl;
-		std::cerr << "└─> ./program_name \"parameter\"" << std::endl;
-		return (1);
-	}
-	convert = new Converter(argv[1]);
-	delete	convert;
-	return (0);
-}
+class A : public Base {};
+class B : public Base {};
+class C : public Base {};
+
+#endif
