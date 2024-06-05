@@ -3,21 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   Converter.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:39:52 by oroy              #+#    #+#             */
-/*   Updated: 2024/06/04 15:24:58 by oroy             ###   ########.fr       */
+/*   Updated: 2024/06/04 21:35:50 by olivierroy       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CONVERTER_H
 # define CONVERTER_H
 
-# define _STRING	-1
-# define _CHAR		0
-# define _INT		1
-# define _FLOAT		2
-# define _DOUBLE	3
+# define _STRING		-1
+# define _CHAR			0
+# define _INT			1
+# define _FLOAT			2
+# define _DOUBLE		3
+# define _IMPOSSIBLE	4
 
 # include <iostream>
 # include <limits>
@@ -27,35 +28,41 @@ class Converter
 {
 private:
 
-	int		_type;
-	char	_valueC;
-	int		_valueI;
-	float	_valueF;
-	double	_valueD;
+	std::string	_str;
+	int			_type;
+	char		_char;
+	int			_int;
+	float		_float;
+	double		_double;
 
-	void	_convertString(std::string const str);
-	void	_detectType(std::string const str);
-	int		_getType(size_t len, bool digit, bool dot, bool f) const;
+	void		_checkExceptions(void);
 
-	int		_ft_stoi(std::string const str) const;
+	void		_convertString(void);
+	void		_detectType(void);
+	int			_getType(size_t len, bool digit, bool dot, bool f) const;
 
-	void	_setChar(char const valueC);
-	void	_setInt(int const valueI);
-	void	_setFloat(float const valueF);
-	void	_setDouble(double const valueD);
+	// int			_ft_stoi(std::string const str) const;
+
+	// void		_setChar(char const valueC);
+	void		_setInt(void);
+	void		_setFloat(void);
+	// void		_setDouble(double const valueD);
+
+	void		_setOtherTypes(void);
 
 public:
 
-	Converter(std::string str);
+	Converter(std::string const str);
 	// Converter(Converter const &src);
 	// Converter &operator=(Converter const &rhs);
 	~Converter();
 
-	char const		getChar(void) const;
-	int const		getInt(void) const;
-	float const		getFloat(void) const;
-	double const	getDouble(void) const;
+	// char const		getChar(void) const;
+	// int const		getInt(void) const;
+	// float const		getFloat(void) const;
+	// double const	getDouble(void) const;
 
+	void			printResult(void) const;
 
 };
 
