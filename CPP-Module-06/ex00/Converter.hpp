@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Converter.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:39:52 by oroy              #+#    #+#             */
-/*   Updated: 2024/06/05 19:20:15 by oroy             ###   ########.fr       */
+/*   Updated: 2024/06/05 23:42:58 by olivierroy       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # define _IMPOSSIBLE	4
 
 # include <iostream>
+# include <iomanip>
 # include <limits>
 # include <string>
 
@@ -49,6 +50,11 @@ private:
 	void		_setDouble(void);
 
 	void		_setOtherTypes(void);
+
+	void		_toChar(void) const;
+	void		_toInt(void) const;
+	void		_toFloat(void) const;
+	void		_toDouble(void) const;
 
 	bool		_checkIntOverflow(int minus, int data, int c) const;
 
