@@ -6,7 +6,7 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:40:40 by oroy              #+#    #+#             */
-/*   Updated: 2024/06/06 16:44:57 by oroy             ###   ########.fr       */
+/*   Updated: 2024/06/06 19:06:37 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,34 +14,117 @@
 
 /*	Canonical Form Requirements --------------------------------------------- */
 
-Converter::Converter(std::string str) : _str(str)
+Converter::Converter(std::string str) : _str(str), _type(_STRING), _char(0), _int(0), _float(0), _double(0)
 {
 	_convertString();
-	// printResult();
+	printAllTypes();
 	return ;
 }
 
-// Converter::Converter(Converter const &src)
-// {
-// 	*this = src;
-// 	return ;
-// }
+Converter::Converter(Converter const &src)
+{
+	*this = src;
+	printAllTypes();
+	return ;
+}
 
-// Converter	&Converter::operator=(Converter const &rhs)
-// {
-// 	_char = rhs._char;
-// 	_int = rhs._int;
-// 	_float = rhs._float;
-// 	_double = rhs._double;
-// 	return (*this);
-// }
+Converter	&Converter::operator=(Converter const &rhs)
+{
+	_str = rhs._str;
+	_type = rhs._type;
+	_char = rhs._char;
+	_int = rhs._int;
+	_float = rhs._float;
+	_double = rhs._double;
+	return (*this);
+}
 
 Converter::~Converter()
 {
 	return ;
 }
 
-/*	Functions --------------------------------------------------------------- */
+/*	Set Initial Type -------------------------------------------------------- */
+
+void	Converter::_convertString(void)
+{
+	_detectType();
+	switch (_type)
+	{
+		case _STRING: _checkExceptions(); break;
+		case _CHAR: _setChar(); break;
+		case _INT: _setInt(); break;
+		case _FLOAT: _setFloat(); break;
+		case _DOUBLE: _setDouble(); break;
+	}
+}
+
+void	Converter::_detectType(void)
+{
+	size_t	len;
+	bool	digit;
+	bool	dot;
+	bool	f;
+
+	f = false;
+	dot = false;
+	digit = true;
+	len = _str.length();
+	for (size_t i = 0; i < len; i++)
+	{
+		if (i == 0 && len > 1 && (_str[i] == '+' || _str[i] == '-'))
+			continue ;
+		else if (!dot && len > 1 && _str[i] == '.')
+			dot = true;
+		else if (i > 1 && i == len - 1 && _str[i] == 'f')
+			f = true;
+		else if (!(_str[i] >= '0' && _str[i] <= '9'))
+		{
+			digit = false;
+			break ;
+		}
+	}
+	_type = _getType(len, digit, dot, f);
+}
+
+int	Converter::_getType(size_t len, bool digit, bool dot, bool f) const
+{
+	if (!digit && len == 1)
+		return (_CHAR);
+	if (digit && !dot && !f)
+		return (_INT);
+	if (digit && dot && f)
+		return (_FLOAT);
+	if (digit && dot && !f)
+		return (_DOUBLE);
+	return (_STRING);
+}
+
+void	Converter::_checkExceptions(void)
+{
+	if (_str == "-inff" || _str == "inff" || _str == "nanf")
+	{
+		_type = _FLOAT;
+		if (_str == "nanf")
+			_float = std::numeric_limits<float>::quiet_NaN();
+		else if (_str == "-inff")
+			_float = -std::numeric_limits<float>::infinity();
+		else if (_str == "inff")
+			_float = std::numeric_limits<float>::infinity();
+	}
+	else if (_str == "-inf" || _str == "inf" || _str == "nan")
+	{
+		_type = _DOUBLE;
+		if (_str == "nan")
+			_double = std::numeric_limits<double>::quiet_NaN();
+		else if (_str == "-inf")
+			_double = -std::numeric_limits<double>::infinity();
+		else if (_str == "inf")
+			_double = std::numeric_limits<double>::infinity();
+	}
+	else
+		_type = _IMPOSSIBLE;
+}
 
 void	Converter::_setChar(void)
 {
@@ -133,7 +216,9 @@ void	Converter::_setDouble(void)
 	_double = data * multiplier * static_cast<double>(minus);
 }
 
-void	Converter::_setOtherTypes(void)
+/*	Print ------------------------------------------------------------------- */
+
+void	Converter::printAllTypes(void) const
 {
 	if (_type == _CHAR)
 	{
@@ -169,7 +254,7 @@ void	Converter::_setOtherTypes(void)
 		else
 			std::cout << "char: " << static_cast<char>(_float) << std::endl;
 		// Int Printing
-		if (_float < std::numeric_limits<int>::min() || _float > std::numeric_limits<int>::max())
+		if (_float != _float || _float < std::numeric_limits<int>::min() || _float > std::numeric_limits<int>::max())
 			std::cout << "int: impossible" << std::endl;
 		else
 			std::cout << "int: " << static_cast<int>(_float) << std::endl;
@@ -188,7 +273,7 @@ void	Converter::_setOtherTypes(void)
 		else
 			std::cout << "char: " << static_cast<char>(_double) << std::endl;
 		// Int Printing
-		if (_double < std::numeric_limits<int>::min() || _double > std::numeric_limits<int>::max())
+		if (_double != _double || _double < std::numeric_limits<int>::min() || _double > std::numeric_limits<int>::max())
 			std::cout << "int: impossible" << std::endl;
 		else
 			std::cout << "int: " << static_cast<int>(_double) << std::endl;
@@ -206,89 +291,7 @@ void	Converter::_setOtherTypes(void)
 	}
 }
 
-int	Converter::_getType(size_t len, bool digit, bool dot, bool f) const
-{
-	if (!digit && len == 1)
-		return (_CHAR);
-	if (digit && !dot && !f)
-		return (_INT);
-	if (digit && dot && f)
-		return (_FLOAT);
-	if (digit && dot && !f)
-		return (_DOUBLE);
-	return (_STRING);
-}
-
-void	Converter::_detectType(void)
-{
-	size_t	len;
-	bool	digit;
-	bool	dot;
-	bool	f;
-
-	f = false;
-	dot = false;
-	digit = true;
-	len = _str.length();
-	for (size_t i = 0; i < len; i++)
-	{
-		if (i == 0 && len > 1 && (_str[i] == '+' || _str[i] == '-'))
-			continue ;
-		else if (!dot && len > 1 && _str[i] == '.')
-			dot = true;
-		else if (i > 1 && i == len - 1 && _str[i] == 'f')
-			f = true;
-		else if (!(_str[i] >= '0' && _str[i] <= '9'))
-		{
-			digit = false;
-			break ;
-		}
-	}
-	_type = _getType(len, digit, dot, f);
-}
-
-void	Converter::_convertString(void)
-{
-	_detectType();
-	switch (_type)
-	{
-		case _STRING: _checkExceptions(); break;
-		case _CHAR: _setChar(); break;
-		case _INT: _setInt(); break;
-		case _FLOAT: _setFloat(); break;
-		case _DOUBLE: _setDouble(); break;
-	}
-	// if (_type != _IMPOSSIBLE)
-		_setOtherTypes();
-}
-
 /*	Utils ------------------------------------------------------------------- */
-
-void	Converter::_checkExceptions(void)
-{
-	if (_str == "-inff" || _str == "inff" || _str == "nanf")
-	{
-		_type = _FLOAT;
-		if (_str == "nanf")
-			_float = std::numeric_limits<float>::quiet_NaN();
-		else if (_str == "-inff")
-			_float = -std::numeric_limits<float>::infinity();
-		else if (_str == "inff")
-			_float = std::numeric_limits<float>::infinity();
-	}
-	else if (_str == "-inf" || _str == "inf" || _str == "nan")
-	{
-		_type = _DOUBLE;
-		if (_str == "nan")
-			_double = std::numeric_limits<double>::quiet_NaN();
-		else if (_str == "-inf")
-			_double = -std::numeric_limits<double>::infinity();
-		else if (_str == "inf")
-			_double = std::numeric_limits<double>::infinity();
-	}
-	else
-		_type = _IMPOSSIBLE;
-}
 
 bool	Converter::_checkIntOverflow(int minus, int data, int c) const
 {

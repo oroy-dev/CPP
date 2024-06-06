@@ -6,7 +6,7 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:39:52 by oroy              #+#    #+#             */
-/*   Updated: 2024/06/06 16:17:27 by oroy             ###   ########.fr       */
+/*   Updated: 2024/06/06 16:55:08 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ private:
 
 	std::string	_str;
 	int			_type;
+
 	char		_char;
 	int			_int;
 	float		_float;
@@ -51,21 +52,16 @@ private:
 
 	void		_setOtherTypes(void);
 
-	void		_printChar(void) const;
-	void		_toInt(void) const;
-	void		_toFloat(void) const;
-	void		_toDouble(void) const;
-
 	bool		_checkIntOverflow(int minus, int data, int c) const;
 
 public:
 
 	Converter(std::string const str);
-	// Converter(Converter const &src);
-	// Converter &operator=(Converter const &rhs);
+	Converter(Converter const &src);
+	Converter &operator=(Converter const &rhs);
 	~Converter();
 
-	void		printResult(void) const;
+	void		printAllTypes(void) const;
 
 };
 
