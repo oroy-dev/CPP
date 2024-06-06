@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Converter.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+        */
+/*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:40:40 by oroy              #+#    #+#             */
-/*   Updated: 2024/06/05 23:51:49 by olivierroy       ###   ########.fr       */
+/*   Updated: 2024/06/06 16:44:57 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 Converter::Converter(std::string str) : _str(str)
 {
 	_convertString();
-	printResult();
+	// printResult();
 	return ;
 }
 
@@ -137,27 +137,72 @@ void	Converter::_setOtherTypes(void)
 {
 	if (_type == _CHAR)
 	{
-		_int = static_cast<int>(_char);
-		_float = static_cast<float>(_char);
-		_double = static_cast<double>(_char);
+		std::cout << "char: " << _char << std::endl;
+		std::cout << "int: " << static_cast<int>(_char) << std::endl;
+		std::cout << std::fixed << std::setprecision(1);
+		std::cout << "float: " << static_cast<float>(_char) << "f" << std::endl;
+		std::cout << "double: " << static_cast<double>(_char) << std::endl;
 	}
 	else if (_type == _INT)
 	{
-		_char = static_cast<char>(_int);
-		_float = static_cast<float>(_int);
-		_double = static_cast<double>(_int);
+		// Char Printing
+		if (!(_int >= 0 && _int <= 127))
+			std::cout << "char: impossible" << std::endl;
+		else if (!(_int >= 32 && _int <= 126))
+			std::cout << "char: Non Displayable" << std::endl;
+		else
+			std::cout << "char: " << static_cast<char>(_int) << std::endl;
+		// Int Printing
+		std::cout << "int: " << _int << std::endl;
+		// Float Printing
+		std::cout << std::fixed << std::setprecision(1);
+		std::cout << "float: " << static_cast<float>(_int) << "f" << std::endl;
+		std::cout << "double: " << static_cast<double>(_int) << std::endl;
 	}
 	else if (_type == _FLOAT)
 	{
-		_char = static_cast<char>(_float);
-		_int = static_cast<int>(_float);
-		_double = static_cast<double>(_float);
+		// Char Printing
+		if (!(_float >= 0 && _float <= 127))
+			std::cout << "char: impossible" << std::endl;
+		else if (!(_float >= 32 && _float <= 126))
+			std::cout << "char: Non Displayable" << std::endl;
+		else
+			std::cout << "char: " << static_cast<char>(_float) << std::endl;
+		// Int Printing
+		if (_float < std::numeric_limits<int>::min() || _float > std::numeric_limits<int>::max())
+			std::cout << "int: impossible" << std::endl;
+		else
+			std::cout << "int: " << static_cast<int>(_float) << std::endl;
+		// Float Printing
+		std::cout << std::fixed << std::setprecision(1);
+		std::cout << "float: " << _float << "f" << std::endl;
+		std::cout << "double: " << static_cast<double>(_float) << std::endl;
 	}
 	else if (_type == _DOUBLE)
 	{
-		_char = static_cast<char>(_double);
-		_int = static_cast<int>(_double);
-		_float = static_cast<float>(_double);
+		// Char Printing
+		if (!(_double >= 0 && _double <= 127))
+			std::cout << "char: impossible" << std::endl;
+		else if (!(_double >= 32 && _double <= 126))
+			std::cout << "char: Non Displayable" << std::endl;
+		else
+			std::cout << "char: " << static_cast<char>(_double) << std::endl;
+		// Int Printing
+		if (_double < std::numeric_limits<int>::min() || _double > std::numeric_limits<int>::max())
+			std::cout << "int: impossible" << std::endl;
+		else
+			std::cout << "int: " << static_cast<int>(_double) << std::endl;
+		// Float Printing
+		std::cout << std::fixed;
+		std::cout << "float: " << static_cast<float>(_double) << "f" << std::endl;
+		std::cout << "double: " << _double << std::endl;
+	}
+	else
+	{
+		std::cout << "char: impossible" << std::endl;
+		std::cout << "int: impossible" << std::endl;
+		std::cout << "float: impossible" << std::endl;
+		std::cout << "double: impossible" << std::endl;
 	}
 }
 
@@ -189,9 +234,9 @@ void	Converter::_detectType(void)
 	{
 		if (i == 0 && len > 1 && (_str[i] == '+' || _str[i] == '-'))
 			continue ;
-		else if (!dot && i > 0 && i != len - 1 && _str[i] == '.')
+		else if (!dot && len > 1 && _str[i] == '.')
 			dot = true;
-		else if (i > 0 && i == len - 1 && _str[i] == 'f')
+		else if (i > 1 && i == len - 1 && _str[i] == 'f')
 			f = true;
 		else if (!(_str[i] >= '0' && _str[i] <= '9'))
 		{
@@ -213,49 +258,8 @@ void	Converter::_convertString(void)
 		case _FLOAT: _setFloat(); break;
 		case _DOUBLE: _setDouble(); break;
 	}
-	if (_type != _IMPOSSIBLE)
+	// if (_type != _IMPOSSIBLE)
 		_setOtherTypes();
-}
-
-void	Converter::printResult(void) const
-{
-	if (_type == _IMPOSSIBLE)
-	{
-		std::cout << "char: impossible" << std::endl;
-		std::cout << "int: impossible" << std::endl;
-		std::cout << "float: impossible" << std::endl;
-		std::cout << "double: impossible" << std::endl;
-	}
-	else
-	{
-		std::cout << "char: " << _char << std::endl;
-		std::cout << "int: " << _int << std::endl;
-		std::cout << std::fixed << std::setprecision(1);
-		std::cout << "float: " << _float << "f" << std::endl;
-		std::cout << "double: " << _double << std::endl;
-	}
-}
-
-/*	Conversions ------------------------------------------------------------- */
-
-void	Converter::_toChar(void) const
-{
-
-}
-
-void	Converter::_toInt(void) const
-{
-	
-}
-
-void	Converter::_toFloat(void) const
-{
-	
-}
-
-void	Converter::_toDouble(void) const
-{
-	
 }
 
 /*	Utils ------------------------------------------------------------------- */

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Converter.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+        */
+/*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:39:52 by oroy              #+#    #+#             */
-/*   Updated: 2024/06/05 23:42:58 by olivierroy       ###   ########.fr       */
+/*   Updated: 2024/06/06 16:17:27 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ private:
 
 	void		_setOtherTypes(void);
 
-	void		_toChar(void) const;
+	void		_printChar(void) const;
 	void		_toInt(void) const;
 	void		_toFloat(void) const;
 	void		_toDouble(void) const;
