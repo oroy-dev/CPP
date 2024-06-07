@@ -5,24 +5,30 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/27 18:14:05 by oroy              #+#    #+#             */
-/*   Updated: 2024/06/07 13:33:58 by oroy             ###   ########.fr       */
+/*   Created: 2024/06/07 15:33:09 by oroy              #+#    #+#             */
+/*   Updated: 2024/06/07 16:40:54 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Converter.hpp"
+#include "Array.hpp"
 
-int	main(int argc, char **argv)
+int main(void)
 {
-	Converter	*convert = NULL;
+	int	a = 2;
+	int	b = 3;
 
-	if (argc != 2)
-	{
-		std::cerr << "Please enter only one parameter" << std::endl;
-		std::cerr << "└─> ./program_name \"parameter\"" << std::endl;
-		return (1);
-	}
-	convert = new Converter(argv[1]);
-	delete	convert;
-	return (0);
+	::swap( a, b );
+	std::cout << "a = " << a << ", b = " << b << std::endl;
+	std::cout << "min( a, b ) = " << ::min( a, b ) << std::endl;
+	std::cout << "max( a, b ) = " << ::max( a, b ) << std::endl;
+
+	std::string c = "chaine1";
+	std::string d = "chaine2";
+
+	::swap(c, d);
+	std::cout << "c = " << c << ", d = " << d << std::endl;
+	std::cout << "min( c, d ) = " << ::min( c, d ) << std::endl;
+	std::cout << "max( c, d ) = " << ::max( c, d ) << std::endl;
+
+	return 0;
 }

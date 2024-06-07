@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   Array.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/27 18:14:05 by oroy              #+#    #+#             */
-/*   Updated: 2024/06/07 13:33:58 by oroy             ###   ########.fr       */
+/*   Created: 2024/06/07 15:34:26 by oroy              #+#    #+#             */
+/*   Updated: 2024/06/07 16:46:09 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Converter.hpp"
+#ifndef ARRAY_HPP
+# define ARRAY_HPP
 
-int	main(int argc, char **argv)
+class Array
 {
-	Converter	*convert = NULL;
+private:
+	/* data */
+public:
+	Array(void);
+	~Array();
+};
 
-	if (argc != 2)
-	{
-		std::cerr << "Please enter only one parameter" << std::endl;
-		std::cerr << "└─> ./program_name \"parameter\"" << std::endl;
-		return (1);
-	}
-	convert = new Converter(argv[1]);
-	delete	convert;
-	return (0);
-}
+#endif

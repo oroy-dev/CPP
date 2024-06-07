@@ -1,28 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   iter.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/27 18:14:05 by oroy              #+#    #+#             */
-/*   Updated: 2024/06/07 13:33:58 by oroy             ###   ########.fr       */
+/*   Created: 2024/06/07 15:34:26 by oroy              #+#    #+#             */
+/*   Updated: 2024/06/07 16:37:00 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Converter.hpp"
+#ifndef ITER_HPP
+# define ITER_HPP
 
-int	main(int argc, char **argv)
+# include <iostream>
+# include <string>
+
+// template< typename T>
+// void	f(T &data)
+// {
+// 	data++;
+// }
+
+template< typename T>
+void	f(T &data)
 {
-	Converter	*convert = NULL;
-
-	if (argc != 2)
-	{
-		std::cerr << "Please enter only one parameter" << std::endl;
-		std::cerr << "└─> ./program_name \"parameter\"" << std::endl;
-		return (1);
-	}
-	convert = new Converter(argv[1]);
-	delete	convert;
-	return (0);
+	std::cout << data << std::endl;
 }
+
+template< typename T >
+void	iter(T *arr, size_t size, void (*f)(T &))
+{
+	for (size_t i = 0; i < size; ++i)
+	{
+		f(arr[i]);
+	}
+}
+
+#endif

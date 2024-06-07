@@ -1,28 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   Array.tpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/27 18:14:05 by oroy              #+#    #+#             */
-/*   Updated: 2024/06/07 13:33:58 by oroy             ###   ########.fr       */
+/*   Created: 2024/06/07 16:45:31 by oroy              #+#    #+#             */
+/*   Updated: 2024/06/07 16:45:42 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Converter.hpp"
+#include "Array.hpp"
 
-int	main(int argc, char **argv)
+Array::Array(/* args */)
 {
-	Converter	*convert = NULL;
+}
 
-	if (argc != 2)
-	{
-		std::cerr << "Please enter only one parameter" << std::endl;
-		std::cerr << "└─> ./program_name \"parameter\"" << std::endl;
-		return (1);
-	}
-	convert = new Converter(argv[1]);
-	delete	convert;
-	return (0);
+Array::~Array()
+{
 }

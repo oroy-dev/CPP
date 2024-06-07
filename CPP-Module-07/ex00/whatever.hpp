@@ -1,28 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   Whatever.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/27 18:14:05 by oroy              #+#    #+#             */
-/*   Updated: 2024/06/07 13:33:58 by oroy             ###   ########.fr       */
+/*   Created: 2024/06/07 15:34:26 by oroy              #+#    #+#             */
+/*   Updated: 2024/06/07 15:50:37 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Converter.hpp"
+#ifndef WHATEVER_HPP
+# define WHATEVER_HPP
 
-int	main(int argc, char **argv)
+# include <iostream>
+# include <string>
+
+template< typename T >
+void	swap(T &a, T &b)
 {
-	Converter	*convert = NULL;
+	T	tmp;
 
-	if (argc != 2)
-	{
-		std::cerr << "Please enter only one parameter" << std::endl;
-		std::cerr << "└─> ./program_name \"parameter\"" << std::endl;
-		return (1);
-	}
-	convert = new Converter(argv[1]);
-	delete	convert;
-	return (0);
+	tmp = a;
+	a = b;
+	b = tmp;
 }
+
+template< typename T >
+T const	&min(T const &a, T const &b)
+{
+	if (a < b)
+		return (a);
+	else
+		return (b);
+}
+
+template< typename T >
+T const	&max(T const &a, T const &b)
+{
+	if (a > b)
+		return (a);
+	else
+		return (b);
+}
+
+#endif

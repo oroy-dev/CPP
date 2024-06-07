@@ -6,11 +6,12 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:39:52 by oroy              #+#    #+#             */
-/*   Updated: 2024/06/06 21:39:21 by oroy             ###   ########.fr       */
+/*   Updated: 2024/06/07 13:36:35 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // https://stackoverflow.com/questions/4392665/converting-string-to-float-without-atof-in-c
+// https://www.programiz.com/cpp-programming/string-float-conversion
 
 #ifndef CONVERTER_H
 # define CONVERTER_H
@@ -23,6 +24,7 @@
 # define _TOTALLY_IMPOSSIBLE	4
 
 # include <iostream>
+# include <sstream>
 # include <iomanip>
 # include <limits>
 # include <string>

@@ -5,24 +5,30 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/27 18:14:05 by oroy              #+#    #+#             */
-/*   Updated: 2024/06/07 13:33:58 by oroy             ###   ########.fr       */
+/*   Created: 2024/06/07 15:33:09 by oroy              #+#    #+#             */
+/*   Updated: 2024/06/07 16:36:37 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Converter.hpp"
+#include "iter.hpp"
 
-int	main(int argc, char **argv)
+int main(void)
 {
-	Converter	*convert = NULL;
+	int			arr_i[3] = {-1, 0, 1};
+	float		arr_f[5] = {0.1f, -2.5f, 3.6f, 4.1f, 5.0f};
+	std::string	arr_s[2] = {"Allo", "Man"};
 
-	if (argc != 2)
-	{
-		std::cerr << "Please enter only one parameter" << std::endl;
-		std::cerr << "└─> ./program_name \"parameter\"" << std::endl;
-		return (1);
-	}
-	convert = new Converter(argv[1]);
-	delete	convert;
-	return (0);
+	std::cout << "-- Test: Array of ints --" << std::endl;
+	iter(arr_i, 3, f);
+	std::cout << std::endl;
+	
+	std::cout << "-- Test: Array of floats --" << std::endl;
+	iter(arr_f, 5, f);
+	std::cout << std::endl;
+
+	std::cout << "-- Test: Array of strings --" << std::endl;
+	iter(arr_s, 2, f);
+	std::cout << std::endl;
+
+	return 0;
 }
