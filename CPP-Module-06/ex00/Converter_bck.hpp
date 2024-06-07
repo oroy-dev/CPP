@@ -6,7 +6,7 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:39:52 by oroy              #+#    #+#             */
-/*   Updated: 2024/06/06 21:39:21 by oroy             ###   ########.fr       */
+/*   Updated: 2024/06/06 16:55:08 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 #ifndef CONVERTER_H
 # define CONVERTER_H
 
-# define _STRING				-1
-# define _CHAR					0
-# define _INT					1
-# define _FLOAT					2
-# define _DOUBLE				3
-# define _TOTALLY_IMPOSSIBLE	4
+# define _STRING		-1
+# define _CHAR			0
+# define _INT			1
+# define _FLOAT			2
+# define _DOUBLE		3
+# define _IMPOSSIBLE	4
 
 # include <iostream>
 # include <iomanip>
@@ -39,20 +39,20 @@ private:
 	float		_float;
 	double		_double;
 
-	bool		_char_impossible;
-	bool		_int_impossible;
+	void		_checkExceptions(void);
 
 	void		_convertString(void);
 	void		_detectType(void);
-	int			_getType(size_t len, bool digit, bool dot, bool f, bool sign) const;
+	int			_getType(size_t len, bool digit, bool dot, bool f) const;
 
-	void		_checkExceptions(void);
 	void		_setChar(void);
 	void		_setInt(void);
 	void		_setFloat(void);
 	void		_setDouble(void);
 
-	void		_convertOtherTypes(void);
+	void		_setOtherTypes(void);
+
+	bool		_checkIntOverflow(int minus, int data, int c) const;
 
 public:
 
@@ -61,8 +61,7 @@ public:
 	Converter &operator=(Converter const &rhs);
 	~Converter();
 
-	// void		printAllTypes(void) const;
-	void		printResult(void) const;
+	void		printAllTypes(void) const;
 
 };
 

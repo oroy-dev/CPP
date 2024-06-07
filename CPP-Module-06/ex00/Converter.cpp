@@ -6,7 +6,7 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:40:40 by oroy              #+#    #+#             */
-/*   Updated: 2024/06/06 19:06:37 by oroy             ###   ########.fr       */
+/*   Updated: 2024/06/06 21:41:40 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 /*	Canonical Form Requirements --------------------------------------------- */
 
-Converter::Converter(std::string str) : _str(str), _type(_STRING), _char(0), _int(0), _float(0), _double(0)
+Converter::Converter(std::string str) : _str(str), _type(_STRING), _char(0), _int(0), _float(0), _double(0), _char_impossible(0), _int_impossible(0)
 {
 	_convertString();
-	printAllTypes();
+	printResult();
 	return ;
 }
 
 Converter::Converter(Converter const &src)
 {
 	*this = src;
-	printAllTypes();
+	printResult();
 	return ;
 }
 
@@ -36,6 +36,8 @@ Converter	&Converter::operator=(Converter const &rhs)
 	_int = rhs._int;
 	_float = rhs._float;
 	_double = rhs._double;
+	_char_impossible = rhs._char_impossible;
+	_int_impossible = rhs._int_impossible;
 	return (*this);
 }
 
@@ -57,23 +59,23 @@ void	Converter::_convertString(void)
 		case _FLOAT: _setFloat(); break;
 		case _DOUBLE: _setDouble(); break;
 	}
+	if (_type != _TOTALLY_IMPOSSIBLE)
+		_convertOtherTypes();
 }
 
 void	Converter::_detectType(void)
 {
+	bool	sign = false;
+	bool	digit = true;
+	bool	dot = false;
+	bool	f = false;
 	size_t	len;
-	bool	digit;
-	bool	dot;
-	bool	f;
 
-	f = false;
-	dot = false;
-	digit = true;
 	len = _str.length();
 	for (size_t i = 0; i < len; i++)
 	{
 		if (i == 0 && len > 1 && (_str[i] == '+' || _str[i] == '-'))
-			continue ;
+			sign = true;
 		else if (!dot && len > 1 && _str[i] == '.')
 			dot = true;
 		else if (i > 1 && i == len - 1 && _str[i] == 'f')
@@ -84,11 +86,13 @@ void	Converter::_detectType(void)
 			break ;
 		}
 	}
-	_type = _getType(len, digit, dot, f);
+	_type = _getType(len, digit, dot, f, sign);
 }
 
-int	Converter::_getType(size_t len, bool digit, bool dot, bool f) const
+int	Converter::_getType(size_t len, bool digit, bool dot, bool f, bool sign) const
 {
+	if ((dot && sign && len == 2) || (dot && f && sign && len == 3))
+		return (_STRING); // Exceptions: "+.", "-.", "+.f", "-.f" 
 	if (!digit && len == 1)
 		return (_CHAR);
 	if (digit && !dot && !f)
@@ -123,7 +127,7 @@ void	Converter::_checkExceptions(void)
 			_double = std::numeric_limits<double>::infinity();
 	}
 	else
-		_type = _IMPOSSIBLE;
+		_type = _TOTALLY_IMPOSSIBLE;
 }
 
 void	Converter::_setChar(void)
@@ -147,9 +151,10 @@ void	Converter::_setInt(void)
 	while (i < _str.length())
 	{
 		c = _str[i] - '0';
-		if (_checkIntOverflow(minus, data, c))
+		if ((minus == 1 && data > std::numeric_limits<int>::max() - 10 - c) \
+		|| (minus == -1 && -data < std::numeric_limits<int>::min() + 10 + c))
 		{
-			_type = _IMPOSSIBLE;
+			_type = _TOTALLY_IMPOSSIBLE;
 			return ;
 		}
 		data = data * 10 + c;
@@ -216,87 +221,153 @@ void	Converter::_setDouble(void)
 	_double = data * multiplier * static_cast<double>(minus);
 }
 
-/*	Print ------------------------------------------------------------------- */
+/*	Set Other Types --------------------------------------------------------- */
 
-void	Converter::printAllTypes(void) const
+void	Converter::_convertOtherTypes(void)
 {
 	if (_type == _CHAR)
 	{
-		std::cout << "char: " << _char << std::endl;
-		std::cout << "int: " << static_cast<int>(_char) << std::endl;
-		std::cout << std::fixed << std::setprecision(1);
-		std::cout << "float: " << static_cast<float>(_char) << "f" << std::endl;
-		std::cout << "double: " << static_cast<double>(_char) << std::endl;
+		_int = static_cast<int>(_char);
+		_float = static_cast<float>(_char);
+		_double = static_cast<double>(_char);
 	}
 	else if (_type == _INT)
 	{
-		// Char Printing
 		if (!(_int >= 0 && _int <= 127))
-			std::cout << "char: impossible" << std::endl;
-		else if (!(_int >= 32 && _int <= 126))
-			std::cout << "char: Non Displayable" << std::endl;
+			_char_impossible = true;
 		else
-			std::cout << "char: " << static_cast<char>(_int) << std::endl;
-		// Int Printing
-		std::cout << "int: " << _int << std::endl;
-		// Float Printing
-		std::cout << std::fixed << std::setprecision(1);
-		std::cout << "float: " << static_cast<float>(_int) << "f" << std::endl;
-		std::cout << "double: " << static_cast<double>(_int) << std::endl;
+			_char = static_cast<char>(_int);
+		_float = static_cast<float>(_int);
+		_double = static_cast<double>(_int);
 	}
 	else if (_type == _FLOAT)
 	{
-		// Char Printing
 		if (!(_float >= 0 && _float <= 127))
-			std::cout << "char: impossible" << std::endl;
-		else if (!(_float >= 32 && _float <= 126))
-			std::cout << "char: Non Displayable" << std::endl;
+			_char_impossible = true;
 		else
-			std::cout << "char: " << static_cast<char>(_float) << std::endl;
-		// Int Printing
-		if (_float != _float || _float < std::numeric_limits<int>::min() || _float > std::numeric_limits<int>::max())
-			std::cout << "int: impossible" << std::endl;
+			_char = static_cast<char>(_float);
+		if (_float != _float // Condition is true if float is NaN
+			|| _float < std::numeric_limits<int>::min()
+			|| _float > std::numeric_limits<int>::max())
+			_int_impossible = true;
 		else
-			std::cout << "int: " << static_cast<int>(_float) << std::endl;
-		// Float Printing
-		std::cout << std::fixed << std::setprecision(1);
-		std::cout << "float: " << _float << "f" << std::endl;
-		std::cout << "double: " << static_cast<double>(_float) << std::endl;
+			_int = static_cast<int>(_float);
+		_double = static_cast<double>(_float);
 	}
 	else if (_type == _DOUBLE)
 	{
-		// Char Printing
 		if (!(_double >= 0 && _double <= 127))
-			std::cout << "char: impossible" << std::endl;
-		else if (!(_double >= 32 && _double <= 126))
-			std::cout << "char: Non Displayable" << std::endl;
+			_char_impossible = true;
 		else
-			std::cout << "char: " << static_cast<char>(_double) << std::endl;
-		// Int Printing
-		if (_double != _double || _double < std::numeric_limits<int>::min() || _double > std::numeric_limits<int>::max())
-			std::cout << "int: impossible" << std::endl;
+			_char = static_cast<char>(_double);
+		if (_double != _double // Condition is true if double is NaN
+			|| _double < std::numeric_limits<int>::min()
+			|| _double > std::numeric_limits<int>::max())
+			_int_impossible = true;
 		else
-			std::cout << "int: " << static_cast<int>(_double) << std::endl;
-		// Float Printing
-		std::cout << std::fixed;
-		std::cout << "float: " << static_cast<float>(_double) << "f" << std::endl;
-		std::cout << "double: " << _double << std::endl;
+			_int = static_cast<int>(_double);
+		_float = static_cast<float>(_double);
 	}
-	else
+}
+
+/*	Print ------------------------------------------------------------------- */
+
+void	Converter::printResult(void) const
+{
+	if (_type == _TOTALLY_IMPOSSIBLE)
 	{
 		std::cout << "char: impossible" << std::endl;
 		std::cout << "int: impossible" << std::endl;
 		std::cout << "float: impossible" << std::endl;
 		std::cout << "double: impossible" << std::endl;
 	}
+	else
+	{
+		if (_char_impossible)
+			std::cout << "char: impossible" << std::endl;
+		else if (!(_char >= 32 && _char <= 126))
+			std::cout << "char: Non Displayable" << std::endl;
+		else
+			std::cout << "char: " << _char << std::endl;
+		if (_int_impossible)
+			std::cout << "int: impossible" << std::endl;
+		else
+			std::cout << "int: " << _int << std::endl;
+		std::cout << std::fixed << std::setprecision(1);
+		std::cout << "float: " << _float << "f" << std::endl;
+		std::cout << "double: " << _double << std::endl;
+	}
 }
 
-/*	Utils ------------------------------------------------------------------- */
-
-bool	Converter::_checkIntOverflow(int minus, int data, int c) const
-{
-	if ((minus == 1 && data > std::numeric_limits<int>::max() - 10 - c) \
-	|| (minus == -1 && -data < std::numeric_limits<int>::min() + 10 + c))
-		return (true);
-	return (false);
-}
+// void	Converter::printAllTypes(void) const
+// {
+// 	if (_type == _CHAR)
+// 	{
+// 		std::cout << "char: " << _char << std::endl;
+// 		std::cout << "int: " << static_cast<int>(_char) << std::endl;
+// 		std::cout << std::fixed << std::setprecision(1);
+// 		std::cout << "float: " << static_cast<float>(_char) << "f" << std::endl;
+// 		std::cout << "double: " << static_cast<double>(_char) << std::endl;
+// 	}
+// 	else if (_type == _INT)
+// 	{
+// 		// Char Printing
+// 		if (!(_int >= 0 && _int <= 127))
+// 			std::cout << "char: impossible" << std::endl;
+// 		else if (!(_int >= 32 && _int <= 126))
+// 			std::cout << "char: Non Displayable" << std::endl;
+// 		else
+// 			std::cout << "char: " << static_cast<char>(_int) << std::endl;
+// 		// Int Printing
+// 		std::cout << "int: " << _int << std::endl;
+// 		// Float Printing
+// 		std::cout << std::fixed << std::setprecision(1);
+// 		std::cout << "float: " << static_cast<float>(_int) << "f" << std::endl;
+// 		std::cout << "double: " << static_cast<double>(_int) << std::endl;
+// 	}
+// 	else if (_type == _FLOAT)
+// 	{
+// 		// Char Printing
+// 		if (!(_float >= 0 && _float <= 127))
+// 			std::cout << "char: impossible" << std::endl;
+// 		else if (!(_float >= 32 && _float <= 126))
+// 			std::cout << "char: Non Displayable" << std::endl;
+// 		else
+// 			std::cout << "char: " << static_cast<char>(_float) << std::endl;
+// 		// Int Printing
+// 		if (_float != _float || _float < std::numeric_limits<int>::min() || _float > std::numeric_limits<int>::max())
+// 			std::cout << "int: impossible" << std::endl;
+// 		else
+// 			std::cout << "int: " << static_cast<int>(_float) << std::endl;
+// 		// Float Printing
+// 		std::cout << std::fixed << std::setprecision(1);
+// 		std::cout << "float: " << _float << "f" << std::endl;
+// 		std::cout << "double: " << static_cast<double>(_float) << std::endl;
+// 	}
+// 	else if (_type == _DOUBLE)
+// 	{
+// 		// Char Printing
+// 		if (!(_double >= 0 && _double <= 127))
+// 			std::cout << "char: impossible" << std::endl;
+// 		else if (!(_double >= 32 && _double <= 126))
+// 			std::cout << "char: Non Displayable" << std::endl;
+// 		else
+// 			std::cout << "char: " << static_cast<char>(_double) << std::endl;
+// 		// Int Printing
+// 		if (_double != _double || _double < std::numeric_limits<int>::min() || _double > std::numeric_limits<int>::max())
+// 			std::cout << "int: impossible" << std::endl;
+// 		else
+// 			std::cout << "int: " << static_cast<int>(_double) << std::endl;
+// 		// Float Printing
+// 		std::cout << std::fixed;
+// 		std::cout << "float: " << static_cast<float>(_double) << "f" << std::endl;
+// 		std::cout << "double: " << _double << std::endl;
+// 	}
+// 	else
+// 	{
+// 		std::cout << "char: impossible" << std::endl;
+// 		std::cout << "int: impossible" << std::endl;
+// 		std::cout << "float: impossible" << std::endl;
+// 		std::cout << "double: impossible" << std::endl;
+// 	}
+// }
