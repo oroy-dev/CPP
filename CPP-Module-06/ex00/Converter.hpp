@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Converter.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:39:52 by oroy              #+#    #+#             */
-/*   Updated: 2024/06/07 13:36:35 by oroy             ###   ########.fr       */
+/*   Updated: 2024/06/09 14:07:52 by olivierroy       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ private:
 
 	bool		_char_impossible;
 	bool		_int_impossible;
+	
+	bool		_checkIntOverflow(int c, int data, int minus) const;
 
 	void		_convertString(void);
 	void		_detectType(void);

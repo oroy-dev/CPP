@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Converter.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:40:40 by oroy              #+#    #+#             */
-/*   Updated: 2024/06/07 13:37:37 by oroy             ###   ########.fr       */
+/*   Updated: 2024/06/09 14:48:20 by olivierroy       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,8 +151,7 @@ void	Converter::_setInt(void)
 	while (i < _str.length())
 	{
 		c = _str[i] - '0';
-		if ((minus == 1 && data > std::numeric_limits<int>::max() - 10 - c) \
-		|| (minus == -1 && -data < std::numeric_limits<int>::min() + 10 + c))
+		if (_checkIntOverflow(c, data, minus))
 		{
 			_type = _TOTALLY_IMPOSSIBLE;
 			return ;
@@ -186,10 +185,14 @@ void	Converter::_setFloat(void)
 		}
 		c = _str[i] - '0';
 		if (point_seen)
+		{
 			multiplier /= 10.0f;
-		data = data * 10.0f + static_cast<float>(c);
+			data = data + static_cast<float>(c) * multiplier;
+		}
+		else
+			data = data * 10.0f + static_cast<float>(c);
 	}
-	_float = data * multiplier * static_cast<float>(minus);
+	_float = data * static_cast<float>(minus);
 }
 
 void	Converter::_setDouble(void)
@@ -215,10 +218,14 @@ void	Converter::_setDouble(void)
 		}
 		c = _str[i] - '0';
 		if (point_seen)
+		{
 			multiplier /= 10.0;
-		data = data * 10.0 + static_cast<double>(c);
+			data = data + static_cast<double>(c) * multiplier;
+		}
+		else
+			data = data * 10.0 + static_cast<double>(c);
 	}
-	_double = data * multiplier * static_cast<double>(minus);
+	_double = data * static_cast<double>(minus);
 }
 
 /*	Set Other Types --------------------------------------------------------- */
@@ -297,6 +304,17 @@ void	Converter::printResult(void) const
 		std::cout << "float: " << _float << "f" << std::endl;
 		std::cout << "double: " << _double << std::endl;
 	}
+}
+
+/*	Utils ------------------------------------------------------------------- */
+
+bool	Converter::_checkIntOverflow(int c, int data, int minus) const
+{
+	if (data < 214748364 ||	(data == 214748364
+		&& ((minus == 1 && c <= 7) || (minus == -1 && c <= 8))))
+		return (false);
+	else
+		return (true);
 }
 
 // void	Converter::printAllTypes(void) const
