@@ -6,7 +6,7 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 16:45:31 by oroy              #+#    #+#             */
-/*   Updated: 2024/06/10 21:21:20 by oroy             ###   ########.fr       */
+/*   Updated: 2024/06/11 17:34:36 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ template <typename T>
 Array<T>::Array(unsigned int n) : _a(new T[n]), _n(n)
 {
 	for (unsigned int i = 0; i < _n; ++i)
-		_a[i] = 0;
+		_a[i] = 5;
 	return ;
 }
 
@@ -56,18 +56,19 @@ Array<T>::~Array()
 /*	Others ------------------------------------------------------------------ */
 
 template <typename T>
-T const	&Array<T>::operator[](unsigned int i) const
+T	&Array<T>::operator[](unsigned int i) const
 {
 	try
 	{
-		if (!_a[i])
+		if (i >= _n)
 			throw	InvalidIndex();
+		return (_a[i]);
 	}
 	catch (const InvalidIndex& e)
 	{
 		std::cout << e.what() << std::endl;
+		return (0);
 	}
-	return (_a[i]);
 }
 
 template <typename T>

@@ -6,7 +6,7 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 15:34:26 by oroy              #+#    #+#             */
-/*   Updated: 2024/06/10 21:17:59 by oroy             ###   ########.fr       */
+/*   Updated: 2024/06/11 17:32:43 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ public:
 	Array<T> &operator=(Array<T> const &rhs);
 	~Array<T>();
 
-	T const	&operator[](unsigned int i) const;
+	T				*operator[](unsigned int i) const;
 
 	unsigned int	size(void) const;
 

@@ -6,7 +6,7 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 15:33:09 by oroy              #+#    #+#             */
-/*   Updated: 2024/06/10 21:19:42 by oroy             ###   ########.fr       */
+/*   Updated: 2024/06/11 17:35:32 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,10 @@ int main(void)
 	Array<int>	arr(5);
 
 	std::cout << arr[4] << std::endl;
+
+	arr[4] = 6;
+
+	std::cout << arr[4] << std::endl;
+	
 	return 0;
 }
