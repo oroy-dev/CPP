@@ -6,11 +6,11 @@
 #    By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/13 15:50:37 by oroy              #+#    #+#              #
-#    Updated: 2024/06/07 15:47:52 by oroy             ###   ########.fr        #
+#    Updated: 2024/06/10 20:19:43 by oroy             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	:= whatever
+NAME	:= array
 
 OBJDIR	:= obj
 SRC		:= main.cpp

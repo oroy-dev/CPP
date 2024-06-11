@@ -6,7 +6,7 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:02:49 by oroy              #+#    #+#             */
-/*   Updated: 2024/06/05 15:17:05 by oroy             ###   ########.fr       */
+/*   Updated: 2024/06/10 16:47:48 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,8 @@
 static Base	*generate(void)
 {
 	Base	*inst;
-	int		random;
 
-	random = std::rand();
-	switch (random % 3)
+	switch (std::rand() % 3)
 	{
 		case 0: inst = new A(); break;
 		case 1: inst = new B(); break;
