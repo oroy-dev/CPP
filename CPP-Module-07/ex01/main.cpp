@@ -6,7 +6,7 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 15:33:09 by oroy              #+#    #+#             */
-/*   Updated: 2024/06/10 17:29:36 by oroy             ###   ########.fr       */
+/*   Updated: 2024/08/05 16:55:27 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,15 @@ int main(void)
 	std::string	arr_s[2] = {"Allo", "Man"};
 
 	std::cout << "-- Test: Array of ints --" << std::endl;
-	iter(arr_i, 3, f);
+	iter(arr_i, sizeof(arr_i), f);
 	std::cout << std::endl;
 	
 	std::cout << "-- Test: Array of floats --" << std::endl;
-	iter(arr_f, 5, f);
+	iter(arr_f, sizeof(arr_f), f);
 	std::cout << std::endl;
 
 	std::cout << "-- Test: Array of strings --" << std::endl;
-	iter(arr_s, 2, f);
+	iter(arr_s, sizeof(arr_s), f);
 	std::cout << std::endl;
 
 	return 0;

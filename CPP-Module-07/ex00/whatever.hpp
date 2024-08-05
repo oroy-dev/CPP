@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Whatever.hpp                                       :+:      :+:    :+:   */
+/*   whatever.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 15:34:26 by oroy              #+#    #+#             */
-/*   Updated: 2024/06/07 15:50:37 by oroy             ###   ########.fr       */
+/*   Updated: 2024/08/05 16:48:42 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <iostream>
 # include <string>
 
-template< typename T >
+template <typename T>
 void	swap(T &a, T &b)
 {
 	T	tmp;
@@ -26,7 +26,7 @@ void	swap(T &a, T &b)
 	b = tmp;
 }
 
-template< typename T >
+template <typename T>
 T const	&min(T const &a, T const &b)
 {
 	if (a < b)
@@ -35,7 +35,7 @@ T const	&min(T const &a, T const &b)
 		return (b);
 }
 
-template< typename T >
+template <typename T>
 T const	&max(T const &a, T const &b)
 {
 	if (a > b)
