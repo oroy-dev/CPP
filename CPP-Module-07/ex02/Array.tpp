@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Array.tpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 16:45:31 by oroy              #+#    #+#             */
-/*   Updated: 2024/06/12 16:30:06 by oroy             ###   ########.fr       */
+/*   Updated: 2024/08/05 21:08:28 by olivierroy       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /*	Canonical Form Requirements --------------------------------------------- */
 
 template <typename T>
-Array<T>::Array(void) : _a(new T()), _n(0)
+Array<T>::Array(void) : _a(NULL), _n(0)
 {
 	return ;
 }
@@ -23,11 +23,15 @@ Array<T>::Array(void) : _a(new T()), _n(0)
 template <typename T>
 Array<T>::Array(unsigned int n) : _a(new T[n]), _n(n)
 {
+	for (unsigned i = 0; i < _n; ++i)
+	{
+		_a[i] = '\0';
+	}
 	return ;
 }
 
 template <typename T>
-Array<T>::Array(Array<T> const &src) : _n(0)
+Array<T>::Array(Array<T> const &src) : _a(NULL), _n(0)
 {
 	*this = src;
 	return ;
@@ -41,7 +45,9 @@ Array<T>	&Array<T>::operator=(Array<T> const &rhs)
 	_n = rhs._n;
 	_a = new T[_n];
 	for (unsigned int i = 0; i < _n; ++i)
+	{
 		_a[i] = rhs._a[i];
+	}
 	return (*this);
 }
 

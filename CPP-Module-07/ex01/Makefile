@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+         #
+#    By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/13 15:50:37 by oroy              #+#    #+#              #
-#    Updated: 2024/06/07 16:37:15 by oroy             ###   ########.fr        #
+#    Updated: 2024/08/05 18:55:33 by olivierroy       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,6 @@ run: $(NAME)
 # VALGRIND ******************************************************************* #
 
 vleaks:
-	$(MAKE)
 	valgrind \
 	--leak-check=full \
 	--show-leak-kinds=all \
