@@ -6,7 +6,7 @@
 /*   By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 16:45:31 by oroy              #+#    #+#             */
-/*   Updated: 2024/08/05 21:08:28 by olivierroy       ###   ########.fr       */
+/*   Updated: 2024/08/05 21:45:23 by olivierroy       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,16 @@ Array<T>::Array(Array<T> const &src) : _a(NULL), _n(0)
 template <typename T>
 Array<T>	&Array<T>::operator=(Array<T> const &rhs)
 {
-	if (_n)
-		delete [] _a;
-	_n = rhs._n;
-	_a = new T[_n];
-	for (unsigned int i = 0; i < _n; ++i)
+	if (this != &rhs)
 	{
-		_a[i] = rhs._a[i];
+		if (_n)
+			delete [] _a;
+		_n = rhs._n;
+		_a = new T[_n];
+		for (unsigned int i = 0; i < _n; ++i)
+		{
+			_a[i] = rhs._a[i];
+		}
 	}
 	return (*this);
 }
