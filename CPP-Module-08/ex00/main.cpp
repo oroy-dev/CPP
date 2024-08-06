@@ -6,7 +6,7 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:08:48 by oroy              #+#    #+#             */
-/*   Updated: 2024/06/12 19:39:25 by oroy             ###   ########.fr       */
+/*   Updated: 2024/08/06 13:38:12 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 #include <iostream>
 #include <exception>
+#include <deque>
 #include <list>
+#include <vector>
 
 class	NoOccurenceFound : public std::exception
 {
@@ -25,13 +27,12 @@ class	NoOccurenceFound : public std::exception
 		}
 };
 
-// template <typename T>
-int	easyfind(std::list<int> const lst, int data)
+template <typename T>
+int	easyfind(T container, int entry)
 {
-	std::list<int>::const_iterator	it;
-	std::list<int>::const_iterator	ite = lst.end();
-	
-	for (it = lst.begin(); it != ite; ++it)
+	size_t	len = container.size();
+
+	for (size_t i = 0; i < len; ++i)
 	{
 		if (*it == data)
 			return (*it);
