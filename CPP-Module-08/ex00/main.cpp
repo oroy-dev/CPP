@@ -6,35 +6,26 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:08:48 by oroy              #+#    #+#             */
-/*   Updated: 2024/08/06 13:38:12 by oroy             ###   ########.fr       */
+/*   Updated: 2024/08/09 16:47:11 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // #include "easyfind.hpp"
 
 #include <iostream>
-#include <exception>
+// #include <exception>
 #include <deque>
 #include <list>
 #include <vector>
 
-class	NoOccurenceFound : public std::exception
-{
-	public:
-		virtual const char* what() const throw()
-		{
-			return ("No Occurence Found");
-		}
-};
-
 template <typename T>
 int	easyfind(T container, int entry)
 {
-	size_t	len = container.size();
+	typename T::iterator it = std::find(container.begin(), container.end(), entry);
 
-	for (size_t i = 0; i < len; ++i)
+	for (T::iterator it = container.begin(); it != container.end(); ++it)
 	{
-		if (*it == data)
+		if (*it == entry)
 			return (*it);
 	}
 	throw	NoOccurenceFound();
@@ -42,20 +33,66 @@ int	easyfind(T container, int entry)
 
 int	main(void)
 {
-	std::list<int>	lst;
-
-	lst.push_back(1);
-	lst.push_back(3);
-	lst.push_back(6);
-	lst.push_back(127);
-
-	try
+	std::cout << "---------- std::list ----------" << std::endl;
 	{
-		std::cout << easyfind(lst, 42) << std::endl;
+		std::list<int>	lst;
+
+		lst.push_back(1);
+		lst.push_back(3);
+		lst.push_back(6);
+		lst.push_back(127);
+
+		try
+		{
+			std::cout << easyfind(lst, 127) << std::endl;
+			std::cout << easyfind(lst, 42) << std::endl;
+		}
+		catch(int e)
+		{
+			std::cerr << "No occurence of " << e << "found in the list." << std::endl;
+		}
 	}
-	catch(const std::exception& e)
+
+	std::cout << "---------- std::vector ----------" << std::endl;
 	{
-		std::cerr << e.what() << std::endl;
+		std::vector<int>	vect;
+
+		vect.push_back(42);
+		vect.push_back(-1);
+		vect.push_back(2147483647);
+		vect.push_back(0);
+
+		try
+		{
+			std::cout << easyfind(vect, 42) << std::endl;
+			std::cout << easyfind(vect, 0) << std::endl;
+		}
+		catch(int e)
+		{
+			std::cerr << "No occurence of " << e << "found in the vector." << std::endl;
+		}
+	}
+
+	std::cout << "---------- std::deque ----------" << std::endl;
+	{
+		std::deque<int>	deq;
+
+		deq.push_back(-1);
+		deq.push_back(2147483647);
+		deq.push_back(0);
+		deq.push_back(888);
+		deq.push_back(777);
+		deq.push_back(777);
+
+		try
+		{
+			std::cout << easyfind(deq, 888) << std::endl;
+			std::cout << easyfind(deq, 777) << std::endl;
+		}
+		catch(int e)
+		{
+			std::cerr << "No occurence of " << e << "found in the deque." << std::endl;
+		}
 	}
 
 	return (0);	
