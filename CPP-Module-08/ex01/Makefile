@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+         #
+#    By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/13 15:50:37 by oroy              #+#    #+#              #
-#    Updated: 2024/08/10 17:05:23 by olivierroy       ###   ########.fr        #
+#    Updated: 2024/08/12 15:31:48 by oroy             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	:= easyfind
+NAME	:= span
 
 OBJDIR	:= obj
-SRC		:= main.cpp
+SRC		:= main.cpp Span.cpp
 OBJ		:= $(patsubst %.cpp, $(OBJDIR)/%.o, $(SRC))
 
 CC		:= c++
