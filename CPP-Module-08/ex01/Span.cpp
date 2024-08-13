@@ -3,19 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   Span.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+        */
+/*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 01:01:01 by olivierroy        #+#    #+#             */
-/*   Updated: 2024/08/13 14:08:34 by olivierroy       ###   ########.fr       */
+/*   Updated: 2024/08/13 18:47:06 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Span.hpp"
 
-Span::Span(unsigned int N) : _N(N)
+Span::Span(unsigned int N)
 {
-	std::cout << GREEN << "Span class instance created" << RESET << std::endl;
-	_v.reserve(_N);
+	_v.reserve(N);
 }
 
 Span::Span(Span const &src)
@@ -25,17 +24,13 @@ Span::Span(Span const &src)
 
 Span	&Span::operator=(Span const &rhs)
 {
-	this->_N = rhs._N;
 	this->_v = rhs._v;
 	return (*this);
 }
 
-Span::~Span()
-{
-	std::cout << GREEN << "Span class instance destroyed" << RESET << std::endl;
-}
+Span::~Span() {}
 
-/* Member Functions */
+/* Private Functions */
 
 unsigned int	Span::_range(unsigned int num1, unsigned int num2) const
 {
@@ -73,6 +68,8 @@ unsigned int	Span::_span(bool length) const
 	return (range_rtn);
 }
 
+/* Public Functions */
+
 unsigned int	Span::shortestSpan(void) const
 {
 	return (_span(SHORTEST));
@@ -83,30 +80,33 @@ unsigned int	Span::longestSpan(void) const
 	return (_span(LONGEST));
 }
 
+unsigned int	Span::vectorCapacity(void) const
+{
+	return (_v.capacity());
+}
+
 void	Span::addNumber(unsigned int number)
 {
-	if (_v.size() + 1 > _N)
-		throw	std::length_error("Size exceeds maximum limit");
+	if (_v.size() + 1 > _v.capacity())
+		throw	std::length_error("addNumber error: Size exceeds maximum limit");
 	_v.push_back(number);
 }
 
-void	Span::addNumberRange(Span const &sp, unsigned int count) const
+void	Span::addNumberRange(Span const &sp)
 {
-	std::vector<unsigned int>::const_iterator	position = _v.begin() + _v.size();
-	std::vector<unsigned int>::const_iterator	sp_begin = _v.begin();
-	std::vector<unsigned int>::const_iterator	sp_end = _v.begin();
-
-	if (_v.capacity() - _v.size() < count)
-		throw	std::length_error("Size exceeds maximum limit");
-	_v.insert(position, )
+	if (_v.capacity() - _v.size() < sp._v.size())
+		throw	std::length_error("addNumberRange error: Size exceeds maximum limit");
+	_v.insert(_v.begin() + _v.size(), sp._v.begin(), sp._v.end());
 }
 
 void	Span::print(void) const
 {
+	std::cout << std::endl;
 	std::cout << "============ Span print - start ============" << std::endl;
 	for (std::vector<unsigned int>::const_iterator it = _v.begin(); it != _v.end(); ++it)
 	{
 		std::cout << *it << std::endl;
 	}
 	std::cout << "============ Span print - end ============" << std::endl;
+	std::cout << std::endl;
 }
