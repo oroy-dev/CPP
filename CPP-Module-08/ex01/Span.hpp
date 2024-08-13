@@ -6,7 +6,7 @@
 /*   By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 00:45:48 by olivierroy        #+#    #+#             */
-/*   Updated: 2024/08/13 00:16:29 by olivierroy       ###   ########.fr       */
+/*   Updated: 2024/08/13 14:02:28 by olivierroy       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ public:
 	unsigned int	longestSpan(void) const;
 
 	void			addNumber(unsigned int number);
-	void			addNumberRange(std::vector<unsigned int>::const_iterator position, std::vector<unsigned int>::const_iterator first, std::vector<unsigned int>::const_iterator last) const;
+	void			addNumberRange(Span const &sp, unsigned int count) const;
 	void			print(void) const;
 
 };

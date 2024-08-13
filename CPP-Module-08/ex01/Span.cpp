@@ -6,7 +6,7 @@
 /*   By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 01:01:01 by olivierroy        #+#    #+#             */
-/*   Updated: 2024/08/13 00:16:22 by olivierroy       ###   ########.fr       */
+/*   Updated: 2024/08/13 14:08:34 by olivierroy       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,15 @@ void	Span::addNumber(unsigned int number)
 	_v.push_back(number);
 }
 
-void	Span::addNumberRange(std::vector<unsigned int>::const_iterator position, \
-std::vector<unsigned int>::const_iterator first, std::vector<unsigned int>::const_iterator last) const
+void	Span::addNumberRange(Span const &sp, unsigned int count) const
 {
-	
+	std::vector<unsigned int>::const_iterator	position = _v.begin() + _v.size();
+	std::vector<unsigned int>::const_iterator	sp_begin = _v.begin();
+	std::vector<unsigned int>::const_iterator	sp_end = _v.begin();
+
+	if (_v.capacity() - _v.size() < count)
+		throw	std::length_error("Size exceeds maximum limit");
+	_v.insert(position, )
 }
 
 void	Span::print(void) const
