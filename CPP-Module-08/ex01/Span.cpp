@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Span.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 01:01:01 by olivierroy        #+#    #+#             */
-/*   Updated: 2024/08/12 17:48:42 by oroy             ###   ########.fr       */
+/*   Updated: 2024/08/13 00:16:22 by olivierroy       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,52 @@ Span::~Span()
 
 /* Member Functions */
 
+unsigned int	Span::_range(unsigned int num1, unsigned int num2) const
+{
+	if (num1 > num2)
+		return (num1 - num2);
+	else
+		return (num2 - num1);
+}
+
+unsigned int	Span::_span(bool length) const
+{
+	bool			first = true;
+	unsigned int	range_tmp = 0;
+	unsigned int	range_rtn = 0;
+	size_t			v_size = _v.size();
+
+	if (v_size <= 1)
+		throw	std::logic_error("No distance can be found with one number or less");
+	for (size_t	i = 0; i < v_size; ++i)
+	{
+		for (size_t j = i + 1; j < v_size; ++j)
+		{
+			range_tmp = _range(_v.at(i), _v.at(j));
+			if (first)
+			{
+				range_rtn = range_tmp;
+				first = false;
+				continue ;
+			}
+			if ((range_tmp < range_rtn && length == SHORTEST) \
+			||	(range_tmp > range_rtn && length == LONGEST))
+				range_rtn = range_tmp;
+		}
+	}
+	return (range_rtn);
+}
+
+unsigned int	Span::shortestSpan(void) const
+{
+	return (_span(SHORTEST));
+}
+
+unsigned int	Span::longestSpan(void) const
+{
+	return (_span(LONGEST));
+}
+
 void	Span::addNumber(unsigned int number)
 {
 	if (_v.size() + 1 > _N)
@@ -44,60 +90,10 @@ void	Span::addNumber(unsigned int number)
 	_v.push_back(number);
 }
 
-unsigned int	Span::shortestSpan(void) const
+void	Span::addNumberRange(std::vector<unsigned int>::const_iterator position, \
+std::vector<unsigned int>::const_iterator first, std::vector<unsigned int>::const_iterator last) const
 {
-	bool			first = true;
-	long			range_l = 0;
-	unsigned int	range_u = 0;
-	size_t			v_size = _v.size();
-
-	for (size_t	i = 0; i < v_size; ++i)
-	{
-		for (size_t j = 0; j < v_size; ++j)
-		{
-			if (j != i)
-			{
-				range_l = _v.at(j) - _v.at(i);
-				if (first)
-				{	
-					range_u = std::abs(range_l);
-					first = false;
-					continue ;
-				}
-				if ((range_l = std::abs(range_l)) < range_u)
-					range_u = range_l;
-			}
-		}
-	}
-	return (range_u);
-}
-
-unsigned int	Span::longestSpan(void) const
-{
-	bool			first = true;
-	long			range_l = 0;
-	unsigned int	range_u = 0;
-	size_t			v_size = _v.size();
-
-	for (size_t	i = 0; i < v_size; ++i)
-	{
-		for (size_t j = 0; j < v_size; ++j)
-		{
-			if (j != i)
-			{
-				range_l = _v.at(j) - _v.at(i);
-				if (first)
-				{
-					range_u = std::abs(range_l);
-					first = false;
-					continue ;
-				}
-				if ((range_l = std::abs(range_l)) > range_u)
-					range_u = range_l;
-			}
-		}
-	}
-	return (range_u);
+	
 }
 
 void	Span::print(void) const

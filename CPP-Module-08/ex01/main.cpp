@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 01:01:01 by olivierroy        #+#    #+#             */
-/*   Updated: 2024/08/12 17:40:42 by oroy             ###   ########.fr       */
+/*   Updated: 2024/08/12 21:07:15 by olivierroy       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 // 	span.addNumber(24);
 
 // 	std::cout << span.shortestSpan() << std::endl;
-// 	std::cout << span.shortestSpan() << std::endl;
+// 	std::cout << span.longestSpan() << std::endl;
 
 // 	span.print();
 
@@ -43,3 +43,18 @@ int main()
 
 	return 0;
 }
+
+// int	main(void)
+// {
+// 	Span	sp(20000);
+
+// 	for (size_t i = 0; i < 20000; ++i)
+// 	{
+// 		sp.addNumber(i);
+// 	}
+	
+// 	std::cout << "Shortest span = " << sp.shortestSpan() << std::endl;
+// 	std::cout << "Longest span = " << sp.longestSpan() << std::endl;
+
+// 	return (0);
+// }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Span.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 00:45:48 by olivierroy        #+#    #+#             */
-/*   Updated: 2024/08/12 17:39:28 by oroy             ###   ########.fr       */
+/*   Updated: 2024/08/13 00:16:29 by olivierroy       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,14 @@
 # define SPAN_HPP
 
 # include <iostream>
-# include <vector>
 # include <stdexcept>
+# include <vector>
 
-# define GREEN 	"\033[32m"
-# define RESET	"\033[0m"
+# define GREEN 		"\033[32m"
+# define RESET		"\033[0m"
+
+# define SHORTEST	0
+# define LONGEST	1
 
 class Span
 {
@@ -26,6 +29,10 @@ private:
 
 	std::vector<unsigned int>	_v;
 	unsigned int				_N;
+
+	unsigned int				_range(unsigned int num1, unsigned int num2) const;
+	unsigned int				_span(bool length) const;
+
 
 public:
 
@@ -38,6 +45,7 @@ public:
 	unsigned int	longestSpan(void) const;
 
 	void			addNumber(unsigned int number);
+	void			addNumberRange(std::vector<unsigned int>::const_iterator position, std::vector<unsigned int>::const_iterator first, std::vector<unsigned int>::const_iterator last) const;
 	void			print(void) const;
 
 };
