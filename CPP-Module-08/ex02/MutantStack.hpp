@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   MutantStack.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 00:45:48 by olivierroy        #+#    #+#             */
-/*   Updated: 2024/08/13 19:43:19 by oroy             ###   ########.fr       */
+/*   Updated: 2024/08/13 23:16:05 by olivierroy       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@
 # include <list>
 # include <vector>
 
-template <typename T>
+template <typename T, typename Container = std::deque<T> >
 class MutantStack
 {
 private:
 
-	std::deque<T>	_d;
+	Container	_container;
 
 public:
 
@@ -36,9 +36,11 @@ public:
 	size_t		size(void) const;
 	T const &	top(void) const;
 
-	void		pop();
-	void		push(T const &);
+	void		pop(void);
+	void		push(T const &number);
 
 };
+
+#include "MutantStack.tpp"
 
 #endif
