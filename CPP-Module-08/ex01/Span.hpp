@@ -6,14 +6,17 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 00:45:48 by olivierroy        #+#    #+#             */
-/*   Updated: 2024/08/13 18:36:57 by oroy             ###   ########.fr       */
+/*   Updated: 2024/08/15 16:48:31 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SPAN_HPP
 # define SPAN_HPP
 
+# include <algorithm>
 # include <climits>
+# include <cstdlib>
+# include <ctime>
 # include <iostream>
 # include <stdexcept>
 # include <vector>
@@ -31,6 +34,7 @@ private:
 
 	std::vector<unsigned int>	_v;
 
+	unsigned int				_random(void) const;
 	unsigned int				_range(unsigned int num1, unsigned int num2) const;
 	unsigned int				_span(bool length) const;
 
@@ -47,6 +51,7 @@ public:
 
 	void						addNumber(unsigned int number);
 	void						addNumberRange(Span const &sp);
+	void						fillWithRandomNumbers(void);
 	void						print(void) const;
 
 };

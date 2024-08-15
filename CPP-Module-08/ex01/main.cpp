@@ -6,7 +6,7 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 01:01:01 by olivierroy        #+#    #+#             */
-/*   Updated: 2024/08/15 16:07:37 by oroy             ###   ########.fr       */
+/*   Updated: 2024/08/15 16:45:13 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,22 @@ int	main(void)
 		{
 			sp.addNumber(i);
 		}
+
+		std::cout << "Shortest span = " << sp.shortestSpan() << std::endl;
+		std::cout << "Longest span = " << sp.longestSpan() << std::endl;
+	}
+	catch (const std::exception& e)
+	{
+		std::cerr << RED << e.what() << RESET << std::endl;
+	}
+	std::cout << std::endl;
+
+	std::cout << "---------- Generate random numbers ----------" << std::endl;
+	try
+	{
+		Span	sp(42);
+
+		sp.fillWithRandomNumbers();
 
 		std::cout << "Shortest span = " << sp.shortestSpan() << std::endl;
 		std::cout << "Longest span = " << sp.longestSpan() << std::endl;

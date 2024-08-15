@@ -6,7 +6,7 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 01:01:01 by olivierroy        #+#    #+#             */
-/*   Updated: 2024/08/14 14:32:36 by oroy             ###   ########.fr       */
+/*   Updated: 2024/08/15 16:55:20 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,11 @@ Span	&Span::operator=(Span const &rhs)
 Span::~Span() {}
 
 /* Private Functions */
+
+unsigned int	Span::_random(void) const
+{
+	return (static_cast<unsigned int>(std::rand() % 100));
+}
 
 unsigned int	Span::_range(unsigned int num1, unsigned int num2) const
 {
@@ -98,6 +103,12 @@ void	Span::addNumberRange(Span const &sp)
 	if (_v.capacity() - _v.size() < sp._v.size())
 		throw	std::length_error("addNumberRange error: Size exceeds maximum limit");
 	_v.insert(_v.begin() + _v.size(), sp._v.begin(), sp._v.end());
+}
+
+void	Span::fillWithRandomNumbers(void)
+{
+	std::srand(std::time(0));
+	std::generate(_v.begin(), _v.begin() + _v.capacity(), _random);
 }
 
 void	Span::print(void) const
