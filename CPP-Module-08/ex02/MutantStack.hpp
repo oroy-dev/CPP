@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   MutantStack.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 00:45:48 by olivierroy        #+#    #+#             */
-/*   Updated: 2024/08/14 21:42:33 by oroy             ###   ########.fr       */
+/*   Updated: 2024/08/15 00:48:49 by olivierroy       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,28 +18,18 @@
 # include <iostream>
 # include <deque>
 # include <list>
+# include <stack>
 # include <vector>
 
 template <typename T, typename Container = std::deque<T> >
-class MutantStack
+class MutantStack : public std::stack<T, Container> 
 {
-private:
-
-	Container	_container;
-
 public:
 
 	MutantStack(void);
 	MutantStack(MutantStack const &src);
 	MutantStack &operator=(MutantStack const &rhs);
 	~MutantStack();
-
-	bool		empty(void) const;
-	size_t		size(void) const;
-	T const &	top(void) const;
-
-	void		pop(void);
-	void		push(T const &);
 
 	class iterator
 	{
@@ -113,7 +103,7 @@ public:
 
 		// static iterator	operator+(std::ptrdiff_t n, iterator const &rhs) const
 		// {
-		// 	return n + rhs._ptr;
+		// 	return iterator(n + rhs._ptr);
 		// }
 
 		iterator	operator-(std::ptrdiff_t n) const
@@ -129,8 +119,8 @@ public:
 		}
 	};
 
-	iterator	begin() { return iterator(&_container[0]); }
-	iterator	end() { return iterator(&_container[_container.size()]); }
+	iterator	begin() { return iterator(&this->c[0]); }
+	iterator	end() { return iterator(&this->c[this->c.size()]); }
 
 };
 
