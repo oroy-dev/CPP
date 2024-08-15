@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+        */
+/*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 00:45:48 by olivierroy        #+#    #+#             */
-/*   Updated: 2024/08/13 22:50:31 by olivierroy       ###   ########.fr       */
+/*   Updated: 2024/08/14 21:42:12 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,9 @@ int	main(void)
 	MutantStack<int>::iterator it = mstack.begin();
 	MutantStack<int>::iterator ite = mstack.end();
 
+	std::cout << *it << std::endl;
+	std::cout << *ite << std::endl;
+
 	++it;
 	--it;
 	while (it != ite)
@@ -42,6 +45,29 @@ int	main(void)
 		std::cout << *it << std::endl;
 		++it;
 	}
-	std::stack<int> s(mstack);
+	// std::stack<int> s(mstack);
 	return 0;
 }
+
+// #include <iostream>
+// #include <vector>
+
+// int	main(void)
+// {
+// 	std::vector<int>			vect;
+// 	std::vector<int>::iterator	it;
+// 	std::vector<int>::iterator	ite;
+
+// 	vect.push_back(0);
+// 	vect.push_back(1);
+// 	vect.push_back(2);
+// 	vect.push_back(3);
+// 	vect.push_back(4);
+
+// 	it = vect.begin();
+// 	ite = vect.end();
+
+// 	std::cout << std::boolalpha << (it > ite) << std::endl;
+	
+// 	return (0);	
+// }

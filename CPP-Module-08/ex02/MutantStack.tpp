@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   MutantStack.tpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+        */
+/*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 22:27:21 by olivierroy        #+#    #+#             */
-/*   Updated: 2024/08/13 23:00:07 by olivierroy       ###   ########.fr       */
+/*   Updated: 2024/08/14 14:33:06 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ MutantStack<T, Container>::MutantStack(MutantStack<T, Container> const &src)
 template <typename T, typename Container>
 MutantStack<T, Container>	&MutantStack<T, Container>::operator=(MutantStack<T, Container> const &rhs)
 {
-	if (*this != rhs)
+	if (this != &rhs)
 	{
 		this->_container = rhs._container;
 	}

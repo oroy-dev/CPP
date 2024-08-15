@@ -6,7 +6,7 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 01:01:01 by olivierroy        #+#    #+#             */
-/*   Updated: 2024/08/13 18:47:06 by oroy             ###   ########.fr       */
+/*   Updated: 2024/08/14 14:32:36 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ Span::Span(Span const &src)
 
 Span	&Span::operator=(Span const &rhs)
 {
-	this->_v = rhs._v;
+	if (this != &rhs)
+		this->_v = rhs._v;
 	return (*this);
 }
 
