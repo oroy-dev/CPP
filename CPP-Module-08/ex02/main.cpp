@@ -6,7 +6,7 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 00:45:48 by olivierroy        #+#    #+#             */
-/*   Updated: 2024/08/15 15:49:35 by oroy             ###   ########.fr       */
+/*   Updated: 2024/08/16 14:25:54 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,42 @@ int	main(void)
 			++it;
 		}
 		std::stack<int> s(mstack);
+	}
+	std::cout << std::endl;
+
+	std::cout << "---------- pdf test with std::vector ----------" << std::endl;
+	{
+		std::vector<int> mstack;
+
+		mstack.push_back(5);
+		mstack.push_back(17);
+
+		std::cout << mstack.back() << std::endl;
+
+		mstack.pop_back();
+
+		std::cout << mstack.size() << std::endl;
+
+		mstack.push_back(3);
+		mstack.push_back(5);
+		mstack.push_back(737);
+		//[...]
+		mstack.push_back(0);
+
+		std::vector<int>::iterator it = mstack.begin();
+		std::vector<int>::iterator ite = mstack.end();
+
+		std::cout << *it << std::endl;
+		// std::cout << *ite << std::endl;
+
+		++it;
+		--it;
+		while (it != ite)
+		{
+			std::cout << *it << std::endl;
+			++it;
+		}
+		std::vector<int> s(mstack);
 	}
 	std::cout << std::endl;
 	

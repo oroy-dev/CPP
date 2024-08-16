@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+        */
+/*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 01:01:01 by olivierroy        #+#    #+#             */
-/*   Updated: 2024/08/16 00:18:45 by olivierroy       ###   ########.fr       */
+/*   Updated: 2024/08/16 14:18:40 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ int	main(void)
 	try
 	{
 		Span	sp1(100);
-		Span	sp2(100);
+		Span	sp2(50);
 
 		for (size_t i = 0; i < sp1.vectorCapacity(); ++i)
 		{
