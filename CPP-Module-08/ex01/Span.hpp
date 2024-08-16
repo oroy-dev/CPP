@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Span.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 00:45:48 by olivierroy        #+#    #+#             */
-/*   Updated: 2024/08/15 16:48:31 by oroy             ###   ########.fr       */
+/*   Updated: 2024/08/16 00:08:54 by olivierroy       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ private:
 
 	std::vector<unsigned int>	_v;
 
-	unsigned int				_random(void) const;
 	unsigned int				_range(unsigned int num1, unsigned int num2) const;
 	unsigned int				_span(bool length) const;
 
@@ -55,5 +54,7 @@ public:
 	void						print(void) const;
 
 };
+
+unsigned int					generateRandomNumber(void);
 
 #endif

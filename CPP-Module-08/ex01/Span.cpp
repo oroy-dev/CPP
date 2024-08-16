@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Span.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 01:01:01 by olivierroy        #+#    #+#             */
-/*   Updated: 2024/08/15 16:55:20 by oroy             ###   ########.fr       */
+/*   Updated: 2024/08/16 00:19:27 by olivierroy       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,6 @@ Span	&Span::operator=(Span const &rhs)
 Span::~Span() {}
 
 /* Private Functions */
-
-unsigned int	Span::_random(void) const
-{
-	return (static_cast<unsigned int>(std::rand() % 100));
-}
 
 unsigned int	Span::_range(unsigned int num1, unsigned int num2) const
 {
@@ -107,8 +102,9 @@ void	Span::addNumberRange(Span const &sp)
 
 void	Span::fillWithRandomNumbers(void)
 {
+	_v.insert(_v.begin(), _v.capacity(), 0);
 	std::srand(std::time(0));
-	std::generate(_v.begin(), _v.begin() + _v.capacity(), _random);
+	std::generate(_v.begin(), _v.end(), generateRandomNumber);
 }
 
 void	Span::print(void) const
@@ -121,4 +117,9 @@ void	Span::print(void) const
 	}
 	std::cout << "============ Span print - end ============" << std::endl;
 	std::cout << std::endl;
+}
+
+unsigned int	generateRandomNumber(void)
+{
+	return (std::rand() % 100);
 }

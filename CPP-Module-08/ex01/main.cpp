@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 01:01:01 by olivierroy        #+#    #+#             */
-/*   Updated: 2024/08/15 16:45:13 by oroy             ###   ########.fr       */
+/*   Updated: 2024/08/16 00:18:45 by olivierroy       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,6 +188,8 @@ int	main(void)
 		Span	sp(42);
 
 		sp.fillWithRandomNumbers();
+
+		sp.print();
 
 		std::cout << "Shortest span = " << sp.shortestSpan() << std::endl;
 		std::cout << "Longest span = " << sp.longestSpan() << std::endl;
