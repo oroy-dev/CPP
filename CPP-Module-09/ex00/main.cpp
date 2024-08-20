@@ -3,45 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:08:48 by oroy              #+#    #+#             */
-/*   Updated: 2024/08/16 16:41:21 by oroy             ###   ########.fr       */
+/*   Updated: 2024/08/20 00:24:48 by olivierroy       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "BitcoinExchange.hpp"
 
-static void	run(char const *arg)
+static void	run(const char *arg)
 {
-	size_t								pos;
-	std::ifstream						file(arg);
-	std::map<std::string, std::string>	entries;
-	std::string							line;
-	std::string							date;
-	std::string							value;
+	BitcoinExchange	btc;
 
-	if (file.is_open())
-	{
-		while (std::getline(file, line))
-		{
-			pos = line.find('|');
-			date = line.substr(0, pos);
-			if (pos != std::string::npos)
-				value = line.substr(pos);
-			entries[date] = value;
-		}
-		file.close();
-		for (std::map<std::string, std::string>::const_iterator it = entries.begin(); it != entries.end(); ++it)
-		{
-			std::cout << it->first << " == " << it->second << std::endl;
-		}
-		// BitcoinExchange	input(file);
-	}
-	else
-	{
-		std::cerr << "Error: could not open file." << std::endl;
-	}
+	btc.evaluate(arg);
 }
 
 int	main(int argc, char **argv)

@@ -3,14 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+         #
+#    By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/13 15:50:37 by oroy              #+#    #+#              #
-#    Updated: 2024/08/16 14:59:45 by oroy             ###   ########.fr        #
+#    Updated: 2024/08/19 19:50:17 by olivierroy       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	:= btc
+
+DB		:= input.txt
 
 OBJDIR	:= obj
 SRC		:= main.cpp BitcoinExchange.cpp
@@ -46,7 +48,7 @@ fclean: clean
 re: fclean all
 
 run: $(NAME)
-	@./$(NAME)
+	@./$(NAME) $(DB)
 
 # VALGRIND ******************************************************************* #
 
