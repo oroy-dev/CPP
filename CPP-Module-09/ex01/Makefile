@@ -6,11 +6,11 @@
 #    By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/13 15:50:37 by oroy              #+#    #+#              #
-#    Updated: 2024/08/12 15:31:48 by oroy             ###   ########.fr        #
+#    Updated: 2024/08/21 16:31:01 by oroy             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	:= span
+NAME	:= RPN
 
 OBJDIR	:= obj
 SRC		:= main.cpp Span.cpp

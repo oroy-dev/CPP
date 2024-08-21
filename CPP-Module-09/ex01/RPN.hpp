@@ -1,33 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   RPN.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/12 17:08:48 by oroy              #+#    #+#             */
-/*   Updated: 2024/08/21 16:31:35 by oroy             ###   ########.fr       */
+/*   Created: 2024/08/19 20:01:25 by olivierroy        #+#    #+#             */
+/*   Updated: 2024/08/21 14:57:07 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "BitcoinExchange.hpp"
+#ifndef RPN_HPP
+# define RPN_HPP
 
-static void	run(const char *arg)
+# include <iostream>
+# include <stack>
+# include <string>
+
+class RPN
 {
-	BitcoinExchange	btc;
+private:
 
-	if (btc.databaseIsValid())
-		btc.evaluate(arg);
-	else
-		std::cerr << "Error: invalid database" << std::endl;
-}
+	std::stack<int>	_stack;
 
-int	main(int argc, char **argv)
-{
-	if (argc == 1)
-	{
-		std::cerr << "Error: could not open file." << std::endl;
-		return (1);
-	}
-	run(argv[1]);
-}
+public:
+
+	RPN(std::string const &arg);
+	RPN(RPN const &src);
+	RPN &operator=(RPN const &rhs);
+	~RPN();
+
+};
+
+#endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   BitcoinExchange.cpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+        */
+/*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 20:01:25 by olivierroy        #+#    #+#             */
-/*   Updated: 2024/08/21 00:25:45 by olivierroy       ###   ########.fr       */
+/*   Updated: 2024/08/21 17:02:25 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,7 @@ void	BitcoinExchange::_printResult(std::string const &date, std::string const &r
 
 	iRate >> fRate;
 	iValue >> fValue;
-	std::cout << date << " => " << value << " = " << fRate * fValue << std::endl; 
+	std::cout << date << " => " << value << " = " << fRate * fValue << std::endl;
 }
 
 /* Public */
