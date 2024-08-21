@@ -6,7 +6,7 @@
 /*   By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:08:48 by oroy              #+#    #+#             */
-/*   Updated: 2024/08/20 00:24:48 by olivierroy       ###   ########.fr       */
+/*   Updated: 2024/08/20 20:33:18 by olivierroy       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,10 @@ static void	run(const char *arg)
 {
 	BitcoinExchange	btc;
 
-	btc.evaluate(arg);
+	if (btc.databaseIsValid())
+		btc.evaluate(arg);
+	else
+		std::cerr << "Error: invalid database" << std::endl;
 }
 
 int	main(int argc, char **argv)

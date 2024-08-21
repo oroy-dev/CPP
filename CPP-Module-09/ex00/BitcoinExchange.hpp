@@ -6,27 +6,18 @@
 /*   By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:08:48 by oroy              #+#    #+#             */
-/*   Updated: 2024/08/20 00:32:05 by olivierroy       ###   ########.fr       */
+/*   Updated: 2024/08/20 21:04:53 by olivierroy       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BITCOINEXCHANGE_HPP
 # define BITCOINEXCHANGE_HPP
 
-# include <algorithm>
-# include <cstring>
 # include <fstream>
 # include <iostream>
 # include <map>
 # include <sstream>
 # include <string>
-
-typedef struct s_date
-{
-	int	year;
-	int	month;
-	int	day;
-}	t_date;
 
 class BitcoinExchange
 {
@@ -34,11 +25,14 @@ private:
 	
 	std::map<std::string const, std::string const>	_database;
 
+	bool				_databaseIsValid;
+
 	bool				_dateIsValid(std::string const &date) const;
-	std::string const	_constructDate(t_date dateStruct) const;
-	t_date				_createDateStruct(std::string const &date) const;
-	void				_findInDatabase(t_date date) const;
+	bool				_isFloat(std::string const &number) const;
+	bool				_valueIsValid(std::string const &value) const;
+	std::string const &	_findInDatabase(std::string const &date);
 	std::string const	_trim(std::string const &date) const;
+	void				_printResult(std::string const &date, std::string const &rate, std::string const &value) const;
 
 public:
 
@@ -47,7 +41,8 @@ public:
 	BitcoinExchange &operator=(BitcoinExchange const &rhs);
 	~BitcoinExchange();
 
-	void	evaluate(const char *arg) const;
+	bool	databaseIsValid(void) const;
+	void	evaluate(const char *arg);
 
 };
 

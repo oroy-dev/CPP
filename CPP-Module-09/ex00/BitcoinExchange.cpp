@@ -6,7 +6,7 @@
 /*   By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 20:01:25 by olivierroy        #+#    #+#             */
-/*   Updated: 2024/08/20 00:35:58 by olivierroy       ###   ########.fr       */
+/*   Updated: 2024/08/20 21:26:48 by olivierroy       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /* Canonical */
 
-BitcoinExchange::BitcoinExchange(void)
+BitcoinExchange::BitcoinExchange(void) : _databaseIsValid(true)
 {
 	std::ifstream	file("data.csv");
 	std::string		line;
@@ -26,20 +26,35 @@ BitcoinExchange::BitcoinExchange(void)
 	{
 		while (std::getline(file, line))
 		{
+			line = _trim(line);
+			if (line == "date,exchange_rate" || line.empty())
+				continue ;
 			pos = line.find(',');
-			date = line.substr(0, pos);
-			if (pos != std::string::npos)
-				value = line.substr(pos + 1);
-			else
-				value = "";
+			if (pos == std::string::npos)
+			{
+				_databaseIsValid = false;
+				break ;
+			}
+			date = _trim(line.substr(0, pos));
+			if (!_dateIsValid(date))
+			{
+				_databaseIsValid = false;
+				break ;
+			}
+			value = _trim(line.substr(pos + 1));
+			if (!_isFloat(value))
+			{
+				_databaseIsValid = false;
+				break ;
+			}
 			_database.insert(std::pair<std::string const, std::string const>(date, value));
-			// _database[date] = value;
 		}
 		file.close();
 	}
 	else
 	{
 		std::cerr << "Error: could not open file." << std::endl;
+		_databaseIsValid = false;
 	}
 }
 
@@ -82,60 +97,92 @@ bool	BitcoinExchange::_dateIsValid(std::string const &date) const
 	return (true);
 }
 
-std::string const	BitcoinExchange::_constructDate(t_date dateStruct) const
+bool	BitcoinExchange::_isFloat(std::string const &number) const
 {
-	std::string	date;
+	std::istringstream	iss(number);
+	float				f;
 
-	date = dateStruct.year + '-' + dateStruct.month + '-' + dateStruct.day;
-
-	return (date);
+	iss >> f;
+	if (iss.fail() || !iss.eof())
+		return (false);
+	return (true);
 }
 
-t_date	BitcoinExchange::_createDateStruct(std::string const &date) const
+bool	BitcoinExchange::_valueIsValid(std::string const &value) const
 {
-	t_date				dateStruct;
-	std::string			tmp = date;
-	std::istringstream	iss;
+	std::istringstream	iss(value);
+	float				f;
 
-	std::replace(tmp.begin(), tmp.end(), '-', ' ');
-	iss.str(tmp);
-	iss >> dateStruct.year;
-	iss >> dateStruct.month;
-	iss >> dateStruct.day;
-	return (dateStruct);
-}
-
-void	BitcoinExchange::_findInDatabase(t_date dateStruct) const
-{
-	std::map<std::string const, std::string const>::const_iterator	it;
-
-	while ((it = _database.find(_constructDate(dateStruct))) == _database.end())
+	iss >> f;
+	if (iss.fail() || !iss.eof())
 	{
-		
+		std::cerr << "Error: invalid number => " << value << std::endl;
+		return (false);
 	}
+	if (f < 0)
+	{
+		std::cerr << "Error: not a positive number => " << f << std::endl;
+		return (false);
+	}
+	if (f > 1000)
+	{
+		std::cerr << "Error: too large a number => " << f << std::endl;
+		return (false);
+	}
+	return (true);
+}
 
-	// if (it != _database.end())
-	// {
-	// 	std::cout << "Date = " << it->first << " Rate = " << it->second << std::endl;
-	// }
+std::string const	&BitcoinExchange::_findInDatabase(std::string const &date)
+{
+	std::pair<std::map<std::string const, std::string const>::const_iterator, bool>	rtn;
+
+	rtn = _database.insert(std::pair<std::string const, std::string const>(date, ""));
+	if (rtn.second == true)	// Meaning a new element was inserted in the map
+	{
+		--rtn.first;
+		if (rtn.first->second.empty())
+			std::cout << "Yo" << std::endl;
+		_database.erase(date);
+	}
+	return (rtn.first->second);
 }
 
 std::string const	BitcoinExchange::_trim(std::string const &date) const
 {
-	size_t	start_pos = date.find_first_not_of(" \t");
-	size_t	end_pos = date.find_last_not_of(" \t");
+	size_t	startPos = date.find_first_not_of(" \t");
+	size_t	endPos = date.find_last_not_of(" \t");
 
-	return (date.substr(start_pos, end_pos + 1));
+	if (startPos == std::string::npos || endPos == std::string::npos)
+		return ("");
+	return (date.substr(startPos, endPos + 1));
+}
+
+void	BitcoinExchange::_printResult(std::string const &date, std::string const &rate, std::string const &value) const
+{
+	float				fRate;
+	float				fValue;
+	std::istringstream	iRate(rate);
+	std::istringstream	iValue(value);
+
+	iRate >> fRate;
+	iValue >> fValue;
+	std::cout << date << " => " << value << " = " << fRate * fValue << std::endl; 
 }
 
 /* Public */
 
-void	BitcoinExchange::evaluate(const char *arg) const
+bool	BitcoinExchange::databaseIsValid(void) const
+{
+	return (_databaseIsValid);
+}
+
+void	BitcoinExchange::evaluate(const char *arg)
 {
 	std::ifstream	file(arg);
 	std::string		line;
 	std::string		date;
-	t_date			dateStruct;
+	std::string		value;
+	std::string		rate;
 	size_t			pos;
 
 	if (file.is_open())
@@ -143,15 +190,22 @@ void	BitcoinExchange::evaluate(const char *arg) const
 		while (std::getline(file, line))
 		{
 			pos = line.find('|');
-			date = _trim(line.substr(0, pos));
-			if (_dateIsValid(date))
+			if (pos == std::string::npos)
 			{
-				dateStruct = _createDateStruct(date);
-				// std::cout << dateStruct.year << "-" << dateStruct.month << "-" << dateStruct.day << std::endl;
-				_findInDatabase(dateStruct);
+				std::cerr << "Error: bad input => " << line << std::endl;
+				continue ;
 			}
-			else
-				std::cerr << "Date is not valid" << std::endl;
+			date = _trim(line.substr(0, pos));
+			if (!_dateIsValid(date))
+			{
+				std::cerr << "Error: invalid date => " << date << std::endl;
+				continue ;
+			}
+			value = _trim(line.substr(pos + 1));
+			if (!_valueIsValid(value))
+				continue ;
+			rate = _findInDatabase(date);
+			_printResult(date, rate, value);
 		}
 		file.close();
 	}
