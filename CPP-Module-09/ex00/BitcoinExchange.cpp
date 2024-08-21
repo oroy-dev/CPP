@@ -6,7 +6,7 @@
 /*   By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 20:01:25 by olivierroy        #+#    #+#             */
-/*   Updated: 2024/08/20 21:26:48 by olivierroy       ###   ########.fr       */
+/*   Updated: 2024/08/21 00:25:45 by olivierroy       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,8 +140,6 @@ std::string const	&BitcoinExchange::_findInDatabase(std::string const &date)
 	if (rtn.second == true)	// Meaning a new element was inserted in the map
 	{
 		--rtn.first;
-		if (rtn.first->second.empty())
-			std::cout << "Yo" << std::endl;
 		_database.erase(date);
 	}
 	return (rtn.first->second);
@@ -205,6 +203,11 @@ void	BitcoinExchange::evaluate(const char *arg)
 			if (!_valueIsValid(value))
 				continue ;
 			rate = _findInDatabase(date);
+			if (rate.empty())
+			{
+				std::cerr << "Error: no entry found => " << date << std::endl;
+				continue ;
+			}
 			_printResult(date, rate, value);
 		}
 		file.close();
