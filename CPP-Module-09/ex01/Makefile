@@ -6,14 +6,14 @@
 #    By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/13 15:50:37 by oroy              #+#    #+#              #
-#    Updated: 2024/08/21 16:31:01 by oroy             ###   ########.fr        #
+#    Updated: 2024/08/22 15:18:12 by oroy             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	:= RPN
 
 OBJDIR	:= obj
-SRC		:= main.cpp Span.cpp
+SRC		:= main.cpp RPN.cpp
 OBJ		:= $(patsubst %.cpp, $(OBJDIR)/%.o, $(SRC))
 
 CC		:= c++
