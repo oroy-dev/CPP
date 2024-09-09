@@ -6,7 +6,7 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 20:01:25 by olivierroy        #+#    #+#             */
-/*   Updated: 2024/08/22 17:03:34 by oroy             ###   ########.fr       */
+/*   Updated: 2024/09/09 17:30:51 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ RPN::RPN(std::string const &arg) : _left(0), _right(0)
 		else if (*it == '+' || *it == '-' || *it == '*' || *it == '/')
 		{
 			if (!_insert(_right) || !_insert(_left))
-				break ;
+				return ;
 			_operate(*it);
 		}
 		else
@@ -32,7 +32,7 @@ RPN::RPN(std::string const &arg) : _left(0), _right(0)
 			return ;
 		}
 	}
-	printResult();
+	_printStack();
 }
 
 RPN::RPN(RPN const &src)
@@ -53,11 +53,11 @@ RPN::~RPN() {}
 
 /* Private */
 
-bool	RPN::_insert(int &operand)
+bool	RPN::_insert(double &operand)
 {
 	if (_stack.empty())
 	{
-		std::cerr << "Error: no numbers in stack" << std::endl;
+		std::cerr << "Error: not enough numbers in stack to operate" << std::endl;
 		return false;
 	}
 	operand = _stack.top();
@@ -76,12 +76,12 @@ void	RPN::_operate(char sign)
 	}
 }
 
-/* Public */
-
-void	RPN::printResult(void) const
+void	RPN::_printStack(void)
 {
-	if (_stack.size() != 1)
-		std::cerr << "Error: Stack size must be exactly 1 at the end" << std::endl;	
-	else
-		std::cout << _stack.top() << std::endl;
+	while (!_stack.empty())
+	{
+		std::cout << _stack.top() << " ";
+		_stack.pop();
+	}
+	std::cout << std::endl;
 }
