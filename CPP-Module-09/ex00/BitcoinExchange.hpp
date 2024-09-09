@@ -6,7 +6,7 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:08:48 by oroy              #+#    #+#             */
-/*   Updated: 2024/09/09 13:04:54 by oroy             ###   ########.fr       */
+/*   Updated: 2024/09/09 16:29:45 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ private:
 	bool				_valueIsValid(std::string const &value) const;
 	int					_findNumberOfDays(int month, int year) const;
 	std::string const	_findInDatabase(std::string const &date) const;
-	std::string const	_trim(std::string const &date) const;
+	std::string const	_trimFloat(std::string const &value) const;
+	std::string const	_trimWhiteSpace(std::string const &date) const;
 	void				_printResult(std::string const &date, std::string const &rate, std::string const &value) const;
 
 public:

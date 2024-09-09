@@ -6,13 +6,13 @@
 #    By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/13 15:50:37 by oroy              #+#    #+#              #
-#    Updated: 2024/09/09 11:18:54 by oroy             ###   ########.fr        #
+#    Updated: 2024/09/09 16:29:07 by oroy             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	:= btc
 
-DB		:= input.txt
+DB		:= input_pdf.txt
 
 OBJDIR	:= obj
 SRC		:= main.cpp BitcoinExchange.cpp
@@ -60,4 +60,4 @@ vleaks:
 	--show-reachable=yes \
 	--show-possibly-lost=yes \
 	--track-origins=yes \
-	./$(NAME)
+	./$(NAME) $(DB)
