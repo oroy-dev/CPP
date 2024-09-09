@@ -6,7 +6,7 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 20:01:25 by olivierroy        #+#    #+#             */
-/*   Updated: 2024/08/21 17:02:25 by oroy             ###   ########.fr       */
+/*   Updated: 2024/09/09 13:18:52 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,40 +22,37 @@ BitcoinExchange::BitcoinExchange(void) : _databaseIsValid(true)
 	std::string		value;
 	size_t			pos;
 
-	if (file.is_open())
-	{
-		while (std::getline(file, line))
-		{
-			line = _trim(line);
-			if (line == "date,exchange_rate" || line.empty())
-				continue ;
-			pos = line.find(',');
-			if (pos == std::string::npos)
-			{
-				_databaseIsValid = false;
-				break ;
-			}
-			date = _trim(line.substr(0, pos));
-			if (!_dateIsValid(date))
-			{
-				_databaseIsValid = false;
-				break ;
-			}
-			value = _trim(line.substr(pos + 1));
-			if (!_isFloat(value))
-			{
-				_databaseIsValid = false;
-				break ;
-			}
-			_database.insert(std::pair<std::string const, std::string const>(date, value));
-		}
-		file.close();
-	}
-	else
+	if (!file.is_open())
 	{
 		std::cerr << "Error: could not open file." << std::endl;
 		_databaseIsValid = false;
 	}
+	while (std::getline(file, line))
+	{
+		line = _trim(line);
+		if (line == "date,exchange_rate" || line.empty())
+			continue ;
+		pos = line.find(',');
+		if (pos == std::string::npos)
+		{
+			_databaseIsValid = false;
+			break ;
+		}
+		date = _trim(line.substr(0, pos));
+		if (!_dateIsValid(date))
+		{
+			_databaseIsValid = false;
+			break ;
+		}
+		value = _trim(line.substr(pos + 1));
+		if (!_isFloat(value))
+		{
+			_databaseIsValid = false;
+			break ;
+		}
+		_database.insert(std::pair<std::string const, std::string const>(date, value));
+	}
+	file.close();
 }
 
 BitcoinExchange::BitcoinExchange(BitcoinExchange const &src)
@@ -69,33 +66,94 @@ BitcoinExchange &BitcoinExchange::operator=(BitcoinExchange const &rhs)
 	{
 		_database = rhs._database;
 	}
-	return (*this);
+	return *this;
 }
 
 BitcoinExchange::~BitcoinExchange() {}
 
 /* Private */
 
+int	BitcoinExchange::_findNumberOfDays(int month, int year) const
+{
+	switch (month)
+	{
+		case 1: case 3: case 5: case 7: case 8: case 10: case 12:
+			return 31;
+		case 4: case 6: case 9: case 11:
+			return 30;
+		case 2:
+			if ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0)
+				return 29;
+			else
+				return 28;
+	}
+	return -1;
+}
+
+bool	BitcoinExchange::_dayAndMonthAreValid(int day, int month, int year) const
+{
+	int	daysInMonth;
+
+	if (!(month >= 1 && month <= 12))
+		return false;
+	daysInMonth = _findNumberOfDays(month, year);
+	if (!(day >= 1 && day <= daysInMonth))
+		return false;
+	return true;
+}
+
 bool	BitcoinExchange::_dateIsValid(std::string const &date) const
 {
 	std::string const	pattern = "YYYY-MM-DD";
+	int					day = 0;
+	int					month = 0;
+	int					year = 0;
 	ssize_t				i = -1;
 
+	if (date.size() != pattern.size())
+		return false;
 	while (date[++i])
 	{
-		if ((pattern[i] == 'Y' && strchr("0123456789", date[i])) \
-		||	(pattern[i] == 'M' && strchr("0123456789", date[i])) \
-		||	(pattern[i] == 'D' && strchr("0123456789", date[i])))
+		if (pattern[i] == '-' && date[i] == '-')
 			continue ;
-		else if (pattern[i] == '-' && date[i] == '-')
-			continue ;
+		else if (pattern[i] == 'Y' && strchr("0123456789", date[i]))
+			year = (year * 10) + (date[i] - '0');
+		else if (pattern[i] == 'M' && strchr("0123456789", date[i]))
+			month = (month * 10) + (date[i] - '0');
+		else if (pattern[i] == 'D' && strchr("0123456789", date[i]))
+			day = (day * 10) + (date[i] - '0');
 		else
-			return (false);
+			return false;
 	}
-	if (pattern[i])
-		return (false);
-	return (true);
+	if (!_dayAndMonthAreValid(day, month, year))
+		return false;
+	return true;
 }
+
+// bool	BitcoinExchange::_dateIsValid(std::string const &date) const
+// {
+// 	std::string const	pattern = "YYYY-MM-DD";
+// 	ssize_t				i = -1;
+// 	int					month;
+// 	int					day;
+
+// 	if (date.size() != pattern.size())
+// 		return false;
+// 	while (date[++i])
+// 	{
+// 		if ((pattern[i] == 'Y' && strchr("0123456789", date[i])) \
+// 		||	(pattern[i] == 'M' && strchr("0123456789", date[i])) \
+// 		||	(pattern[i] == 'D' && strchr("0123456789", date[i])))
+// 			continue ;
+// 		else if (pattern[i] == '-' && date[i] == '-')
+// 			continue ;
+// 		else
+// 			return false;
+// 	}
+// 	if (!_dayAndMonthAreValid(date))
+// 		return false;
+// 	return true;
+// }
 
 bool	BitcoinExchange::_isFloat(std::string const &number) const
 {
@@ -104,8 +162,8 @@ bool	BitcoinExchange::_isFloat(std::string const &number) const
 
 	iss >> f;
 	if (iss.fail() || !iss.eof())
-		return (false);
-	return (true);
+		return false;
+	return true;
 }
 
 bool	BitcoinExchange::_valueIsValid(std::string const &value) const
@@ -117,32 +175,44 @@ bool	BitcoinExchange::_valueIsValid(std::string const &value) const
 	if (iss.fail() || !iss.eof())
 	{
 		std::cerr << "Error: invalid number => " << value << std::endl;
-		return (false);
+		return false;
 	}
 	if (f < 0)
 	{
 		std::cerr << "Error: not a positive number => " << f << std::endl;
-		return (false);
+		return false;
 	}
 	if (f > 1000)
 	{
 		std::cerr << "Error: too large a number => " << f << std::endl;
-		return (false);
+		return false;
 	}
-	return (true);
+	return true;
 }
 
-std::string const	&BitcoinExchange::_findInDatabase(std::string const &date)
+std::string const	BitcoinExchange::_findInDatabase(std::string const &date) const
 {
-	std::pair<std::map<std::string const, std::string const>::const_iterator, bool>	rtn;
+	// std::pair<std::map<std::string const, std::string const>::const_iterator, bool>	rtn;
 
-	rtn = _database.insert(std::pair<std::string const, std::string const>(date, ""));
-	if (rtn.second == true)	// Meaning a new element was inserted in the map
+	// rtn = _database.insert(std::pair<std::string const, std::string const>(date, ""));
+	// if (rtn.second == true)	// Meaning a new element was inserted in the map
+	// {
+	// 	--rtn.first;
+	// 	_database.erase(date);
+	// }
+	// return rtn.first->second;
+
+	std::map<std::string const, std::string const>::const_iterator	it;
+
+	it = _database.lower_bound (date);
+	if (it->first != date)
 	{
-		--rtn.first;
-		_database.erase(date);
+		if (it == _database.begin())
+			return "";
+		--it;
 	}
-	return (rtn.first->second);
+	// std::cout << it->first << std::endl;
+	return it->second;
 }
 
 std::string const	BitcoinExchange::_trim(std::string const &date) const
@@ -151,8 +221,8 @@ std::string const	BitcoinExchange::_trim(std::string const &date) const
 	size_t	endPos = date.find_last_not_of(" \t");
 
 	if (startPos == std::string::npos || endPos == std::string::npos)
-		return ("");
-	return (date.substr(startPos, endPos + 1));
+		return "";
+	return date.substr(startPos, endPos + 1);
 }
 
 void	BitcoinExchange::_printResult(std::string const &date, std::string const &rate, std::string const &value) const
@@ -171,7 +241,7 @@ void	BitcoinExchange::_printResult(std::string const &date, std::string const &r
 
 bool	BitcoinExchange::databaseIsValid(void) const
 {
-	return (_databaseIsValid);
+	return _databaseIsValid;
 }
 
 void	BitcoinExchange::evaluate(const char *arg)
@@ -183,37 +253,35 @@ void	BitcoinExchange::evaluate(const char *arg)
 	std::string		rate;
 	size_t			pos;
 
-	if (file.is_open())
-	{
-		while (std::getline(file, line))
-		{
-			pos = line.find('|');
-			if (pos == std::string::npos)
-			{
-				std::cerr << "Error: bad input => " << line << std::endl;
-				continue ;
-			}
-			date = _trim(line.substr(0, pos));
-			if (!_dateIsValid(date))
-			{
-				std::cerr << "Error: invalid date => " << date << std::endl;
-				continue ;
-			}
-			value = _trim(line.substr(pos + 1));
-			if (!_valueIsValid(value))
-				continue ;
-			rate = _findInDatabase(date);
-			if (rate.empty())
-			{
-				std::cerr << "Error: no entry found => " << date << std::endl;
-				continue ;
-			}
-			_printResult(date, rate, value);
-		}
-		file.close();
-	}
-	else
+	if (!file.is_open())
 	{
 		std::cerr << "Error: could not open file." << std::endl;
+		return ;
 	}
+	while (std::getline(file, line))
+	{
+		pos = line.find('|');
+		if (pos == std::string::npos)
+		{
+			std::cerr << "Error: bad input => " << line << std::endl;
+			continue ;
+		}
+		date = _trim(line.substr(0, pos));
+		if (!_dateIsValid(date))
+		{
+			std::cerr << "Error: invalid date => " << date << std::endl;
+			continue ;
+		}
+		value = _trim(line.substr(pos + 1));
+		if (!_valueIsValid(value))
+			continue ;
+		rate = _findInDatabase(date);
+		if (rate.empty())
+		{
+			std::cerr << "Error: no entry found => " << date << std::endl;
+			continue ;
+		}
+		_printResult(date, rate, value);
+	}
+	file.close();
 }
