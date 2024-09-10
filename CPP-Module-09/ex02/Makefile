@@ -6,11 +6,11 @@
 #    By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/13 15:50:37 by oroy              #+#    #+#              #
-#    Updated: 2024/08/13 18:49:52 by oroy             ###   ########.fr        #
+#    Updated: 2024/09/10 11:07:20 by oroy             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	:= MutantStack
+NAME	:= PmergeMe
 
 OBJDIR	:= obj
 SRC		:= main.cpp
