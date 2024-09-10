@@ -6,14 +6,14 @@
 #    By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/13 15:50:37 by oroy              #+#    #+#              #
-#    Updated: 2024/09/10 11:07:20 by oroy             ###   ########.fr        #
+#    Updated: 2024/09/10 18:13:39 by oroy             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	:= PmergeMe
 
 OBJDIR	:= obj
-SRC		:= main.cpp
+SRC		:= main.cpp PmergeMe.cpp
 OBJ		:= $(patsubst %.cpp, $(OBJDIR)/%.o, $(SRC))
 
 CC		:= c++
@@ -46,7 +46,7 @@ fclean: clean
 re: fclean all
 
 run: $(NAME)
-	@./$(NAME)
+	@./$(NAME) "5 2 3 1 4 7 6"
 
 # VALGRIND ******************************************************************* #
 

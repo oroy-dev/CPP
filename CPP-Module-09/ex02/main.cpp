@@ -6,31 +6,23 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:50:37 by oroy              #+#    #+#             */
-/*   Updated: 2024/09/10 13:19:32 by oroy             ###   ########.fr       */
+/*   Updated: 2024/09/10 16:53:36 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
-#include <string>
-#include <utility>
-#include <vector>
-
-static bool	parseArgs(const char **argv)
-{
-	for (size_t i = 0; argv[i]; ++i)
-	{
-		if (argv[i])
-	}
-}
+#include "PmergeMe.hpp"
 
 int	main(int argc, char **argv)
 {
-	if (argc == 1)
-	{
-		std::cerr << "Error: Please provide arguments" << std::endl;
-		return 1; 
-	}
-	argsAreValid(argv);
+	PmergeMe	p(argc, argv);
+
+	// if (argc == 1)
+	// {
+	// 	std::cerr << "Error: Please provide arguments" << std::endl;
+	// 	return 1; 
+	// }
+	
+	return 0;
 }
 
 // int	main(void)
