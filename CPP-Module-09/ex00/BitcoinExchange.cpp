@@ -6,7 +6,7 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 20:01:25 by olivierroy        #+#    #+#             */
-/*   Updated: 2024/09/09 16:48:49 by oroy             ###   ########.fr       */
+/*   Updated: 2024/09/11 15:28:58 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ BitcoinExchange &BitcoinExchange::operator=(BitcoinExchange const &rhs)
 BitcoinExchange::~BitcoinExchange() {}
 
 /* Private */
+
+// std::get_time
 
 bool	BitcoinExchange::_dayAndMonthAreValid(int day, int month, int year) const
 {

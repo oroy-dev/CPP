@@ -6,11 +6,14 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:50:37 by oroy              #+#    #+#             */
-/*   Updated: 2024/09/10 18:52:57 by oroy             ###   ########.fr       */
+/*   Updated: 2024/09/11 17:49:36 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+// https://github.com/decidedlyso/merge-insertion-sort?tab=readme-ov-file
+// https://en.wikipedia.org/wiki/Merge-insertion_sort
 // https://www.reddit.com/r/algorithms/comments/1bajgye/merge_insertion_ford_johnson/
+// https://iq.opengenus.org/merge-insertion-sort/#google_vignette
 
 #include "PmergeMe.hpp"
 
@@ -18,7 +21,8 @@ PmergeMe::PmergeMe(int argc, char **argv)
 {
 	_groupIntoPairs(argc, argv);
 	_sortEachPair();
-	_sortPairs(0);
+	_recursiveSort(_pairs.size());
+	// _sortPairs(0);
 	_printPairs();
 }
 
@@ -48,17 +52,18 @@ void	PmergeMe::_groupIntoPairs(int argc, char **argv)
 	for (int i = 1; i < argc; ++i)
 	{
 		iss.str (argv[i]);
-		while (iss)
+		while (iss.good())
 		{
 			std::pair<int, int>	p;
 
-			if ((iss >> p.second).fail() || (iss >> p.first).fail()) // Assigning p.second first in case number of args is odd
+			if ((iss >> p.first).fail() || (iss >> p.second).fail())
 			{
 				if (!iss.eof())
 				{
 					std::cerr << "Error: Only positive numbers accepted" << std::endl;
 					return ;
 				}
+				_odd = p.first;
 			}
 			if (p.second < 0 || p.first < 0)
 			{
@@ -74,14 +79,29 @@ void	PmergeMe::_printPairs(void) const
 {
 	for (std::vector<std::pair<int, int> >::const_iterator it = _pairs.begin(); it != _pairs.end(); ++it)
 	{
-		std::cout << it->first << " ";
+		std::cout << "(" << it->first << "," << it->second << ") ";
 	}
 	std::cout << std::endl;
-	for (std::vector<std::pair<int, int> >::const_iterator it = _pairs.begin(); it != _pairs.end(); ++it)
+}
+
+void	PmergeMe::_recursiveSort(size_t numbersToCompare)
+{
+	std::pair<int, int>	tempPair;
+	size_t				inc = numbersToCompare / 2;
+
+	for (size_t i = 0; i < numbersToCompare; i += inc)
 	{
-		std::cout << it->second << " ";
+		if (_pairs.at(i).second > _pairs.at(i + 1).second)
+		{
+			tempPair = _pairs[i];
+			_pairs[i] = _pairs[i + 1];
+			_pairs[i + 1] = tempPair;
+		}
 	}
-	std::cout << std::endl;
+	if (numbersToCompare > 1)
+	{
+		_recursiveSort(numbersToCompare / 2);
+	}
 }
 
 void	PmergeMe::_sortEachPair(void)
