@@ -6,13 +6,14 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:50:37 by oroy              #+#    #+#             */
-/*   Updated: 2024/09/12 16:42:10 by oroy             ###   ########.fr       */
+/*   Updated: 2024/09/13 14:31:47 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PMERGEME_HPP
 # define PMERGEME_HPP
 
+# include <algorithm>
 # include <iostream>
 # include <sstream>
 # include <stdexcept>
@@ -28,9 +29,10 @@ private:
 	std::vector<std::pair<int, int> >	_pairs;
 	std::vector<int>					_jacob;
 
+	bool								_isOdd;
 	int									_odd;
 
-	int		_findJacobsthalNumber(int idx);
+	int		_jacobsthal(int idx);
 
 	void	_createS(void);
 	void	_fillJacobsthalArray(void);
