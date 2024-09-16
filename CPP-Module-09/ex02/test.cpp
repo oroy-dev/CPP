@@ -1,14 +1,19 @@
-/* Merge Sort Test */
+// Time Test
 
-static void	sort()
-{
-
-}
+#include <iomanip>
+#include <iostream>
+#include <sys/time.h>
 
 int	main(void)
 {
-	int	array[] = {6, 7, 8, 5, 3, 1, 2, 4};
+	struct timeval stop, start;
 
-	sort(array);
+	gettimeofday(&start, NULL);
+	for (size_t i = 0, j = 0; i < 500000000; ++i)
+	{
+		j++;
+	}
+	gettimeofday(&stop, NULL);
+	std::cout << std::fixed << std::setprecision(5) << stop.tv_sec - start.tv_sec + (stop.tv_usec - start.tv_usec) / static_cast<double>(1000000) << "" << std::endl;
 	return 0;
 }

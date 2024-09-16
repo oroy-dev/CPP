@@ -6,7 +6,7 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:50:37 by oroy              #+#    #+#             */
-/*   Updated: 2024/09/16 14:05:31 by oroy             ###   ########.fr       */
+/*   Updated: 2024/09/16 17:33:36 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,6 @@ PmergeMe	&PmergeMe::operator=(PmergeMe const &rhs)
 PmergeMe::~PmergeMe() {}
 
 /*	Private ====================================== */
-
-void	PmergeMe::_sortMainSequence(std::vector<int> main, std::vector<int> pend)
-{
-	
-}
 
 void	PmergeMe::_initSequences(std::vector<int> &main, std::vector<int> &pend, std::vector<std::pair<int, int > > const &pairs) const
 {
@@ -115,6 +110,58 @@ void	PmergeMe::_makePairs(std::vector<std::pair<int, int> > &pairs, bool &isOdd,
 	}
 }
 
+size_t	PmergeMe::_jacobsthal(unsigned int n) const
+{
+	if (n == 0 || n == 1)
+		return n;
+	return _jacobsthal(n - 1) + (_jacobsthal(n - 2) * 2);
+}
+
+std::vector<int>	PmergeMe::_createJacobSequence(std::vector<int> const &pend) const
+{
+	std::vector<int>	jacobSequence;
+	int					jacobIndex = 3;
+	size_t				len = pend.size();
+
+	while (_jacobsthal(jacobIndex) < len - 1)
+	{
+		jacobSequence.push_back(_jacobsthal(jacobIndex));
+		jacobIndex++;
+	}
+	return jacobSequence;
+}
+
+void	PmergeMe::_sortMainSequence(std::vector<int> &main, std::vector<int> const &pend)
+{
+	bool				useJacobIndex = true;
+	int					num = 0;
+	size_t				len = pend.size();
+	std::vector<int>	indexSequence;
+	std::vector<int>	jacobSequence;
+
+	indexSequence.push_back(1);
+	jacobSequence = _createJacobSequence(pend);
+	for (size_t i = 0; i < len; ++i)
+	{
+		if (jacobSequence.size() && useJacobIndex)
+		{
+			indexSequence.push_back(jacobSequence[0]);
+			num = pend[jacobSequence[0] - 1];
+			jacobSequence.erase(jacobSequence.begin());
+			useJacobIndex = false;
+		}
+		else
+		{
+			if (std::find(indexSequence.begin(), indexSequence.end(), i) != indexSequence.end())
+				i++;
+			num = pend[i - 1];
+			indexSequence.push_back(i);
+			useJacobIndex = true;
+		}
+		main.insert(std::lower_bound(main.begin(), main.end(), num), num);
+	}
+}
+
 void	PmergeMe::_sortNumbers(void)
 {
 	std::vector<std::pair<int, int> >	pairs;
@@ -122,33 +169,40 @@ void	PmergeMe::_sortNumbers(void)
 	std::vector<int>					pend;
 	int									straggler = 0;
 	bool								isOdd = false;
+	struct timeval 						start;
+	struct timeval 						end;
 
+	gettimeofday(&start, NULL);
 	// Step 1
 	_makePairs(pairs, isOdd, straggler);
 	// Step 2
 	_swapNumbers(pairs);
 	// Step 3
 	pairs = _mergeSort(0, pairs.size() - 1, pairs);
-	_initSequences(main, pend, pairs);
 	// Step 4
+	_initSequences(main, pend, pairs);
 	main.insert(main.begin(), pend[0]);
 	// Step 5
 	_sortMainSequence(main, pend);
-	// _printNumbers(pairs);
-	for (std::vector<int>::const_iterator it = main.begin(); it != main.end(); ++it)
-	{
-		std::cout << *it << " ";
-	}
-	std::cout << std::endl;
+	if (isOdd)
+		main.insert(std::lower_bound(main.begin(), main.end(), straggler), straggler);
+	gettimeofday(&end, NULL);
+	_printResult(main, end.tv_sec - start.tv_sec + (end.tv_usec - start.tv_usec) / static_cast<double>(1000000));
 }
 
-void	PmergeMe::_printNumbers(std::vector<std::pair<int, int> > const &pairs) const
+void	PmergeMe::_printResult(std::vector<int> const &main, double time) const
 {
-	for (std::vector<std::pair<int, int> >::const_iterator it = pairs.begin(); it != pairs.end(); ++it)
+	std::cout << "Before: " << _unsortedNumbers << std::endl;
+	std::cout << "After:";
+	for (std::vector<int>::const_iterator it = main.begin(); it != main.end(); ++it)
 	{
-		std::cout << "(" << it->first << "," << it->second << ")";
+		std::cout << " " << *it;
 	}
 	std::cout << std::endl;
+	std::cout << "Time to process a range of " << main.size() << " elements with std::vector : ";
+	std::cout << std::fixed << std::setprecision(5) << time << " us" << std::endl;
+	// std::cout << "Time to process a range of " << main.size() << " elements with std::deque : ";
+	// std::cout << "0.00014 us" << std::endl;
 }
 
 /*	Public 	====================================== */
@@ -180,6 +234,5 @@ bool	PmergeMe::parseArgs(int argc, char **argv)
 
 void	PmergeMe::start(void)
 {
-	std::cout << "Before: " << _unsortedNumbers << std::endl;
 	_sortNumbers();
 }
