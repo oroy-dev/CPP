@@ -6,27 +6,13 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:50:37 by oroy              #+#    #+#             */
-/*   Updated: 2024/09/13 16:39:37 by oroy             ###   ########.fr       */
+/*   Updated: 2024/09/16 14:05:31 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// https://github.com/decidedlyso/merge-insertion-sort?tab=readme-ov-file
-// https://en.wikipedia.org/wiki/Merge-insertion_sort
-// https://www.reddit.com/r/algorithms/comments/1bajgye/merge_insertion_ford_johnson/
-// https://iq.opengenus.org/merge-insertion-sort/#google_vignette
-// https://github.com/PunkChameleon/ford-johnson-merge-insertion-sort
-
 #include "PmergeMe.hpp"
 
-PmergeMe::PmergeMe(int argc, char **argv) : _isOdd(false)
-{
-	_groupIntoPairs(argc, argv);
-	_sortEachPair();
-	_insertionSort();
-	_printPairs();
-	_createS();
-	_printS();
-}
+PmergeMe::PmergeMe(void) {}
 
 PmergeMe::PmergeMe(PmergeMe const &src)
 {
@@ -35,10 +21,6 @@ PmergeMe::PmergeMe(PmergeMe const &src)
 
 PmergeMe	&PmergeMe::operator=(PmergeMe const &rhs)
 {
-	// if (this != &rhs)
-	// {
-
-	// }
 	(void) rhs;
 	return *this;
 }
@@ -47,153 +29,157 @@ PmergeMe::~PmergeMe() {}
 
 /*	Private ====================================== */
 
-void	PmergeMe::_createS(void)
+void	PmergeMe::_sortMainSequence(std::vector<int> main, std::vector<int> pend)
 {
-	bool								isJacob = false;
-	std::vector<int>					idx;
-	int									item;
-	std::vector<int>::const_iterator	insertionPoint;
+	
+}
 
-	idx.push_back(1);
-	for (std::vector<std::pair<int, int> >::const_iterator it = _pairs.begin(); it != _pairs.end(); ++it)
+void	PmergeMe::_initSequences(std::vector<int> &main, std::vector<int> &pend, std::vector<std::pair<int, int > > const &pairs) const
+{
+	for (std::vector<std::pair<int, int > >::const_iterator it = pairs.begin(); it != pairs.end(); ++it)
 	{
-		S.push_back(it->second);
-		_pend.push_back(it->first);
+		main.push_back(it->second);
+		pend.push_back(it->first);
 	}
-	S.insert(S.begin(), _pend[0]);
-	_fillJacobsthalArray();
-	for (size_t i = 1; i <= _pend.size(); i++)
+}
+
+std::vector<std::pair<int, int > >	PmergeMe::_merge(std::vector<std::pair<int, int > > const &left, std::vector<std::pair<int, int > > const &right)
+{
+	std::vector<std::pair<int, int> >	sortedList;
+	size_t								l = 0;
+	size_t								r = 0;
+
+	while (l != left.size() || r != right.size())
 	{
-		if (_jacob.size() && !isJacob)
-		{
-			idx.push_back(_jacob[0]);
-			item = _pend[_jacob[0] - 1];
-			_jacob.erase(_jacob.begin());
-			isJacob = true;
-		}
+		if (l == left.size())
+			sortedList.push_back(right[r++]);
+		else if (r == right.size())
+			sortedList.push_back(left[l++]);
+		else if (left[l].second < right[r].second)
+			sortedList.push_back(left[l++]);
 		else
+			sortedList.push_back(right[r++]);
+	}
+	return sortedList;
+}
+
+std::vector<std::pair<int, int > >	PmergeMe::_mergeSort(size_t lowIndex, size_t highIndex, std::vector<std::pair<int, int> > const &pairs)
+{
+	std::vector<std::pair<int, int > >	left;
+	std::vector<std::pair<int, int > >	right;
+	size_t								middle;
+	
+	if (lowIndex == highIndex)
+	{
+		std::vector<std::pair<int, int> > remaining;
+		remaining.push_back(pairs[lowIndex]);
+		return remaining;
+	}
+	middle = (lowIndex + highIndex) / 2;
+	left = _mergeSort(lowIndex, middle, pairs);
+	right = _mergeSort(middle + 1, highIndex, pairs);
+	return _merge(left, right);
+}
+
+void	PmergeMe::_swapNumbers(std::vector<std::pair<int, int> > &pairs)
+{
+	int	tmp = 0;
+
+	for (std::vector<std::pair<int, int> >::iterator it = pairs.begin(); it != pairs.end(); ++it)
+	{
+		if (it->first > it->second)
 		{
-			if (std::find(idx.begin(), idx.end(), i) != idx.end())
-				++i;
-			item = _pend[i - 1];
-			idx.push_back(i);
-			isJacob = false;
-		}
-		insertionPoint = std::lower_bound (S.begin(), S.end(), item);
-		S.insert(insertionPoint, item);
-	}
-	if (_isOdd)
-	{
-		insertionPoint = std::lower_bound (S.begin(), S.end(), _odd);
-		S.insert(insertionPoint, _odd);
-	}
-}
-
-void	PmergeMe::_fillJacobsthalArray(void)
-{
-	int	len = _pend.size();
-	int	jacobIndex = 3;
-
-	while (_jacobsthal(jacobIndex) < len - 1)
-	{
-		_jacob.push_back(_jacobsthal(jacobIndex));
-		jacobIndex++;
-	}
-	for (std::vector<int>::const_iterator it = _jacob.begin(); it != _jacob.end(); ++it)
-	{
-		std::cout << *it << std::endl;
-	}
-}
-
-int	PmergeMe::_jacobsthal(int idx)
-{
-	if (idx == 0 || idx == 1)
-		return idx;
-	return _jacobsthal(idx - 1) + (_jacobsthal(idx - 2) * 2);
-}
-
-void	PmergeMe::_groupIntoPairs(int argc, char **argv)
-{
-	std::istringstream	iss;
-
-	for (int i = 1; i < argc; ++i)
-	{
-		iss.str (argv[i]);
-		while (iss.good())
-		{
-			std::pair<int, int>	p;
-
-			if ((iss >> p.first).fail() || (iss >> p.second).fail())
-			{
-				if (!iss.eof())
-				{
-					std::cerr << "Error: Only positive numbers accepted" << std::endl;
-					return ;
-				}
-				_odd = p.first;
-				_isOdd = true;
-				break ;
-			}
-			if (p.second < 0 || p.first < 0)
-			{
-				std::cerr << "Error: Only positive numbers accepted" << std::endl;
-				return ;
-			}
-			_pairs.push_back(p);
+			tmp = it->first;
+			it->first = it->second;
+			it->second = tmp;
 		}
 	}
 }
 
-void	PmergeMe::_printPairs(void) const
+void	PmergeMe::_makePairs(std::vector<std::pair<int, int> > &pairs, bool &isOdd, int &straggler)
 {
-	for (std::vector<std::pair<int, int> >::const_iterator it = _pairs.begin(); it != _pairs.end(); ++it)
+	std::istringstream	iss(_unsortedNumbers);
+	std::pair<int, int>	pair;
+
+	while (iss.good())
 	{
-		std::cout << "(" << it->first << "," << it->second << ") ";
+		iss >> pair.first;
+		if (iss.eof())
+		{
+			isOdd = true;
+			straggler = pair.first;
+			return ;
+		}
+		iss >> pair.second;
+		pairs.push_back(pair);
 	}
-	std::cout << std::endl;
 }
 
-void	PmergeMe::_printS(void) const
+void	PmergeMe::_sortNumbers(void)
 {
-	for (std::vector<int>::const_iterator it = S.begin(); it != S.end(); ++it)
+	std::vector<std::pair<int, int> >	pairs;
+	std::vector<int>					main;
+	std::vector<int>					pend;
+	int									straggler = 0;
+	bool								isOdd = false;
+
+	// Step 1
+	_makePairs(pairs, isOdd, straggler);
+	// Step 2
+	_swapNumbers(pairs);
+	// Step 3
+	pairs = _mergeSort(0, pairs.size() - 1, pairs);
+	_initSequences(main, pend, pairs);
+	// Step 4
+	main.insert(main.begin(), pend[0]);
+	// Step 5
+	_sortMainSequence(main, pend);
+	// _printNumbers(pairs);
+	for (std::vector<int>::const_iterator it = main.begin(); it != main.end(); ++it)
 	{
 		std::cout << *it << " ";
 	}
 	std::cout << std::endl;
 }
 
-void	PmergeMe::_recurse(std::pair<int, int> p, ssize_t n)
+void	PmergeMe::_printNumbers(std::vector<std::pair<int, int> > const &pairs) const
 {
-	if (n < 0)
-		_pairs[0] = p;
-	else if (p.second >= _pairs.at(n).second)
-		_pairs[n + 1] = p;
-	else
+	for (std::vector<std::pair<int, int> >::const_iterator it = pairs.begin(); it != pairs.end(); ++it)
 	{
-		_pairs[n + 1] = _pairs[n];
-		_recurse(p, n - 1);
+		std::cout << "(" << it->first << "," << it->second << ")";
 	}
+	std::cout << std::endl;
 }
 
-void	PmergeMe::_insertionSort(void)
-{
-	for (size_t i = 1; i < _pairs.size(); ++i)
-	{
-		_recurse(_pairs.at(i), i - 1);
-	}
-}
+/*	Public 	====================================== */
 
-void	PmergeMe::_sortEachPair(void)
+bool	PmergeMe::parseArgs(int argc, char **argv)
 {
-	int	temp = 0;
+	std::istringstream	iss;
+	std::ostringstream	oss;
+	long				num;
 
-	for (std::vector<std::pair<int, int> >::iterator it = _pairs.begin(); it != _pairs.end(); ++it)
+	for (int i = 1; i < argc; ++i)
 	{
-		if (it->second < it->first)
+		iss.str (argv[i]);
+		while (iss.good())
 		{
-			temp = it->first;
-			it->first = it->second;
-			it->second = temp;
+			if ((iss >> num).fail() || num < 0 || num > 2147483647)
+			{
+				std::cerr << "Error: Please enter positive integers only" << std::endl;
+				return false;
+			}
+			oss << num;
+			if (!iss.eof())
+				oss << " ";
 		}
 	}
+	_unsortedNumbers = oss.str();
+	return true;
+}
+
+void	PmergeMe::start(void)
+{
+	std::cout << "Before: " << _unsortedNumbers << std::endl;
+	_sortNumbers();
 }

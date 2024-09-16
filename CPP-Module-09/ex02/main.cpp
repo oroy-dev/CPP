@@ -6,7 +6,7 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:50:37 by oroy              #+#    #+#             */
-/*   Updated: 2024/09/10 16:53:36 by oroy             ###   ########.fr       */
+/*   Updated: 2024/09/16 11:49:01 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,16 @@
 
 int	main(int argc, char **argv)
 {
-	PmergeMe	p(argc, argv);
+	PmergeMe	p;
 
-	// if (argc == 1)
-	// {
-	// 	std::cerr << "Error: Please provide arguments" << std::endl;
-	// 	return 1; 
-	// }
-	
+	if (argc == 1)
+	{
+		std::cerr << "Error: Please provide arguments" << std::endl;
+		return 1; 
+	}
+	if (!p.parseArgs(argc, argv))
+		return 1;
+	p.start();
 	return 0;
 }
 

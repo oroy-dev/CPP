@@ -6,7 +6,7 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:50:37 by oroy              #+#    #+#             */
-/*   Updated: 2024/09/13 14:31:47 by oroy             ###   ########.fr       */
+/*   Updated: 2024/09/16 14:05:11 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,36 +19,52 @@
 # include <stdexcept>
 # include <utility>
 # include <vector>
+# include <string>
 
 class PmergeMe
 {
 private:
 
-	std::vector<int>					S;
-	std::vector<int>					_pend;
-	std::vector<std::pair<int, int> >	_pairs;
-	std::vector<int>					_jacob;
+	std::string							_unsortedNumbers;
 
-	bool								_isOdd;
-	int									_odd;
+	std::vector<std::pair<int, int > >	_merge(std::vector<std::pair<int, int > > const &left, std::vector<std::pair<int, int > > const &right);
+	std::vector<std::pair<int, int > >	_mergeSort(size_t lowIndex, size_t highIndex, std::vector<std::pair<int, int> > const &pairs);
+	void								_initSequences(std::vector<int> &main, std::vector<int> &pend, std::vector<std::pair<int, int > > const &pairs) const;
+	void								_makePairs(std::vector<std::pair<int, int> > &pairs, bool &isOdd, int &straggler);
+	void								_sortMainSequence(std::vector<int> main, std::vector<int> pend);
+	void								_sortNumbers(void);
+	void								_swapNumbers(std::vector<std::pair<int, int> > &pairs);
 
-	int		_jacobsthal(int idx);
+	void								_printNumbers(std::vector<std::pair<int, int> > const &pairs) const;
 
-	void	_createS(void);
-	void	_fillJacobsthalArray(void);
-	void	_groupIntoPairs(int argc, char **argv);
-	void	_insertionSort(void);
-	void	_printPairs(void) const;
-	void	_printS(void) const;
-	void	_recurse(std::pair<int, int> p, ssize_t n);
-	void	_sortEachPair(void);
+	// std::vector<int>					S;
+	// std::vector<int>					_pend;
+	// std::vector<std::pair<int, int> >	_pairs;
+	// std::vector<int>					_jacob;
+
+	// bool								_isOdd;
+	// int									_odd;
+
+	// int		_jacobsthal(int idx);
+
+	// void	_createS(void);
+	// void	_fillJacobsthalArray(void);
+	// void	_groupIntoPairs(int argc, char **argv);
+	// void	_insertionSort(void);
+	// void	_printPairs(void) const;
+	// void	_printS(void) const;
+	// void	_recurse(std::pair<int, int> p, ssize_t n);
+	// void	_sortEachPair(void);
 
 public:
 
-	PmergeMe(int argc, char **argv);
+	PmergeMe(void);
 	PmergeMe(PmergeMe const &src);
 	PmergeMe &operator=(PmergeMe const &rhs);
 	~PmergeMe();
+
+	bool	parseArgs(int argc, char **argv);
+	void	start(void);
 
 };
 
