@@ -6,33 +6,23 @@
 /*   By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:50:37 by oroy              #+#    #+#             */
-/*   Updated: 2024/09/16 22:33:21 by olivierroy       ###   ########.fr       */
+/*   Updated: 2024/09/16 20:46:23 by olivierroy       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PmergeMe.hpp"
 
-PmergeMe::PmergeMe(std::string const &args, size_t const &count) : \
-_initialNumbers(args), _numberCount(count)
-{
-	// std::vector<int>	sortVector;
-	// std::deque<int>		sortDeque;
-	std::vector<int>	sortedNumbers = _sortNumbers();
-	double				firstTime = _timeToSort();
-	// double	secondTime;
+PmergeMe::PmergeMe(void) {}
 
-	std::cout << "Before: " << _initialNumbers << std::endl;
-	std::cout << "After: ";
-	for (std::vector<int>::const_iterator it = sortedNumbers.begin(); it != sortedNumbers.end(); ++it)
-	{
-		std::cout << " " << *it;
-	}
-	std::cout << std::endl;
-	std::cout << "Time to process a range of " << _numberCount << " elements with std::vector : ";
-	std::cout << std::fixed << std::setprecision(5) << firstTime << " us" << std::endl;
-	// std::cout << "Time to process a range of " << _numberCount << " elements with std::deque : ";
-	// std::cout << "0.00014 us" << std::endl;
-	_sortNumbers();
+PmergeMe::PmergeMe(PmergeMe const &src)
+{
+	*this = src;
+}
+
+PmergeMe	&PmergeMe::operator=(PmergeMe const &rhs)
+{
+	(void) rhs;
+	return *this;
 }
 
 PmergeMe::~PmergeMe() {}
@@ -103,7 +93,7 @@ void	PmergeMe::_swapNumbers(std::vector<std::pair<int, int> > &pairs)
 
 void	PmergeMe::_makePairs(std::vector<std::pair<int, int> > &pairs, bool &isOdd, int &straggler)
 {
-	std::istringstream	iss(_initialNumbers);
+	std::istringstream	iss(_unsortedNumbers);
 	std::pair<int, int>	pair;
 
 	while (iss.good())
@@ -172,14 +162,17 @@ void	PmergeMe::_sortMainSequence(std::vector<int> &main, std::vector<int> const 
 	}
 }
 
-std::vector<int>	PmergeMe::_sortNumbers(void)
+void	PmergeMe::_sortNumbers(void)
 {
 	std::vector<std::pair<int, int> >	pairs;
 	std::vector<int>					main;
 	std::vector<int>					pend;
 	int									straggler = 0;
 	bool								isOdd = false;
+	struct timeval 						start;
+	struct timeval 						end;
 
+	gettimeofday(&start, NULL);
 	// Step 1
 	_makePairs(pairs, isOdd, straggler);
 	// Step 2
@@ -193,23 +186,13 @@ std::vector<int>	PmergeMe::_sortNumbers(void)
 	_sortMainSequence(main, pend);
 	if (isOdd)
 		main.insert(std::lower_bound(main.begin(), main.end(), straggler), straggler);
-	return main;
-}
-
-double	PmergeMe::_timeToSort(void)
-{
-	struct timeval 	start;
-	struct timeval 	end;
-
-	gettimeofday(&start, NULL);
-	_sortNumbers();
 	gettimeofday(&end, NULL);
-	return end.tv_sec - start.tv_sec + (end.tv_usec - start.tv_usec) / static_cast<double>(1000000);
+	_printResult(main, end.tv_sec - start.tv_sec + (end.tv_usec - start.tv_usec) / static_cast<double>(1000000));
 }
 
 void	PmergeMe::_printResult(std::vector<int> const &main, double time) const
 {
-	std::cout << "Before: " << _initialNumbers << std::endl;
+	std::cout << "Before: " << _unsortedNumbers << std::endl;
 	std::cout << "After:";
 	for (std::vector<int>::const_iterator it = main.begin(); it != main.end(); ++it)
 	{
@@ -220,4 +203,36 @@ void	PmergeMe::_printResult(std::vector<int> const &main, double time) const
 	std::cout << std::fixed << std::setprecision(5) << time << " us" << std::endl;
 	// std::cout << "Time to process a range of " << main.size() << " elements with std::deque : ";
 	// std::cout << "0.00014 us" << std::endl;
+}
+
+/*	Public 	====================================== */
+
+bool	PmergeMe::parseArgs(int argc, char **argv)
+{
+	std::istringstream	iss;
+	std::ostringstream	oss;
+	long				num;
+
+	for (int i = 1; i < argc; ++i)
+	{
+		iss.str (argv[i]);
+		while (iss.good())
+		{
+			if ((iss >> num).fail() || num < 0 || num > 2147483647)
+			{
+				std::cerr << "Error: Please enter positive integers only" << std::endl;
+				return false;
+			}
+			oss << num;
+			if (!iss.eof())
+				oss << " ";
+		}
+	}
+	_unsortedNumbers = oss.str();
+	return true;
+}
+
+void	PmergeMe::start(void)
+{
+	_sortNumbers();
 }
