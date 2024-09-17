@@ -6,7 +6,7 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:50:37 by oroy              #+#    #+#             */
-/*   Updated: 2024/09/17 13:29:32 by oroy             ###   ########.fr       */
+/*   Updated: 2024/09/17 16:17:41 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,22 +28,26 @@ class PmergeMe
 {
 private:
 
-	std::string		_initialNumbers;
-	std::string 	_sortedNumbers;
-	double			_timeDifference;
+	std::string	const	_type;
 
-	Container		_createJacobSequence(Container const &pend) const;
-	Container		_sortNumbers(void);
-	ContainerPair	_merge(ContainerPair const &left, ContainerPair const &right) const;
-	ContainerPair	_mergeSort(size_t lowIndex, size_t highIndex, ContainerPair const &pairs);
-	size_t			_jacobsthal(unsigned int n) const;
-	void			_initSequences(Container &main, Container &pend, ContainerPair const &pairs) const;
-	void			_makePairs(ContainerPair &pairs, bool &isOdd, int &straggler);
-	void			_setInitialNumbers(std::string const &args);
-	void			_setSortedNumbers(Container sequence);
-	void			_setTimeDifference(struct timeval start, struct timeval end);
-	void			_sortMainSequence(Container &main, Container const &pend);
-	void			_swapNumbers(ContainerPair &pairs);
+	std::string			_initialNumbers;
+	std::string 		_sortedNumbers;
+	double				_timeDifference;
+
+	Container			_createJacobSequence(Container const &pend) const;
+	Container			_sortNumbers(void);
+	ContainerPair		_merge(ContainerPair const &left, ContainerPair const &right) const;
+	ContainerPair		_mergeSort(size_t lowIndex, size_t highIndex, ContainerPair const &pairs);
+	size_t				_jacobsthal(unsigned int n) const;
+	void				_initSequences(Container &main, Container &pend, ContainerPair const &pairs) const;
+	void				_makePairs(ContainerPair &pairs, bool &isOdd, int &straggler);
+	void				_setInitialNumbers(std::string const &args);
+	void				_setSortedNumbers(Container sequence);
+	void				_setTimeDifference(struct timeval start, struct timeval end);
+	void				_sortMainSequence(Container &main, Container const &pend);
+	void				_swapNumbers(ContainerPair &pairs);
+
+	void				_checkIfSorted(void) const;
 
 	typedef	typename Container::const_iterator		iteratorConst;
 	typedef	typename ContainerPair::const_iterator	iteratorConstPair;
@@ -51,7 +55,7 @@ private:
 
 public:
 
-	PmergeMe(void);
+	PmergeMe(std::string const &type);
 	PmergeMe(PmergeMe const &src);
 	PmergeMe &operator=(PmergeMe const &rhs);
 	~PmergeMe();

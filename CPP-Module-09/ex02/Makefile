@@ -6,7 +6,7 @@
 #    By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/13 15:50:37 by oroy              #+#    #+#              #
-#    Updated: 2024/09/17 13:44:06 by oroy             ###   ########.fr        #
+#    Updated: 2024/09/17 16:44:27 by oroy             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,9 +46,51 @@ fclean: clean
 re: fclean all
 
 run: $(NAME)
-# @./$(NAME) "7 8 2 5 3 4 13 11"
-# @./$(NAME) "6 7 8 5 3 1 2 4 10 12 21 19 17 16 11"
-	@./$(NAME) "5 2 3 1 4 7 6 1000 1213 643 2100 0 042 77 14 2100 1212 320 300"
+	@./$(NAME) 2 1
+	@./$(NAME) 3 5 9 7 4
+	@./$(NAME) "10 11 9 4" 5 0 1
+
+bad: $(NAME)
+	@./$(NAME) 7a 2 5
+	@./$(NAME) -1 2 5
+	@./$(NAME) 2 5 2147483648
+	@./$(NAME) 0
+	@./$(NAME)
+
+# TEST ******************************************************************* #
+
+TEST1 = `jot -r 3000 1 100000 | tr '\n' ' '`
+TEST2 = `awk 'BEGIN { srand(); while (length(arr) < 23) { num = int(rand() * 23) + 1; if (!(num in arr)) { arr[num]; print num } } }' /dev/null`
+TEST3 = `awk 'BEGIN { srand(); while (length(arr) < 100) { num = int(rand() * 100) + 1; if (!(num in arr)) { arr[num]; print num } } }' /dev/null`
+TEST4 = `awk 'BEGIN { srand(); while (length(arr) < 1000) { num = int(rand() * 1000) + 1; if (!(num in arr)) { arr[num]; print num } } }' /dev/null`
+TEST5 = `awk 'BEGIN { srand(); while (length(arr) < 3000) { num = int(rand() * 3000) + 1; if (!(num in arr)) { arr[num]; print num } } }' /dev/null`
+TEST6 = `awk 'BEGIN { srand(); while (length(arr) < 5000) { num = int(rand() * 5000) + 1; if (!(num in arr)) { arr[num]; print num } } }' /dev/null`
+TEST7 = `awk 'BEGIN { srand(); while (length(arr) < 10000) { num = int(rand() * 10000) + 1; if (!(num in arr)) { arr[num]; print num } } }' /dev/null`
+TEST8 = `awk 'BEGIN { srand(); while (length(arr) < 15000) { num = int(rand() * 15000) + 1; if (!(num in arr)) { arr[num]; print num } } }' /dev/null`
+
+test1: $(NAME)
+	@./$(NAME) $(TEST1)
+
+test2: $(NAME)
+	@./$(NAME) $(TEST2)
+
+test3: $(NAME)
+	@./$(NAME) $(TEST3)
+
+test4: $(NAME)
+	@./$(NAME) $(TEST4)
+
+test5: $(NAME)
+	@./$(NAME) $(TEST5)
+
+test6: $(NAME)
+	@./$(NAME) $(TEST6)
+
+test7: $(NAME)
+	@./$(NAME) $(TEST7)
+
+test8: $(NAME)
+	@./$(NAME) $(TEST8)
 
 # VALGRIND ******************************************************************* #
 

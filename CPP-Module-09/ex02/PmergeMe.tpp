@@ -6,14 +6,14 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:50:37 by oroy              #+#    #+#             */
-/*   Updated: 2024/09/17 14:10:17 by oroy             ###   ########.fr       */
+/*   Updated: 2024/09/17 16:55:37 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PmergeMe.hpp"
 
 template <typename Container, typename ContainerPair>
-PmergeMe<Container, ContainerPair>::PmergeMe(void) : \
+PmergeMe<Container, ContainerPair>::PmergeMe(std::string const &type) : _type(type),
 _initialNumbers(""), _sortedNumbers(""), _timeDifference(0.0) {}
 
 template <typename Container, typename ContainerPair>
@@ -206,6 +206,22 @@ Container	PmergeMe<Container, ContainerPair>::_sortNumbers(void)
 	return main;
 }
 
+/*	Utils ====================================== */
+
+template <typename Container, typename ContainerPair>
+void	PmergeMe<Container, ContainerPair>::_checkIfSorted(void) const
+{
+	for (std::string::const_iterator it = _sortedNumbers.begin(); it != _sortedNumbers.end(); ++it)
+	{
+		if ((it + 1) != _sortedNumbers.end() && it > (it + 1))
+		{
+			std::cout << _type << ": Not sorted" << std::endl;
+			return ;
+		}
+	}
+	std::cout << _type << ": Sorted" << std::endl;
+}
+
 /*	Setters ====================================== */
 
 template <typename Container, typename ContainerPair>
@@ -267,4 +283,7 @@ void	PmergeMe<Container, ContainerPair>::sort(std::string const &args)
 	_setSortedNumbers(_sortNumbers());
 	gettimeofday(&end, NULL);
 	_setTimeDifference(start, end);
+
+	// Sort Check
+	// _checkIfSorted();
 }

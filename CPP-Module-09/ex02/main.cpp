@@ -6,7 +6,7 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:50:37 by oroy              #+#    #+#             */
-/*   Updated: 2024/09/17 13:37:17 by oroy             ###   ########.fr       */
+/*   Updated: 2024/09/17 16:23:57 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static void	runProgram(std::string const &args, size_t count)
 {
-	PmergeMe<std::vector<int>, std::vector<std::pair<int, int> > >	p1;
-	PmergeMe<std::deque<int>, std::deque<std::pair<int, int> > >	p2;
+	PmergeMe<std::vector<int>, std::vector<std::pair<int, int> > >	p1("vector");
+	PmergeMe<std::deque<int>, std::deque<std::pair<int, int> > >	p2("deque");
 
 	p1.sort(args);
 	p2.sort(args);
@@ -40,15 +40,13 @@ static bool	parseArgs(int argc, char **argv, std::string &args, size_t &count)
 		while (iss.good())
 		{
 			if ((iss >> num).fail() || num < 0 || num > 2147483647)
-			{
-				std::cerr << "Error: Please enter positive integers only" << std::endl;
 				return false;
-			}
 			count++;
 			oss << num;
-			if (!iss.eof())
+			if (!iss.eof() || (i + 1) != argc)
 				oss << " ";
 		}
+		iss.clear();
 	}
 	args = oss.str();
 	return true;
@@ -62,14 +60,17 @@ int	main(int argc, char **argv)
 	if (argc == 1)
 	{
 		std::cerr << "Error: Please provide arguments" << std::endl;
-		return 1;
+		return 0;
 	}
 	if (!parseArgs(argc, argv, args, count))
-		return 1;
+	{
+		std::cerr << "Error: Please enter positive integers only" << std::endl;
+		return 0;
+	}
 	if (count < 2)
 	{
 		std::cerr << "Error: Please enter at least 2 numbers" << std::endl;
-		return 1;
+		return 0;
 	}
 	runProgram(args, count);
 	return 0;
