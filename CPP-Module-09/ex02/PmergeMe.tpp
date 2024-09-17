@@ -6,7 +6,7 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:50:37 by oroy              #+#    #+#             */
-/*   Updated: 2024/09/17 16:55:37 by oroy             ###   ########.fr       */
+/*   Updated: 2024/09/17 19:29:09 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,34 +65,89 @@ Container	PmergeMe<Container, ContainerPair>::_createJacobSequence(Container con
 template <typename Container, typename ContainerPair>
 void	PmergeMe<Container, ContainerPair>::_sortMainSequence(Container &main, Container const &pend)
 {
-	bool		useJacobIndex = true;
+	bool		useJacob = true;
 	Container	indexSequence;
 	Container	jacobSequence;
 	int			num = 0;
+	int			it = 1;
 	size_t		len = pend.size();
 
 	indexSequence.push_back(1);
 	jacobSequence = _createJacobSequence(pend);
-	for (size_t i = 1; i <= len; ++i)
+	for (size_t i = 1; i < len; ++i)
 	{
-		if (jacobSequence.size() && useJacobIndex)
+		if (jacobSequence.size() && useJacob)
 		{
 			indexSequence.push_back(jacobSequence[0]);
 			num = pend[jacobSequence[0] - 1];
 			jacobSequence.erase(jacobSequence.begin());
-			useJacobIndex = false;
+			useJacob = false;
 		}
 		else
 		{
-			if (std::find(indexSequence.begin(), indexSequence.end(), i) != indexSequence.end())
-				i++;
-			num = pend[i - 1];
-			indexSequence.push_back(i);
-			useJacobIndex = true;
+			if (std::find(indexSequence.begin(), indexSequence.end(), it) != indexSequence.end())
+				++it;
+			indexSequence.push_back(it);
+			num = pend[it - 1];
+			if (++it == indexSequence.back())
+				useJacob = true;
 		}
 		main.insert(std::lower_bound(main.begin(), main.end(), num), num);
 	}
+
+	
+	// for (size_t i = 1; i <= len; ++i)
+	// {
+	// 	if (jacobSequence.size() && useJacobIndex)
+	// 	{
+	// 		indexSequence.push_back(jacobSequence[0]);
+	// 		num = pend[jacobSequence[0] - 1];
+	// 		jacobSequence.erase(jacobSequence.begin());
+	// 		useJacobIndex = false;
+	// 	}
+	// 	else
+	// 	{
+	// 		if (std::find(indexSequence.begin(), indexSequence.end(), i) != indexSequence.end())
+	// 			i++;
+	// 		num = pend[i - 1];
+	// 		indexSequence.push_back(i);
+	// 		useJacobIndex = true;
+	// 	}
+	// 	main.insert(std::lower_bound(main.begin(), main.end(), num), num);
+	// }
 }
+
+// template <typename Container, typename ContainerPair>
+// void	PmergeMe<Container, ContainerPair>::_sortMainSequence(Container &main, Container const &pend)
+// {
+// 	bool		useJacobIndex = true;
+// 	Container	indexSequence;
+// 	Container	jacobSequence;
+// 	int			num = 0;
+// 	size_t		len = pend.size();
+
+// 	indexSequence.push_back(1);
+// 	jacobSequence = _createJacobSequence(pend);
+// 	for (size_t i = 1; i <= len; ++i)
+// 	{
+// 		if (jacobSequence.size() && useJacobIndex)
+// 		{
+// 			indexSequence.push_back(jacobSequence[0]);
+// 			num = pend[jacobSequence[0] - 1];
+// 			jacobSequence.erase(jacobSequence.begin());
+// 			useJacobIndex = false;
+// 		}
+// 		else
+// 		{
+// 			if (std::find(indexSequence.begin(), indexSequence.end(), i) != indexSequence.end())
+// 				i++;
+// 			num = pend[i - 1];
+// 			indexSequence.push_back(i);
+// 			useJacobIndex = true;
+// 		}
+// 		main.insert(std::lower_bound(main.begin(), main.end(), num), num);
+// 	}
+// }
 
 template <typename Container, typename ContainerPair>
 void	PmergeMe<Container, ContainerPair>::_initSequences(Container &main, Container &pend, ContainerPair const &pairs) const
@@ -206,22 +261,6 @@ Container	PmergeMe<Container, ContainerPair>::_sortNumbers(void)
 	return main;
 }
 
-/*	Utils ====================================== */
-
-template <typename Container, typename ContainerPair>
-void	PmergeMe<Container, ContainerPair>::_checkIfSorted(void) const
-{
-	for (std::string::const_iterator it = _sortedNumbers.begin(); it != _sortedNumbers.end(); ++it)
-	{
-		if ((it + 1) != _sortedNumbers.end() && it > (it + 1))
-		{
-			std::cout << _type << ": Not sorted" << std::endl;
-			return ;
-		}
-	}
-	std::cout << _type << ": Sorted" << std::endl;
-}
-
 /*	Setters ====================================== */
 
 template <typename Container, typename ContainerPair>
@@ -270,6 +309,22 @@ double	PmergeMe<Container, ContainerPair>::getTimeDifference(void) const
 	return _timeDifference;
 }
 
+/*	Utils ====================================== */
+
+template <typename Container, typename ContainerPair>
+void	PmergeMe<Container, ContainerPair>::checkIfSorted(void) const
+{
+	for (std::string::const_iterator it = _sortedNumbers.begin(); it != _sortedNumbers.end(); ++it)
+	{
+		if ((it + 1) != _sortedNumbers.end() && it > (it + 1))
+		{
+			std::cout << _type << ": " << RED << "Not Sorted" << RESET << std::endl;
+			return ;
+		}
+	}
+	std::cout << _type << ": " << GREEN << "Sorted" << RESET << std::endl;
+}
+
 /*	Start ====================================== */
 
 template <typename Container, typename ContainerPair>
@@ -283,7 +338,4 @@ void	PmergeMe<Container, ContainerPair>::sort(std::string const &args)
 	_setSortedNumbers(_sortNumbers());
 	gettimeofday(&end, NULL);
 	_setTimeDifference(start, end);
-
-	// Sort Check
-	// _checkIfSorted();
 }

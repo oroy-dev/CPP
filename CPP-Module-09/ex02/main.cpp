@@ -6,7 +6,7 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:50:37 by oroy              #+#    #+#             */
-/*   Updated: 2024/09/17 16:23:57 by oroy             ###   ########.fr       */
+/*   Updated: 2024/09/17 19:24:57 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static void	runProgram(std::string const &args, size_t count)
 {
-	PmergeMe<std::vector<int>, std::vector<std::pair<int, int> > >	p1("vector");
-	PmergeMe<std::deque<int>, std::deque<std::pair<int, int> > >	p2("deque");
+	PmergeMe<std::vector<int>, std::vector<std::pair<int, int> > >	p1("Vector");
+	PmergeMe<std::deque<int>, std::deque<std::pair<int, int> > >	p2("Deque");
 
 	p1.sort(args);
 	p2.sort(args);
@@ -26,6 +26,11 @@ static void	runProgram(std::string const &args, size_t count)
 	std::cout << std::fixed << std::setprecision(5) << p1.getTimeDifference() << " us" << std::endl;
 	std::cout << "Time to process a range of " << count << " elements with std::deque : ";
 	std::cout << std::fixed << std::setprecision(5) << p2.getTimeDifference() << " us" << std::endl;
+
+	p1.checkIfSorted();
+	p2.checkIfSorted();
+
+	std::cout << std::endl;
 }
 
 static bool	parseArgs(int argc, char **argv, std::string &args, size_t &count)

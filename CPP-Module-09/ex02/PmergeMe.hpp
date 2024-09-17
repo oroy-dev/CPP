@@ -6,7 +6,7 @@
 /*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:50:37 by oroy              #+#    #+#             */
-/*   Updated: 2024/09/17 16:17:41 by oroy             ###   ########.fr       */
+/*   Updated: 2024/09/17 19:28:19 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,10 @@
 # include <vector>
 # include <string>
 # include <sys/time.h>
+
+# define GREEN 		"\033[32m"
+# define RED 		"\033[31m"
+# define RESET		"\033[0m"
 
 template <typename Container, typename ContainerPair>
 class PmergeMe
@@ -47,8 +51,6 @@ private:
 	void				_sortMainSequence(Container &main, Container const &pend);
 	void				_swapNumbers(ContainerPair &pairs);
 
-	void				_checkIfSorted(void) const;
-
 	typedef	typename Container::const_iterator		iteratorConst;
 	typedef	typename ContainerPair::const_iterator	iteratorConstPair;
 	typedef	typename ContainerPair::iterator		iteratorPair;
@@ -64,6 +66,7 @@ public:
 	std::string const	&getSortedNumbers(void) const;
 	double				getTimeDifference(void) const;
 
+	void				checkIfSorted(void) const;
 	void				sort(std::string const &args);
 
 };

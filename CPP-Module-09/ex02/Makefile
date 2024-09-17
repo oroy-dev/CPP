@@ -6,7 +6,7 @@
 #    By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/13 15:50:37 by oroy              #+#    #+#              #
-#    Updated: 2024/09/17 16:44:27 by oroy             ###   ########.fr        #
+#    Updated: 2024/09/17 19:17:43 by oroy             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,7 @@ run: $(NAME)
 	@./$(NAME) 2 1
 	@./$(NAME) 3 5 9 7 4
 	@./$(NAME) "10 11 9 4" 5 0 1
+	@./$(NAME) "10 11 9 4" 5 0 1 2 123 45 788 60 31 21 13 62 34
 
 bad: $(NAME)
 	@./$(NAME) 7a 2 5
@@ -95,11 +96,10 @@ test8: $(NAME)
 # VALGRIND ******************************************************************* #
 
 vleaks:
-	$(MAKE)
 	valgrind \
 	--leak-check=full \
 	--show-leak-kinds=all \
 	--show-reachable=yes \
 	--show-possibly-lost=yes \
 	--track-origins=yes \
-	./$(NAME)
+	./$(NAME) $(TEST1)
