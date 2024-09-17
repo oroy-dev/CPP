@@ -3,14 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+        */
+/*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:50:37 by oroy              #+#    #+#             */
-/*   Updated: 2024/09/16 21:45:49 by olivierroy       ###   ########.fr       */
+/*   Updated: 2024/09/17 13:37:17 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PmergeMe.hpp"
+
+static void	runProgram(std::string const &args, size_t count)
+{
+	PmergeMe<std::vector<int>, std::vector<std::pair<int, int> > >	p1;
+	PmergeMe<std::deque<int>, std::deque<std::pair<int, int> > >	p2;
+
+	p1.sort(args);
+	p2.sort(args);
+
+	std::cout << "Before: " << args << std::endl;
+	std::cout << "After: " << p2.getSortedNumbers() << std::endl;
+	std::cout << "Time to process a range of " << count << " elements with std::vector : ";
+	std::cout << std::fixed << std::setprecision(5) << p1.getTimeDifference() << " us" << std::endl;
+	std::cout << "Time to process a range of " << count << " elements with std::deque : ";
+	std::cout << std::fixed << std::setprecision(5) << p2.getTimeDifference() << " us" << std::endl;
+}
 
 static bool	parseArgs(int argc, char **argv, std::string &args, size_t &count)
 {
@@ -42,7 +58,6 @@ int	main(int argc, char **argv)
 {
 	std::string	args = "";
 	size_t		count = 0;
-	PmergeMe	*p;
 
 	if (argc == 1)
 	{
@@ -51,7 +66,11 @@ int	main(int argc, char **argv)
 	}
 	if (!parseArgs(argc, argv, args, count))
 		return 1;
-	p = new PmergeMe(args, count);
-	delete p;
+	if (count < 2)
+	{
+		std::cerr << "Error: Please enter at least 2 numbers" << std::endl;
+		return 1;
+	}
+	runProgram(args, count);
 	return 0;
 }

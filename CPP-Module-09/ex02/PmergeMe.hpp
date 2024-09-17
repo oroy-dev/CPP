@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PmergeMe.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+        */
+/*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:50:37 by oroy              #+#    #+#             */
-/*   Updated: 2024/09/16 22:28:06 by olivierroy       ###   ########.fr       */
+/*   Updated: 2024/09/17 13:29:32 by oroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,41 +18,52 @@
 # include <iomanip>
 # include <iostream>
 # include <sstream>
-# include <stdexcept>
-# include <utility>
+# include <utility>	//std::pair
 # include <vector>
 # include <string>
 # include <sys/time.h>
 
+template <typename Container, typename ContainerPair>
 class PmergeMe
 {
 private:
 
-	std::string const					_initialNumbers;
-	size_t const						_numberCount;
+	std::string		_initialNumbers;
+	std::string 	_sortedNumbers;
+	double			_timeDifference;
 
-	double								_timeToSort();
-	std::vector<std::pair<int, int > >	_merge(std::vector<std::pair<int, int > > const &left, std::vector<std::pair<int, int > > const &right);
-	std::vector<std::pair<int, int > >	_mergeSort(size_t lowIndex, size_t highIndex, std::vector<std::pair<int, int> > const &pairs);
-	void								_initSequences(std::vector<int> &main, std::vector<int> &pend, std::vector<std::pair<int, int > > const &pairs) const;
-	void								_makePairs(std::vector<std::pair<int, int> > &pairs, bool &isOdd, int &straggler);
-	void								_sortMainSequence(std::vector<int> &main, std::vector<int> const &pend);
-	std::vector<int>					_sortNumbers(void);
-	void								_swapNumbers(std::vector<std::pair<int, int> > &pairs);
+	Container		_createJacobSequence(Container const &pend) const;
+	Container		_sortNumbers(void);
+	ContainerPair	_merge(ContainerPair const &left, ContainerPair const &right) const;
+	ContainerPair	_mergeSort(size_t lowIndex, size_t highIndex, ContainerPair const &pairs);
+	size_t			_jacobsthal(unsigned int n) const;
+	void			_initSequences(Container &main, Container &pend, ContainerPair const &pairs) const;
+	void			_makePairs(ContainerPair &pairs, bool &isOdd, int &straggler);
+	void			_setInitialNumbers(std::string const &args);
+	void			_setSortedNumbers(Container sequence);
+	void			_setTimeDifference(struct timeval start, struct timeval end);
+	void			_sortMainSequence(Container &main, Container const &pend);
+	void			_swapNumbers(ContainerPair &pairs);
 
-	std::vector<int>					_createJacobSequence(std::vector<int> const &pend) const;
-	size_t								_jacobsthal(unsigned int n) const;
-
-	void								_printResult(std::vector<int> const &main, double time) const;
-
-	PmergeMe(PmergeMe const &src);
-	PmergeMe &operator=(PmergeMe const &rhs);
+	typedef	typename Container::const_iterator		iteratorConst;
+	typedef	typename ContainerPair::const_iterator	iteratorConstPair;
+	typedef	typename ContainerPair::iterator		iteratorPair;
 
 public:
 
-	PmergeMe(std::string const &args, size_t const &count);
+	PmergeMe(void);
+	PmergeMe(PmergeMe const &src);
+	PmergeMe &operator=(PmergeMe const &rhs);
 	~PmergeMe();
 
+	std::string const	&getInitialNumbers(void) const;
+	std::string const	&getSortedNumbers(void) const;
+	double				getTimeDifference(void) const;
+
+	void				sort(std::string const &args);
+
 };
+
+# include "PmergeMe.tpp" 
 
 #endif
