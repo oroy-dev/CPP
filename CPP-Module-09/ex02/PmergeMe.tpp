@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PmergeMe.tpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oroy <oroy@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: olivierroy <olivierroy@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:50:37 by oroy              #+#    #+#             */
-/*   Updated: 2024/09/17 19:29:09 by oroy             ###   ########.fr       */
+/*   Updated: 2024/09/17 22:23:59 by olivierroy       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,60 +94,7 @@ void	PmergeMe<Container, ContainerPair>::_sortMainSequence(Container &main, Cont
 		}
 		main.insert(std::lower_bound(main.begin(), main.end(), num), num);
 	}
-
-	
-	// for (size_t i = 1; i <= len; ++i)
-	// {
-	// 	if (jacobSequence.size() && useJacobIndex)
-	// 	{
-	// 		indexSequence.push_back(jacobSequence[0]);
-	// 		num = pend[jacobSequence[0] - 1];
-	// 		jacobSequence.erase(jacobSequence.begin());
-	// 		useJacobIndex = false;
-	// 	}
-	// 	else
-	// 	{
-	// 		if (std::find(indexSequence.begin(), indexSequence.end(), i) != indexSequence.end())
-	// 			i++;
-	// 		num = pend[i - 1];
-	// 		indexSequence.push_back(i);
-	// 		useJacobIndex = true;
-	// 	}
-	// 	main.insert(std::lower_bound(main.begin(), main.end(), num), num);
-	// }
 }
-
-// template <typename Container, typename ContainerPair>
-// void	PmergeMe<Container, ContainerPair>::_sortMainSequence(Container &main, Container const &pend)
-// {
-// 	bool		useJacobIndex = true;
-// 	Container	indexSequence;
-// 	Container	jacobSequence;
-// 	int			num = 0;
-// 	size_t		len = pend.size();
-
-// 	indexSequence.push_back(1);
-// 	jacobSequence = _createJacobSequence(pend);
-// 	for (size_t i = 1; i <= len; ++i)
-// 	{
-// 		if (jacobSequence.size() && useJacobIndex)
-// 		{
-// 			indexSequence.push_back(jacobSequence[0]);
-// 			num = pend[jacobSequence[0] - 1];
-// 			jacobSequence.erase(jacobSequence.begin());
-// 			useJacobIndex = false;
-// 		}
-// 		else
-// 		{
-// 			if (std::find(indexSequence.begin(), indexSequence.end(), i) != indexSequence.end())
-// 				i++;
-// 			num = pend[i - 1];
-// 			indexSequence.push_back(i);
-// 			useJacobIndex = true;
-// 		}
-// 		main.insert(std::lower_bound(main.begin(), main.end(), num), num);
-// 	}
-// }
 
 template <typename Container, typename ContainerPair>
 void	PmergeMe<Container, ContainerPair>::_initSequences(Container &main, Container &pend, ContainerPair const &pairs) const
